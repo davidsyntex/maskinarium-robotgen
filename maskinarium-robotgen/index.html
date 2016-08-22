@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>RoBoT GeN</title>
+    <link href="Content/bootstrap.css" rel="stylesheet"/>
+    <link href="Content/Site.css" rel="stylesheet"/>
+
+    <script src="Scripts/modernizr-2.6.2.js"></script>
+    <script src="Scripts/angular.min.js" type="text/javascript"></script>
+    <script src="Scripts/angular-sanitize.min.js" type="text/javascript"></script>
+    <script src="Scripts/angular-route.min.js" type="text/javascript"></script>
+
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <script src="App/app.js"></script>
+
+</head>
+<body class="container" ng-app="robotgen" ng-controller="robotgenController">
+<h1>MASKINARIUM RBT SLP GEN</h1>
+<p class="computah">Pracownik fabryki wersja systemu głównego 0.0.1a</p>
+<button role="button" class="btn btn-primary" ng-click="GetRandomRobot()" type="button">[SLUMPA]</button>
+<div class="row">
+    <div class="col-md-12">
+        <h3>HUVUD: {{Head.MODELL}}</h3>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-1">Pil</div>
+            <div class="col-md-10">
+                <img src=""/>
+            </div>
+            <div class="col-md-1">Pil</div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6">
+                <ul>
+                    <li>SRV: {{Head.SRV}}</li>
+                    <li>STB: {{Head.STB}}</li>
+                    <li>PRC: {{Head.PRC}}</li>
+                    <li>NTV: {{Head.NTV}}</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul>
+
+                    <li>MOD: {{Head.MOD}}</li>
+                    <li>SKYDD: {{Head.SKYDD}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>BÅL: {{Torso.MODELL}}</h3>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-2">
+                <button role="button" class="btn btn-default" ng-click="GetPreviousTorso()" type="button">[&lt;]</button>
+            </div>
+            <div class="col-md-8">
+                <img src="{{Torso.BILD}}" width="100%" alt="{{Torso.MODELL}}"/>
+            </div>
+            <div class="col-md-2">
+                <button role="button" class="btn btn-default" ng-click="GetNextTorso()" type="button">[&gt;]</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6">
+                <ul>
+                    <li>SRV: {{Torso.SRV}}</li>
+                    <li>STB: {{Torso.STB}}</li>
+                    <li>PRC: {{Torso.PRC}}</li>
+                    <li>NTV: {{Torso.NTV}}</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul>
+
+                    <li>MOD: {{Torso.MOD}}</li>
+                    <li>SKYDD: {{Torso.SKYDD}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>UNDERREDE: {{Leg.MODELL}}</h3>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-1">Pil</div>
+            <div class="col-md-10">
+                <img src=""/>
+            </div>
+            <div class="col-md-1">Pil</div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6">
+                <ul>
+                    <li>SRV: {{Leg.SRV}}</li>
+                    <li>STB: {{Leg.STB}}</li>
+                    <li>PRC: {{Leg.PRC}}</li>
+                    <li>NTV: {{Leg.NTV}}</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul>
+
+                    <li>MOD: {{Leg.MOD}}</li>
+                    <li>SKYDD: {{Leg.SKYDD}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>{{Name}}</h3>
+    </div>
+    <div class="col-md-6">
+        <ul>
+            <li>SRV: {{TotalaStats.SRV}}</li>
+            <li>STB: {{TotalaStats.STB}}</li>
+            <li>PRC: {{TotalaStats.PRC}}</li>
+            <li>NTV: {{TotalaStats.NTV}}</li>
+            <li>MOD: {{TotalaStats.MOD}}</li>
+            <li>SKYDD: {{TotalaStats.SKYDD}}</li>
+        </ul>
+
+    </div>
+    <div class="col-md-6">
+        <p>{{Head.BESKRIVNING}} med {{Torso.BESKRIVNING}} och {{Leg.BESKRIVNING}}</p>
+    </div>
+</div>
+
+</body>
+</html>

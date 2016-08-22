@@ -1,0 +1,87 @@
+﻿@font-face
+{
+    font-family: 'bignoodletitlingregular';
+    font-style: normal;
+    font-weight: normal;
+    src: url('Fonts/big_noodle_titling-webfont.woff2') format('woff2'),
+         url('Fonts/big_noodle_titling-webfont.woff') format('woff');
+}
+
+@font-face {
+	font-family:'ArcherPro-Medium';
+	src: url('Fonts/ArcherPro-Medium.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
+	font-stretch: normal;
+	unicode-range: U+0009-FB04;
+}
+
+@font-face {
+	font-family:'FuturaStd-Book';
+	src: url('Fonts/FuturaStd-Book.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
+	font-stretch: normal;
+	unicode-range: U+0020-FB02;
+}
+
+html
+{
+    font-size: 100% !important;
+}
+
+body
+{
+    font-size: 100% !important;
+    color: #fefefe;
+    background-color: #24282d;
+    background: url("Images/green-black-stripes-monitor-scanlines-1920x1080-59430.jpg") #24282d;
+    background-size: cover;
+    font-family: "ArcherPro-Medium";
+}
+
+ul>li, button
+{
+    font-family: "FuturaStd-Book";
+}
+
+ul
+{
+    list-style: none;
+    padding-left: 0;
+}
+.computah
+{
+    font-family: "FuturaStd-Book";
+    text-transform: uppercase;
+}
+.container-fluid
+{
+    padding: 0 !important;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+
+input,
+select,
+textarea
+{
+    max-width: 280px;
+}
+
+h1, h2, h3
+{
+    font-family: bignoodletitlingregular;
+}
+
+h1
+{
+    color: #bbffbb;
+    font-size: 4rem;
+}
+
+h3
+{
+    font-size: 2rem;
+    font-weight: normal;
+}
