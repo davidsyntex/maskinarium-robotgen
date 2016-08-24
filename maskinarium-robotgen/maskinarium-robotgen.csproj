@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\app.js" />
+    <Content Include="App\data.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\Chassikort - B_Diderot MD34.jpg" />
@@ -102,6 +103,34 @@
     <Content Include="Content\Images\Chassikort - U_Prachi-gong.jpg" />
     <Content Include="Content\Images\Chassikort - U_Rougell_M19.jpg" />
     <Content Include="Content\Images\Chassikort - U_Skrot.jpg" />
+    <Content Include="Content\Images\Chassikort---B_Diderot-MD34.png" />
+    <Content Include="Content\Images\Chassikort---B_fenzhou.png" />
+    <Content Include="Content\Images\Chassikort---B_ganymeda.png" />
+    <Content Include="Content\Images\Chassikort---B_Ikea.png" />
+    <Content Include="Content\Images\Chassikort---B_Kleenkorp.png" />
+    <Content Include="Content\Images\Chassikort---B_Modessi-RK.png" />
+    <Content Include="Content\Images\Chassikort---B_ozkun.png" />
+    <Content Include="Content\Images\Chassikort---B_Pylon.png" />
+    <Content Include="Content\Images\Chassikort---B_Skrot.png" />
+    <Content Include="Content\Images\Chassikort---H_ABC0.png" />
+    <Content Include="Content\Images\Chassikort---H_fenix-MK43.png" />
+    <Content Include="Content\Images\Chassikort---H_Ikea.png" />
+    <Content Include="Content\Images\Chassikort---H_Kordura22.png" />
+    <Content Include="Content\Images\Chassikort---H_Lux.png" />
+    <Content Include="Content\Images\Chassikort---H_MumlaPX01.png" />
+    <Content Include="Content\Images\Chassikort---H_Odessa_Vega.png" />
+    <Content Include="Content\Images\Chassikort---H_Pashin.png" />
+    <Content Include="Content\Images\Chassikort---H_Skrot.png" />
+    <Content Include="Content\Images\Chassikort---U_Ikea.png" />
+    <Content Include="Content\Images\Chassikort---U_Lagos-MD18.png" />
+    <Content Include="Content\Images\Chassikort---U_LBM_Terra.png" />
+    <Content Include="Content\Images\Chassikort---U_LMB_DynoQ.png" />
+    <Content Include="Content\Images\Chassikort---U_methusalem.png" />
+    <Content Include="Content\Images\Chassikort---U_Necrosis2.png" />
+    <Content Include="Content\Images\Chassikort---U_OrionV.png" />
+    <Content Include="Content\Images\Chassikort---U_Prachi-gong.png" />
+    <Content Include="Content\Images\Chassikort---U_Rougell_M19.png" />
+    <Content Include="Content\Images\Chassikort---U_Skrot.png" />
     <Content Include="Content\Images\green-black-stripes-monitor-scanlines-1920x1080-59430.jpg" />
     <Content Include="Content\Site.css" />
     <Content Include="index.html" />
@@ -883,10 +912,14 @@
     <Content Include="Content\Fonts\big_noodle_titling-webfont.woff2" />
     <Content Include="Content\Fonts\ArcherPro-Medium.woff" />
     <Content Include="Content\Fonts\FuturaStd-Book.woff" />
+    <Content Include="Content\Fonts\workingsignstfb_gdi.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\NameSets\mittlandare_set.js" />
+    <Content Include="Scripts\NameSets\robot_set.js" />
+    <Content Include="Scripts\name_generator.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\version.json" />

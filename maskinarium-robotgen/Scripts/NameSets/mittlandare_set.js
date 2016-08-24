@@ -1,0 +1,19 @@
+﻿name_set["mittlandare"] = [
+    "Brenard",
+    "Branbard",
+    "Edeljar",
+    "Edilgjar",
+    "Eided",
+    "Eohed",
+    "Gulfinn",
+    "Galfraidh",
+    "Guldhan",
+    "Gulmarr",
+    "Hedel",
+    "Herwin",
+    "Logred",
+    "Maurik",
+    "Maugwinn",
+    "Morred",
+    "Mordfinn"
+];

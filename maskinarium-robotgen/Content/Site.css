@@ -7,22 +7,34 @@
          url('Fonts/big_noodle_titling-webfont.woff') format('woff');
 }
 
-@font-face {
-	font-family:'ArcherPro-Medium';
-	src: url('Fonts/ArcherPro-Medium.woff') format('woff');
-	font-weight: 400;
-	font-style: normal;
-	font-stretch: normal;
-	unicode-range: U+0009-FB04;
+@font-face
+{
+    font-family: 'ArcherPro-Medium';
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 400;
+    src: url('Fonts/ArcherPro-Medium.woff') format('woff');
+    unicode-range: U+0009-FB04;
 }
 
-@font-face {
-	font-family:'FuturaStd-Book';
-	src: url('Fonts/FuturaStd-Book.woff') format('woff');
-	font-weight: 400;
-	font-style: normal;
-	font-stretch: normal;
-	unicode-range: U+0020-FB02;
+@font-face
+{
+    font-family: 'FuturaStd-Book';
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 400;
+    src: url('Fonts/FuturaStd-Book.woff') format('woff');
+    unicode-range: U+0020-FB02;
+}
+
+@font-face
+{
+    font-family: 'workingsignstfb-Regular';
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 400;
+    src: url('Fonts/workingsignstfb_gdi.woff') format('woff');
+    unicode-range: U+0020-00FE;
 }
 
 html
@@ -32,29 +44,36 @@ html
 
 body
 {
-    font-size: 100% !important;
-    color: #fefefe;
-    background-color: #24282d;
     background: url("Images/green-black-stripes-monitor-scanlines-1920x1080-59430.jpg") #24282d;
+    background-color: #24282d;
     background-size: cover;
+    color: #fefefe;
     font-family: "ArcherPro-Medium";
+    font-size: 100% !important;
 }
 
-ul>li, button
+button, table
 {
     font-family: "FuturaStd-Book";
 }
 
-ul
+ul.stats > li
+{
+    font-family: "FuturaStd-Book";
+}
+
+ul.stats
 {
     list-style: none;
     padding-left: 0;
 }
+
 .computah
 {
     font-family: "FuturaStd-Book";
     text-transform: uppercase;
 }
+
 .container-fluid
 {
     padding: 0 !important;
@@ -76,12 +95,171 @@ h1, h2, h3
 
 h1
 {
-    color: #bbffbb;
+    
     font-size: 4rem;
+    text-align: center;
+}
+
+h2
+{
+        font-size: 2rem;
+    font-weight: normal;
+    margin-top: 0;
 }
 
 h3
 {
-    font-size: 2rem;
+    font-family: "ArcherPro-Medium";
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+h4
+{
+    border-bottom: 0.0625rem solid #fefefe;
+    border-top: 0.0625rem solid #fefefe;
+    font-family: "ArcherPro-Medium";
+    font-weight: bold;
+    margin-top: 2rem;
+    padding: 0.5rem 0;
+    text-align: center;
+}
+
+.part
+{
+    margin-top: 1rem;
+}
+
+.part-image
+{
+    position: relative;
+    width: 100%;
+}
+
+.part-image > div
+{
+    padding: 0;
+}
+
+.part-image img
+{
+    display: block;
+    height: auto;
+    margin: 0 auto;
+    max-width: 100%;
+    min-height: 185px;
+}
+
+.part-image > .navigation
+{
+    bottom: 0;
+    cursor: pointer;
+    font-size: 3rem;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 15%;
+    z-index: 5;
+}
+
+.part-image > .navigation:hover
+{
+    background-color: #fefefe;
+    color: #24282d;
+}
+
+.part h3
+{
+    margin-top: 0.5rem;
+}
+
+.navigation.right
+{
+    left: auto;
+    right: 0;
+}
+
+.navigation span
+{
+    margin-left: -1.5rem;
+    margin-top: -2.125rem;
+    position: absolute;
+    top: 50%;
+}
+
+.col-xs-2.col-md-4
+{
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.rbt-btn
+{
+    border: 0.25rem solid #fefefe;
+    cursor: pointer;
+    padding: 0.25rem;
+    text-align: center;
+    font-family: bignoodletitlingregular;
+    text-transform: uppercase;
     font-weight: normal;
+    margin-top: 0;
+}
+
+.rbt-btn:hover
+{
+    background-color: #fefefe;
+    color: #24282d;
+}
+
+.sheet
+{
+    margin-top: 1rem;
+}
+
+.skill
+{
+    font-family: "FuturaStd-Book";
+    font-size: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 0.05rem;
+    text-transform: uppercase;
+}
+
+.table.skill
+{
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+.reference
+{
+    font-style: italic;
+}
+
+.symbol
+{
+    font-family: "workingsignstfb-Regular";
+    font-size: 1.2rem;
+}
+
+.modules ul
+{
+    list-style: none;
+}
+
+.modules ul li:before
+{
+    content: '\00a4';
+    font-weight: bold;
+    left: 0;
+    margin: 0 -2rem; /* any design */
+    position: absolute;
+}
+
+.modules ul li
+{
+    overflow: visible;
+    padding-left: 0rem;
+    position: relative;
 }

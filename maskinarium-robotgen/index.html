@@ -14,139 +14,321 @@
 
     <script src="Scripts/jquery-1.10.2.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-
+    <script src="Scripts/name_generator.js"></script>
+    <script src="Scripts/NameSets/robot_set.js"></script>
+    <script src="Scripts/NameSets/mittlandare_set.js"></script>
     <script src="App/app.js"></script>
+    <script src="App/data.js"></script>
 
 </head>
 <body class="container" ng-app="robotgen" ng-controller="robotgenController">
 <h1>MASKINARIUM RBT SLP GEN</h1>
-<p class="computah">Pracownik fabryki wersja systemu głównego 0.0.1a</p>
-<button role="button" class="btn btn-primary" ng-click="GetRandomRobot()" type="button">[SLUMPA]</button>
+<p class="computah">Pracownik fabryki wersja systemu głównego 0.0.2a</p>
+
 <div class="row">
-    <div class="col-md-12">
-        <h3>HUVUD: {{Head.MODELL}}</h3>
+    <div class="col-xs-12">
+        <h3 class="rbt-btn" ng-click="GetRandomRobot()">Skapa maskin</h3>
     </div>
-    <div class="col-md-6">
-        <div class="row">
-            <div class="col-md-1">Pil</div>
-            <div class="col-md-10">
-                <img src=""/>
+    <div class="col-md-12 part row">
+        <div class="col-md-6">
+            <div class="row part-image">
+                <div class="col-xs-12">
+                    <img src="{{Robot.Head.BILD}}" alt="{{Robot.Head.NAMN}}"/>
+                </div>
+                <div class="navigation left" ng-click="GetPreviousHead()">
+                    <span>[&#x2039;]</span>
+                </div>
+                <div class="navigation right" ng-click="GetNextHead()">
+                    <span>[&#x203a;]</span>
+                </div>
             </div>
-            <div class="col-md-1">Pil</div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-xs-6 col-md-12">
+                    <h3>HUVUD: {{Robot.Head.NAMN}}</h3>
+                </div>
+                <div class="col-xs-2 col-md-4">
+                    <ul class="stats">
+                        <li>SRV: {{Robot.Head.SRV}}</li>
+                        <li>STB: {{Robot.Head.STB}}</li>
+                    </ul>
+                </div>
+                <div class="col-xs-2 col-md-4">
+                    <ul class="stats">
+                        <li>PRC: {{Robot.Head.PRC}}</li>
+                        <li>NTV: {{Robot.Head.NTV}}</li>
+                    </ul>
+                </div>
+                <div class="col-xs-2 col-md-4">
+                    <ul class="stats">
+
+                        <li>MOD: {{Robot.Head.MOD}}</li>
+                        <li>SKYDD: {{Robot.Head.SKYDD}}</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="row">
-            <div class="col-md-6">
-                <ul>
-                    <li>SRV: {{Head.SRV}}</li>
-                    <li>STB: {{Head.STB}}</li>
-                    <li>PRC: {{Head.PRC}}</li>
-                    <li>NTV: {{Head.NTV}}</li>
-                </ul>
-            </div>
-            <div class="col-md-6">
-                <ul>
 
-                    <li>MOD: {{Head.MOD}}</li>
-                    <li>SKYDD: {{Head.SKYDD}}</li>
-                </ul>
+    <div class="col-md-12 part row">
+
+        <div class="col-md-6">
+            <div class="row part-image">
+                <div class="col-xs-12">
+                    <img src="{{Robot.Torso.BILD}}" alt="{{Robot.Torso.NAMN}}"/>
+                </div>
+                <div class="navigation left" ng-click="GetPreviousTorso()">
+                    <span>[&#x2039;]</span>
+                </div>
+                <div class="navigation right" ng-click="GetNextTorso()">
+                    <span>[&#x203a;]</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-xs-6 col-md-12">
+                    <h3>BÅL: {{Robot.Torso.NAMN}}</h3>
+                </div>
+                <div class="col-xs-2 col-md-4">
+                    <ul class="stats">
+                        <li>SRV: {{Robot.Torso.SRV}}</li>
+                        <li>STB: {{Robot.Torso.STB}}</li>
+                    </ul>
+                </div>
+                <div class="col-xs-2 col-md-4">
+                    <ul class="stats">
+                        <li>PRC: {{Robot.Torso.PRC}}</li>
+                        <li>NTV: {{Robot.Torso.NTV}}</li>
+                    </ul>
+                </div>
+                <div class="col-xs-2 col-md-4">
+                    <ul class="stats">
+
+                        <li>MOD: {{Robot.Torso.MOD}}</li>
+                        <li>SKYDD: {{Robot.Torso.SKYDD}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 part row">
+
+        <div class="col-md-6">
+            <div class="row part-image">
+                <div class="col-xs-12">
+                    <img src="{{Robot.Leg.BILD}}" alt="{{Robot.Leg.NAMN}}"/>
+                </div>
+                <div class="navigation left" ng-click="GetPreviousLeg()">
+                    <span>[&#x2039;]</span>
+                </div>
+                <div class="navigation right" ng-click="GetNextLeg()">
+                    <span>[&#x203a;]</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+
+                <div class="col-xs-6 col-md-12">
+                    <h3>UNDERREDE: {{Robot.Leg.NAMN}}</h3>
+                </div>
+                <div class="col-xs-2 col-md-4">
+                    <ul class="stats">
+                        <li>SRV: {{Robot.Leg.SRV}}</li>
+                        <li>STB: {{Robot.Leg.STB}}</li>
+                    </ul>
+                </div>
+                <div class="col-xs-2 col-md-4">
+                    <ul class="stats">
+                        <li>PRC: {{Robot.Leg.PRC}}</li>
+                        <li>NTV: {{Robot.Leg.NTV}}</li>
+                    </ul>
+                </div>
+                <div class="col-xs-2 col-md-4">
+                    <ul class="stats">
+
+                        <li>MOD: {{Robot.Leg.MOD}}</li>
+                        <li>SKYDD: {{Robot.Leg.SKYDD}}</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-<div class="row">
-    <div class="col-md-12">
-        <h3>BÅL: {{Torso.MODELL}}</h3>
+<div class="row sheet">
+    <div class="col-xs-8">
+        <h2>Designation: {{Robot.Name}} - {{Robot.CodeName}}</h2>
     </div>
-    <div class="col-md-6">
-        <div class="row">
-            <div class="col-md-2">
-                <button role="button" class="btn btn-default" ng-click="GetPreviousTorso()" type="button">[&lt;]</button>
-            </div>
-            <div class="col-md-8">
-                <img src="{{Torso.BILD}}" width="100%" alt="{{Torso.MODELL}}"/>
-            </div>
-            <div class="col-md-2">
-                <button role="button" class="btn btn-default" ng-click="GetNextTorso()" type="button">[&gt;]</button>
-            </div>
-        </div>
+    <div class="col-xs-4">
+        <h3 class="rbt-btn" ng-click="GetRandomRobot()">SLUMPA NY</h3>
     </div>
-    <div class="col-md-6">
-        <div class="row">
-            <div class="col-md-6">
-                <ul>
-                    <li>SRV: {{Torso.SRV}}</li>
-                    <li>STB: {{Torso.STB}}</li>
-                    <li>PRC: {{Torso.PRC}}</li>
-                    <li>NTV: {{Torso.NTV}}</li>
-                </ul>
-            </div>
-            <div class="col-md-6">
-                <ul>
-
-                    <li>MOD: {{Torso.MOD}}</li>
-                    <li>SKYDD: {{Torso.SKYDD}}</li>
-                </ul>
-            </div>
-        </div>
+    <div class="col-xs-6">
+        <ul class="stats">
+            <li>Modell: {{Robot.Model.Name}}</li>
+            <li>Färg: {{Robot.Model.Colour}}</li>
+            <li>Röst: {{Robot.Model.Voice}}</li>
+            <li>Kännetecken: {{Robot.Model.Features}}</li>
+            <li>Hierarki: {{Robot.Model.Hiearchy}}</li>
+        </ul>
     </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
-        <h3>UNDERREDE: {{Leg.MODELL}}</h3>
+    <div class="col-xs-2 col-md-2">
+        <ul class="stats">
+            <li>SRV: {{Robot.TotalaStats.SRV}}</li>
+            <li>STB: {{Robot.TotalaStats.STB}}</li>
+            <li>PRC: {{Robot.TotalaStats.PRC}}</li>
+        </ul>
     </div>
-    <div class="col-md-6">
-        <div class="row">
-            <div class="col-md-1">Pil</div>
-            <div class="col-md-10">
-                <img src=""/>
-            </div>
-            <div class="col-md-1">Pil</div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="row">
-            <div class="col-md-6">
-                <ul>
-                    <li>SRV: {{Leg.SRV}}</li>
-                    <li>STB: {{Leg.STB}}</li>
-                    <li>PRC: {{Leg.PRC}}</li>
-                    <li>NTV: {{Leg.NTV}}</li>
-                </ul>
-            </div>
-            <div class="col-md-6">
-                <ul>
-
-                    <li>MOD: {{Leg.MOD}}</li>
-                    <li>SKYDD: {{Leg.SKYDD}}</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
-        <h3>{{Name}}</h3>
-    </div>
-    <div class="col-md-6">
-        <ul>
-            <li>SRV: {{TotalaStats.SRV}}</li>
-            <li>STB: {{TotalaStats.STB}}</li>
-            <li>PRC: {{TotalaStats.PRC}}</li>
-            <li>NTV: {{TotalaStats.NTV}}</li>
-            <li>MOD: {{TotalaStats.MOD}}</li>
-            <li>SKYDD: {{TotalaStats.SKYDD}}</li>
+    <div class="col-xs-2 col-md-2">
+        <ul class="stats">
+            <li>NTV: {{Robot.TotalaStats.NTV}}</li>
+            <li>MOD: {{Robot.TotalaStats.MOD}}</li>
+            <li>SKYDD: {{Robot.TotalaStats.SKYDD}}</li>
         </ul>
 
     </div>
-    <div class="col-md-6">
-        <p>{{Head.BESKRIVNING}} med {{Torso.BESKRIVNING}} och {{Leg.BESKRIVNING}}</p>
+</div>
+<div class="row sheet">
+    <div class="col-xs-12">
+        <h3>Chassi</h3>
+    </div>
+    <div class="col-xs-6">
+        <ul class="stats">
+            <li>HUVUD: {{Robot.Head.NAMN}}</li>
+            <li>BÅL: {{Robot.Torso.NAMN}}</li>
+            <li>UNDERREDE: {{Robot.Leg.NAMN}}</li>
+        </ul>
+    </div>
+    <div class="col-xs-6">
+        <p>{{Robot.Description}}</p>
     </div>
 </div>
-
+<div class="row sheet">
+    <div class="col-xs-12">
+        <h3>Moduler</h3>
+    </div>
+    <div class="col-xs-12" ng-repeat="module in Robot.Modules">
+        <div class="modules col-xs-6 col-md-4">
+            <h4>{{module.Name}}</h4>
+            <p>{{module.Description}}</p>
+            <ul ng-repeat="option in module.Options">
+                <li ng-bind-html="option | trust"></li>
+            </ul>
+        </div>
+        <div ng-if="$index%2===0 && $index != 0">
+            <div class="clearfix visible-xs-block"></div>
+        </div>
+    </div>
+</div>
+<div class="row sheet">
+    <div class="col-xs-6">
+        <h3>Program</h3>
+        <table class="table skill">
+            <tr>
+                <th>Program</th>
+                <th>PV</th>
+            </tr>
+            <tr>
+                <td>Överbelasta (srv)</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Forcera (srv)</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Bekämpa (srv)</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Infiltrera (stb)</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Retirera (stb)</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Beskjuta (stb)</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Sondera (prc)</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Datasöka (prc)</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Analysera (prc)</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Ifrågasätta (ntv)</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Interagera (ntv)</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Överbelasta (srv)</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Reparera (ntv)</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>{{Robot.Model.SpecialProgram}}</td>
+                <td>0</td>
+            </tr>
+                
+        </table>
+    </div>
+    <div class="col-xs-6">
+        <h3>Utrustning</h3>
+        <div class="modules col-xs-6 col-md-4">
+            <ul ng-repeat="art in Robot.Model.Artifacts">
+                <li ng-bind-html="art"></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-8">
+        <h2>TYPISKA MASKINER</h2>
+    </div>
+    <div class="col-xs-4">
+        <h3 class="rbt-btn" ng-click="FillRobotList(5)">BYGG FLER</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <table class="table">
+            <tr>
+                <th>DESIGNATION</th>
+                <th>SRV</th>
+                <th>STB</th>
+                <th>PRC</th>
+                <th>NTV</th>
+                <th>MOD</th>
+                <th>SKYDD</th>
+            </tr>
+            <tr ng-repeat="robot in RobotList">
+                <td>{{robot.Name}} - {{robot.CodeName}}</td>
+                <td>{{robot.TotalaStats.SRV}}</td>
+                <td>{{robot.TotalaStats.STB}}</td>
+                <td>{{robot.TotalaStats.PRC}}</td>
+                <td>{{robot.TotalaStats.NTV}}</td>
+                <td>{{robot.TotalaStats.MOD}}</td>
+                <td>{{robot.TotalaStats.SKYDD}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
 </body>
 </html>
