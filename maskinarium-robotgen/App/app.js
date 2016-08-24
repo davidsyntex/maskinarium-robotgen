@@ -5,20 +5,15 @@ app.controller("robotgenController",
 [
     "$scope", "$sce", function($scope, $sce) {
         $scope.Data = data;
-        $scope.Data.Heads = data.Heads;
-        $scope.Data.Torsos = data.Torsos;
-        $scope.Data.Legs = data.Legs;
-        $scope.Data.Modules = data.Modules;
-        $scope.Data.StartModels = data.StartModels;
 
         $scope.Robot = {};
+        $scope.Robot.ProgramPoints = 10;
         $scope.Robot.Head = $scope.Data.Heads[0];
         $scope.Robot.Torso = $scope.Data.Torsos[0];
         $scope.Robot.Leg = $scope.Data.Legs[0];
         $scope.Robot.TotalaStats = {};
         $scope.Robot.Name = "ROBiTiCA";
         $scope.Robot.Modell = {};
-        $scope.Robot.Modules = $scope.Data.Modules;
         $scope.RobotList = [];
         $scope.FillRobotList = fillRobotList;
 
@@ -49,12 +44,17 @@ app.controller("robotgenController",
             return robot;
         }
 
-        $scope.GetRandomRobot = function() {
+        $scope.GetRandomRobot = function () {
+            $scope.Robot.Programs = $scope.Data.Programs.slice();
+
             $scope.Robot.Model = getRandomStartModel();
+            $scope.Robot.Programs.push($scope.Robot.Model.SpecialProgram);
+
             $scope.Robot.Head = getRandomHead();
             $scope.Robot.Torso = getRandomTorso();
             $scope.Robot.Leg = getRandomLeg();
             calculateStats();
+            generateProgramValues();
             $scope.Robot.Modules = getRandomModules($scope.Robot.TotalaStats.MOD);
             createDisplayTexts();
         };
@@ -62,7 +62,7 @@ app.controller("robotgenController",
         (function() { $scope.GetRandomRobot(); })();
 
         $scope.GetPreviousHead = function() {
-            var index = $scope.Data.Heads.findIndex(x => x.MODELL === $scope.Robot.Head.MODELL);
+            var index = $scope.Data.Heads.findIndex(x => x.NAMN === $scope.Robot.Head.NAMN);
             index -= 1;
             if (index < 0) {
                 index = $scope.Data.Heads.length - 1;
@@ -73,7 +73,7 @@ app.controller("robotgenController",
             createDisplayTexts();
         };
         $scope.GetNextHead = function() {
-            var index = $scope.Data.Heads.findIndex(x => x.MODELL === $scope.Robot.Head.MODELL);
+            var index = $scope.Data.Heads.findIndex(x => x.NAMN === $scope.Robot.Head.NAMN);
             index += 1;
             if (index >= $scope.Data.Heads.length) {
                 index = 0;
@@ -85,7 +85,7 @@ app.controller("robotgenController",
         };
 
         $scope.GetPreviousTorso = function() {
-            var index = $scope.Data.Torsos.findIndex(x => x.MODELL === $scope.Robot.Torso.MODELL);
+            var index = $scope.Data.Torsos.findIndex(x => x.NAMN === $scope.Robot.Torso.NAMN);
             index -= 1;
             if (index < 0) {
                 index = $scope.Data.Heads.length - 1;
@@ -96,7 +96,7 @@ app.controller("robotgenController",
             createDisplayTexts();
         };
         $scope.GetNextTorso = function() {
-            var index = $scope.Data.Torsos.findIndex(x => x.MODELL === $scope.Robot.Torso.MODELL);
+            var index = $scope.Data.Torsos.findIndex(x => x.NAMN === $scope.Robot.Torso.NAMN);
             index += 1;
             if (index >= $scope.Data.Torsos.length) {
                 index = 0;
@@ -108,7 +108,7 @@ app.controller("robotgenController",
         };
 
         $scope.GetPreviousLeg = function() {
-            var index = $scope.Data.Legs.findIndex(x => x.MODELL === $scope.Robot.Leg.MODELL);
+            var index = $scope.Data.Legs.findIndex(x => x.NAMN === $scope.Robot.Leg.NAMN);
             index -= 1;
             if (index < 0) {
                 index = $scope.Data.Legs.length - 1;
@@ -119,7 +119,7 @@ app.controller("robotgenController",
             createDisplayTexts();
         };
         $scope.GetNextLeg = function() {
-            var index = $scope.Data.Legs.findIndex(x => x.MODELL === $scope.Robot.Leg.MODELL);
+            var index = $scope.Data.Legs.findIndex(x => x.NAMN === $scope.Robot.Leg.NAMN);
             index += 1;
             if (index >= $scope.Data.Legs.length) {
                 index = 0;
@@ -129,6 +129,30 @@ app.controller("robotgenController",
             calculateStats();
             createDisplayTexts();
         };
+
+        function generateProgramValues() {
+            //TODO:Viktad tilläggning av programvärden
+            //$scope.Robot.TotalaStats
+
+            $scope.Robot.ProgramPoints = 10;
+
+            $scope.Robot.Programs.forEach(function (program) {
+                program.Value = 0;
+            });
+            $scope.Robot.Programs[$scope.Robot.Programs.length-1].Value = 1;
+            $scope.Robot.ProgramPoints -= 1;
+
+            var random = 0;
+            while ($scope.Robot.ProgramPoints > 0) {
+                random = getRandomInt(0, $scope.Robot.Programs.length);
+
+                if ($scope.Robot.Programs[random].Value < 3) {
+                    $scope.Robot.Programs[random].Value += 1;
+                    $scope.Robot.ProgramPoints -= 1;
+                }
+                console.log($scope.Robot.ProgramPoints);
+            }
+        }
 
         function createDisplayTexts() {
             $scope.Robot.Name = getRandomName();
@@ -187,19 +211,19 @@ app.controller("robotgenController",
         }
 
         function getRandomStartModel() {
-            var modell = {};
+            var model = {};
             var randomStartModell = $scope.Data.StartModels[getRandomInt(0, $scope.Data.StartModels.length)];
-            modell.Name = randomStartModell.Name;
-            modell.Colour = randomStartModell.Colour[getRandomInt(0, randomStartModell.Colour.length)];
-            modell.Features = randomStartModell.Features[getRandomInt(0, randomStartModell.Features.length)];
-            modell.Voice = randomStartModell.Voice[getRandomInt(0, randomStartModell.Voice.length)];
-            modell.Personality = randomStartModell.Personality[getRandomInt(0, randomStartModell.Personality.length)];
-            modell.SecondaryFunctions = randomStartModell
+            model.Name = randomStartModell.Name;
+            model.Colour = randomStartModell.Colour[getRandomInt(0, randomStartModell.Colour.length)];
+            model.Features = randomStartModell.Features[getRandomInt(0, randomStartModell.Features.length)];
+            model.Voice = randomStartModell.Voice[getRandomInt(0, randomStartModell.Voice.length)];
+            model.Personality = randomStartModell.Personality[getRandomInt(0, randomStartModell.Personality.length)];
+            model.SecondaryFunctions = randomStartModell
                 .SecondaryFunctions[getRandomInt(0, randomStartModell.SecondaryFunctions.length)];
-            modell.Artifacts = randomStartModell.Artifacts;
-            modell.Hiearchy = randomStartModell.Hiearchy;
-            modell.SpecialProgram = randomStartModell.SpecialProgram;
-            return modell;
+            model.Artifacts = randomStartModell.Artifacts;
+            model.Hiearchy = randomStartModell.Hiearchy;
+            model.SpecialProgram = randomStartModell.SpecialProgram;
+            return model;
         }
 
         function getRandomModules(numberOfModules) {

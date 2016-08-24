@@ -1,16 +1,71 @@
 ﻿var data = {
     "StartModels": [
-    {
-        "Name": "Industri",
-        "Colour":["Svart med gula markeringar","Plåt som varit grön","Vit med nött orange text"],
-        "Voice": [" Raspig","Knastrar av damm","Trött och sliten","Skär sig ibland","Lätt skrikig"],
-        "Features": ["Skyddsgoggles", "Sotiga", "Brännmärken", "Smutsig keps", "E-cigarr"],
-        "SecondaryFunctions": ["Inbyggda verktyg", "Massproduktion", "Temperaturtålig"],
-        "Personality": ["Vresig hypokondriker", "Artig och uppgiven", "Nyfiken och burdus"],
-        "Artifacts": ["Lasersvets eller dragmaskin", "E-pack"],
-        "Hiearchy": 2,
-        "SpecialProgram":"Tillverka (srv)"
+        {
+            "Name": "Industri",
+            "Colour": ["Svart med gula markeringar", "Plåt som varit grön", "Vit med nött orange text"],
+            "Voice": [" Raspig", "Knastrar av damm", "Trött och sliten", "Skär sig ibland", "Lätt skrikig"],
+            "Features": ["Skyddsgoggles", "Sotiga", "Brännmärken", "Smutsig keps", "E-cigarr"],
+            "SecondaryFunctions": ["Inbyggda verktyg", "Massproduktion", "Temperaturtålig"],
+            "Personality": ["Vresig hypokondriker", "Artig och uppgiven", "Nyfiken och burdus"],
+            "Artifacts": ["Lasersvets eller dragmaskin", "E-pack"],
+            "Hiearchy": 2,
+            "SpecialProgram": {
+                "Name": "Tillverka",
+                "Attribute": "SRV",
+                "Value":1
+            }
         }
+    ],
+    "Programs": [
+        {
+            "Name": "Överbelasta",
+            "Attribute": "SRV",
+            "Value": 0
+        },{
+            "Name": "Forcera",
+            "Attribute": "SRV",
+            "Value": 0
+        },{
+            "Name": "Bekämpa",
+            "Attribute": "STB",
+            "Value": 0
+        },{
+            "Name": "Infiltrera",
+            "Attribute": "STB",
+            "Value": 0
+        },{
+            "Name": "Retirera",
+            "Attribute": "STB",
+            "Value": 0
+        },{
+            "Name": "Beskjuta",
+            "Attribute": "STB",
+            "Value": 0
+        },{
+            "Name": "Sondera",
+            "Attribute": "PRC",
+            "Value": 0
+        },{
+            "Name": "Datasöka",
+            "Attribute": "PRC",
+            "Value": 0
+        },{
+            "Name": "Analysera",
+            "Attribute": "PRC",
+            "Value": 0
+        },{
+            "Name": "Ifrågasätta",
+            "Attribute": "NTV",
+            "Value": 0
+        },{
+            "Name": "Interagera",
+            "Attribute": "NTV",
+            "Value": 0
+        },{
+            "Name": "Reparera",
+            "Attribute": "NTV",
+            "Value": 0
+        },
     ],
     "Torsos": [
         {

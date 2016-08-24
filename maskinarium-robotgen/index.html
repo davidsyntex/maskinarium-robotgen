@@ -230,61 +230,9 @@
                 <th>Program</th>
                 <th>PV</th>
             </tr>
-            <tr>
-                <td>Överbelasta (srv)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Forcera (srv)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Bekämpa (srv)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Infiltrera (stb)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Retirera (stb)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Beskjuta (stb)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Sondera (prc)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Datasöka (prc)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Analysera (prc)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Ifrågasätta (ntv)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Interagera (ntv)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Överbelasta (srv)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Reparera (ntv)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>{{Robot.Model.SpecialProgram}}</td>
-                <td>0</td>
+            <tr ng-repeat="program in Robot.Programs track by $index">
+                <td>{{program.Name}} ({{program.Attribute}})</td>
+                <td>{{program.Value}}</td>
             </tr>
                 
         </table>
