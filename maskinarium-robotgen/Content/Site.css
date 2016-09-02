@@ -44,7 +44,6 @@ html
 
 body
 {
-    background: url("Images/green-black-stripes-monitor-scanlines-1920x1080-59430.jpg") #24282d;
     background-color: #24282d;
     background-size: cover;
     color: #fefefe;
@@ -91,6 +90,7 @@ textarea
 h1, h2, h3
 {
     font-family: bignoodletitlingregular;
+    color: #ff8300;
 }
 
 h1
@@ -102,9 +102,10 @@ h1
 
 h2
 {
-        font-size: 2rem;
+    font-size: 2rem;
     font-weight: normal;
     margin-top: 0;
+    
 }
 
 h3
@@ -124,11 +125,17 @@ h4
     padding: 0.5rem 0;
     text-align: center;
     text-transform: uppercase;
+    color: #ff8300;
+}
+
+.robot-visuals
+{
+    position: relative;
 }
 
 .part
 {
-    margin-top: 1rem;
+    position: absolute;
 }
 
 .part-head
@@ -163,13 +170,13 @@ h4
 
 .part-image > .navigation
 {
-    bottom: 0;
+    bottom: 50%;
     cursor: pointer;
     font-size: 3rem;
     left: 0;
     position: absolute;
     text-align: center;
-    top: 0;
+    top: 25%;
     width: 15%;
     z-index: 5;
 }
@@ -178,11 +185,6 @@ h4
 {
     background-color: #fefefe;
     color: #24282d;
-}
-
-.part h3
-{
-    margin-top: 0.5rem;
 }
 
 .navigation.right

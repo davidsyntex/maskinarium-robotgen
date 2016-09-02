@@ -72,37 +72,6 @@
     <Content Include="App\data.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Images\Chassikort - B_Diderot MD34.jpg" />
-    <Content Include="Content\Images\Chassikort - B_fenzhou.jpg" />
-    <Content Include="Content\Images\Chassikort - B_ganymeda.jpg" />
-    <Content Include="Content\Images\Chassikort - B_ganymeda2.jpg" />
-    <Content Include="Content\Images\Chassikort - B_Ikea.jpg" />
-    <Content Include="Content\Images\Chassikort - B_Kleenkorp.jpg" />
-    <Content Include="Content\Images\Chassikort - B_Kleenkorp2.jpg" />
-    <Content Include="Content\Images\Chassikort - B_Modessi RK.jpg" />
-    <Content Include="Content\Images\Chassikort - B_ozkun.jpg" />
-    <Content Include="Content\Images\Chassikort - B_Pylon.jpg" />
-    <Content Include="Content\Images\Chassikort - B_Skrot.jpg" />
-    <Content Include="Content\Images\Chassikort - H_ABC0.jpg" />
-    <Content Include="Content\Images\Chassikort - H_fenix MK43.jpg" />
-    <Content Include="Content\Images\Chassikort - H_Ikea.jpg" />
-    <Content Include="Content\Images\Chassikort - H_Kordura22.jpg" />
-    <Content Include="Content\Images\Chassikort - H_Lux.jpg" />
-    <Content Include="Content\Images\Chassikort - H_MumlaPX01.jpg" />
-    <Content Include="Content\Images\Chassikort - H_Odessa_Vega.jpg" />
-    <Content Include="Content\Images\Chassikort - H_Pashin.jpg" />
-    <Content Include="Content\Images\Chassikort - H_Skrot.jpg" />
-    <Content Include="Content\Images\Chassikort - H_Solun.jpg" />
-    <Content Include="Content\Images\Chassikort - U_Ikea.jpg" />
-    <Content Include="Content\Images\Chassikort - U_Lagos MD18.jpg" />
-    <Content Include="Content\Images\Chassikort - U_LBM_Terra.jpg" />
-    <Content Include="Content\Images\Chassikort - U_LMB_DynoQ.jpg" />
-    <Content Include="Content\Images\Chassikort - U_methusalem.jpg" />
-    <Content Include="Content\Images\Chassikort - U_Necrosis2.jpg" />
-    <Content Include="Content\Images\Chassikort - U_OrionV.jpg" />
-    <Content Include="Content\Images\Chassikort - U_Prachi-gong.jpg" />
-    <Content Include="Content\Images\Chassikort - U_Rougell_M19.jpg" />
-    <Content Include="Content\Images\Chassikort - U_Skrot.jpg" />
     <Content Include="Content\Images\Chassikort---B_Diderot-MD34.png" />
     <Content Include="Content\Images\Chassikort---B_fenzhou.png" />
     <Content Include="Content\Images\Chassikort---B_ganymeda.png" />
@@ -131,7 +100,6 @@
     <Content Include="Content\Images\Chassikort---U_Prachi-gong.png" />
     <Content Include="Content\Images\Chassikort---U_Rougell_M19.png" />
     <Content Include="Content\Images\Chassikort---U_Skrot.png" />
-    <Content Include="Content\Images\green-black-stripes-monitor-scanlines-1920x1080-59430.jpg" />
     <Content Include="Content\Site.css" />
     <Content Include="index.html" />
     <Content Include="packages.config" />
@@ -946,6 +914,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="styles.css" />
+    <Content Include="Views\random_items.html" />
+    <Content Include="Views\create_robot.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -954,9 +924,7 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Modules\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

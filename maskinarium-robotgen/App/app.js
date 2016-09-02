@@ -1,7 +1,29 @@
 ﻿"use strict";
-var app = angular.module("robotgen", ["ngSanitize"]);
+var app = angular.module("robotgen", ["ngSanitize", "ngRoute"]);
 
-app.controller("robotgenController",
+app.config(["$routeProvider", "$locationProvider",
+    function ($routeProvider, $locationProvider) {
+        $locationProvider.hashPrefix("!");
+        $locationProvider.html5Mode(true);
+
+        $routeProvider.
+            when("/",
+            {
+                templateUrl: "Views/create_robot.html",
+                controller: "createRobot"
+            }).
+            when("/items",
+            {
+                templateUrl: "Views/random_items.html",
+                controller: "randomItem"
+            }).
+            otherwise({
+                redirectTo: "/"
+            });
+    }]);
+
+app.controller("randomItem", []);
+app.controller("createRobot",
 [
     "$scope", function($scope) {
         $scope.Data = data;
@@ -18,6 +40,7 @@ app.controller("robotgenController",
         $scope.RobotList = [];
         $scope.FillRobotList = fillRobotList;
         $scope.GoNuts = false;
+        $scope.Robot.Visual = {};
 
         function fillRobotList(numberOf) {
             $scope.RobotList = [];
@@ -80,6 +103,26 @@ app.controller("robotgenController",
             $scope.GoNuts = true;
             $scope.GetRandomRobot();
         };
+
+        function getModulesClass() {
+            console.log($scope.Robot.Modules.length);
+            var numberOfModules = $scope.Robot.Modules.length;
+            var modulesClass = "modules ";
+            if (numberOfModules === 1) {
+                modulesClass += "col-xs-12";
+            }
+            if (numberOfModules === 2) {
+                modulesClass += "col-xs-6";
+            }
+            if (numberOfModules === 3) {
+                modulesClass += "col-xs-4";
+            }
+            if (numberOfModules >= 4) {
+                modulesClass += "col-xs-3";
+            }
+            return modulesClass;
+        };
+
         $scope.GetPreviousHead = function() {
             var index = $scope.Data.Heads.findIndex(x => x.NAMN === $scope.Robot.Head.NAMN);
             index -= 1;
@@ -107,7 +150,7 @@ app.controller("robotgenController",
             var index = $scope.Data.Torsos.findIndex(x => x.NAMN === $scope.Robot.Torso.NAMN);
             index -= 1;
             if (index < 0) {
-                index = $scope.Data.Heads.length - 1;
+                index = $scope.Data.Torsos.length - 1;
             }
 
             $scope.Robot.Torso = $scope.Data.Torsos[index];
@@ -200,6 +243,7 @@ app.controller("robotgenController",
             $scope.Robot.Name = getRandomName();
             $scope.Robot.CodeName = getRandomCodeName();
             generateDescription();
+            $scope.Robot.Visual.ModulesClass = getModulesClass();
         };
 
         function capitalize(string) {
