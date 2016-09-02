@@ -123,11 +123,22 @@ h4
     margin-top: 2rem;
     padding: 0.5rem 0;
     text-align: center;
+    text-transform: uppercase;
 }
 
 .part
 {
     margin-top: 1rem;
+}
+
+.part-head
+{
+    z-index: 4;
+}
+
+.part-torso
+{
+    z-index: 3;
 }
 
 .part-image

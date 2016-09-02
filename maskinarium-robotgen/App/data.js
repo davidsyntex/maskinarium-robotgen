@@ -3,69 +3,382 @@
         {
             "Name": "Industri",
             "Colour": ["Svart med gula markeringar", "Plåt som varit grön", "Vit med nött orange text"],
-            "Voice": [" Raspig", "Knastrar av damm", "Trött och sliten", "Skär sig ibland", "Lätt skrikig"],
+            "Voice": ["Raspig", "Knastrar av damm", "Trött", "sliten", "Skär sig ibland", "Lätt skrikig"],
             "Features": ["Skyddsgoggles", "Sotiga", "Brännmärken", "Smutsig keps", "E-cigarr"],
-            "SecondaryFunctions": ["Inbyggda verktyg", "Massproduktion", "Temperaturtålig"],
             "Personality": ["Vresig hypokondriker", "Artig och uppgiven", "Nyfiken och burdus"],
             "Artifacts": ["Lasersvets eller dragmaskin", "E-pack"],
             "Hiearchy": 2,
             "SpecialProgram": {
                 "Name": "Tillverka",
                 "Attribute": "SRV",
-                "Value":1
+                "Value": 1
+            }
+        }, {
+            "Name": "Säkerhet",
+            "Colour": ["Grå med orange detaljer", "Vit med svarta märken", "Blå med gula detaljer"],
+            "Voice": ["Bestämd", "allvarlig", "Entonig", "sur", "Barsk", "kort", "Monoton", "burkig"],
+            "Features": ["Stora skyddsplåtar", "Jacka märkt ”NorPOL”", "Varningsljus"],
+            "Personality": ["Tålmodig pratkvarn", "Cynisk mytoman", "From och fredlig"],
+            "Artifacts": ["Chockbatong eller chockpistol", "Spärrbult"],
+            "Hiearchy": 4,
+            "SpecialProgram": {
+                "Name": "Skydda",
+                "Attribute": "SRV",
+                "Value": 1
+            }
+        }, {
+            "Name": "Protokoll",
+            "Colour": ["Beige och ljusgrå", "Svart med röda symboler", "Blekblå med gula detaljer"],
+            "Voice": ["Gnällig", " lågmäld", "eftertänksam", "Torr", "entonig", "Förnäm", "plåtig"],
+            "Features": ["Labbrock", "Mätare och dioder", "Hatt och halsduk", "Nätjack"],
+            "Personality": ["Eftertänksam och artig", "Spydig och uppgiven", "Riskbenägen och envis"],
+            "Artifacts": ["E-pack"],
+            "Hiearchy": 3,
+            "SpecialProgram": {
+                "Name": "Kalkylera",
+                "Attribute": "PRC",
+                "Value": 1
+            }
+        }, {
+            "Name": "Strid",
+            "Colour": ["Kamouflagemönster", "Mattsvart och repig", "Sandfärgad"],
+            "Voice": ["Korthuggen", "väsande", "Tonlös", "känslokall", "Bestämd", "mekanisk"],
+            "Features": ["Lysande röda ögon", "Dödskallemålning", "Medaljer och spännen"],
+            "Personality": ["Pedantisk och beskyddande", "Omtänksam och filosofisk", "Snorkig och lättretad"],
+            "Artifacts": ["Lasergevär", "E-pack", "Värmesikte eller vibrokniv"],
+            "Hiearchy": 2,
+            "SpecialProgram": {
+                "Name": "Målsöka",
+                "Attribute": "STB",
+                "Value": 1
+            }
+        }, {
+            "Name": "Kompanjon",
+            "Colour": ["Solbränd och frisk", "Mörk och mystisk", "Blek och anemisk"],
+            "Voice": ["Melodisk", "vänlig", "Förförisk", "bestämd", "Uppspelt", "glad"],
+            "Features": ["Kostym", "Grov armprotes av industrityp", "Minimala kläder i lack"],
+            "Personality": ["Flörtig och självgod", "Bekymmerslös och vänlig", "Gladlynt retsticka"],
+            "Artifacts": ["Tuggummi"],
+            "Hiearchy": 1,
+            "SpecialProgram": {
+                "Name": "Manipulera",
+                "Attribute": "NTV",
+                "Value": 1
+            }
+        }, {
+            "Name": "Samordning",
+            "Colour": ["Orange med svart text", "Blå med gula detaljer", "Sliten blankputsad krom"],
+            "Voice": ["Förmyndande", "Elektronisk", "nött,", "Stillsam", "meditativ"],
+            "Features": ["Stora skyddsplåtar", "Vaxat och polerat chassi", "Befälskeps"],
+            "Personality": ["Antenner", "Cynisk mytoman", "From och fredlig"],
+            "Artifacts": ["Laserpistol eller maserpistol", "E-pack"],
+            "Hiearchy": 5,
+            "SpecialProgram": {
+                "Name": "Koordinera",
+                "Attribute": "NTV",
+                "Value": 1
+            }
+        }, {
+            "Name": "Städ",
+            "Colour": ["Beige med röda märken", "Vit med rosa detaljer", "Klargrön med vit text"],
+            "Voice": ["Dyster", "långsam", "Irriterad", "gnisslar ibland", "Enbart pip", "gester"],
+            "Features": ["Luktar av kemikalier", "Dekaler", "Holoskylt: ”Städning pågår”"],
+            "Personality": ["Självgod kleptoman", "Obeslutsam och lättroad", "Frågvis och skojfrisk"],
+            "Artifacts": ["Gummiband"],
+            "Hiearchy": 1,
+            "SpecialProgram": {
+                "Name": "Rengöra",
+                "Attribute": "STB",
+                "Value": 1
+            }
+        }, {
+            "Name": "Skrot",
+            "Colour": ["Dold under lagret av smuts", "Sotigt grå", "Plåt missfärgad av rost och vatten"],
+            "Voice": ["Grov brytning", "Sliten", "melankolisk", "Metalliskt raspande"],
+            "Features": [
+                "Tuppkam av keramborst", "Stickad luva med oläsbar text", "Doftar avfall på långt håll",
+                "Läcker mörk sörja"
+            ],
+            "Personality": ["Omtänksam och lättstressad", "Förvirrad och frågvis", "Riskbenägen och nyfiken"],
+            "Artifacts": [],
+            "Hiearchy": 0,
+            "SpecialProgram": {
+                "Name": "Återanvända",
+                "Attribute": "PRC",
+                "Value": 1
             }
         }
     ],
+    "SecondaryFunctions": {
+        "Industri": [
+            {
+                "Name": "Inbyggda verktyg",
+                "Description":
+                    "Du har en stor samling verktyg som hjälper dig att utföra reparationer och underhåll på robotar. Om du slår för att <span class=\"skill\">reparera</span> en robot (men inte prylar) har du +1 på slaget"
+            }, {
+                "Name": "Massproduktion",
+                "Description":
+                    "Du har förmågan att massproducera prylar i högt tempo. När du <span class=\"skill\">tillverkar</span> en pryl kan du, utan extra tidsåtgång, skapa upp till T6 identiska exemplar."
+            }, {
+                "Name": "Temperaturtålig",
+                "Description":
+                    "Du tar ingen skada av extrema temperaturer. Ditt härdade chassi tål kyla ned till 100 minusgrader och upp till tusentals grader värme. Eld och mutationer som Eldsprut eller Pyrokinesi har ingen effekt på dig (men dina prylar kan förstås fortfarande brinna upp). Sekundärfunktionen skyddar inte mot energivapen"
+            }
+        ],
+        "Säkerhet": [
+            {
+                "Name": "LYDNADSSPÄRR",
+                "Description":
+                    "De flesta robotar i Helium är programmerade att lyda människor (sid 59) som <span class=\"skill\">manipulerar</span> dem. Inte du - så länge det inte handlar om din ägare är du immun mot människors kommandon. Färdigheten <span class=\"skill\">manipulera</span> har ingen effekt på dig. Andra robotar kan dock <span class=\"skill\">interagera</span> med dig normalt."
+            }, {
+                "Name": "POLISGREPP",
+                "Description":
+                    "Du är specialbyggd för att greppa och hålla fast en fiende. När du försöker ta ett grepp får du +2 på <span class=\"skill\">bekämpa</span>, men din attack gör ingen skada - i stället blir offret fasthållet enligt reglerna på sidan 95. Offret får -2 på alla försök att ta sig loss."
+            }, {
+                "Name": "SIRENER",
+                "Description":
+                    "Du kan aktivera en stark ljudsignal och ett kraftigt blinkande blått ljus. I normala fall hörs och syns signalerna i hela distriktet (om du befinner dig i Helium) eller zonsektorn (om du är ute i Zonen)."
+            }
+        ],
+        "Protokoll": [
+            {
+                "Name": "NOTARIEFUNKTION",
+                "Description":
+                    "Du är byggd för att understödja och underlätta mänsklig kommunikation. På ett möte eller i en förhandling kan du visa diagram, presentera fakta och notera allt som sägs för eftervärlden. Den människa eller mutant som <span class=\"skill\">manipulerar</span> med dig på sin sida får bonus +2"
+            }, {
+                "Name": "SAMORDNINGSSTÖD",
+                "Description":
+                    "Du är gjord för att vara ett stöd åt samordningsmodeller. Använder du <span class=\"skill\">kalkylera</span> för en handling som följer direktiven från <span class=\"skill\">koordinera</span> får du +2 på slaget. Samordningsmodellen kan uppdatera sin plan baserad på ditt <span class=\"skill\">kalkylera</span>-slag utan att avbryta sin <span class=\"skill\">koordinering</span>."
+            }, {
+                "Name": "TOLKENHET",
+                "Description":
+                    "Du har särskilda komponenter och minneskretsar för att förstå människors och andra levandes varelsers språk. Du förstår automatiskt alla främmande språk du stöter på, och du kan simultantolka åt ditt sällskap"
+            }
+        ],
+        "Strid": [
+            {
+                "Name": "LYDNADSSPÄRR",
+                "Description":
+                    "Till skillnad från andra robotar är du inte programmerad att lyda människor (sid 59) - så länge det inte är din ägare. Färdigheten <span class=\"skill\">manipulera</span> har ingen effekt på dig. Andra robotar kan dock <span class=\"skill\">interagera</span> med dig normalt"
+            }, {
+                "Name": "IR-KAMERA",
+                "Description":
+                    "Du är anpassad för krigsföring i mörka miljöer. Sekundärfunktionen låter dig se obehindrat i totalt mörker (sid 102) genom att förlita dig på IR-strålning. Du får inga avdrag för handlingar i mörker. Du får även +1 på <span class=\"skill\">sondera</span> om värmen från målet kan avgöra upptäckt"
+            }, {
+                "Name": "ROBOTANATOMI",
+                "Description":
+                    "Du har detaljerade datafiler om hur en mängd olika robottyper är konstruerade. Det låter dig effektivt slå ut just de system som du önskar. När du anfaller en annan robot får du välja vilken GE eller modul du vill skada, i stället för att slå på skadetabellen."
+            }
+        ],
+        "Kompanjon": [
+            {
+                "Name": "FÖRLEDARFUNKTION",
+                "Description":
+                    "Du har särskild programmering för att nästla in dig i ett socialt sammanhang och sedan så split och osämja. Du kan slå för <span class=\"skill\">manipulera</span> när du möter en ny grupp individer - det spelar ingen roll om de är robotar, människor eller mutanter. Om slaget lyckas kan du efter T6 timmar luska ut vilka dolda konflikter som finns i gruppen och skapa någon form av osämja. Detaljerna är upp till SL."
+            }, {
+                "Name": "MÄNSKLIG SKEPNAD",
+                "Description":
+                    "Du är skapad som en perfekt avbild av människan - på utsidan i alla fall. Du har hud, hår och ögon som ser precis ut som människans, du har till och med mänsklig kroppstemperatur. På insidan är du förstås lika mycket maskin som alla andra robotar. För att se igenom din förklädnad krävs att betraktaren granskar dig noga och lyckas med ett slag för <span class=\"skill\">speja</span> - framgång innebär att betraktaren inser att det är något onaturligt eller omänskligt med din uppenbarelse. Observera att du endast kan välja denna sekundärfunktion om du har ett människoliknande chassi (sid 15)."
+            }, {
+                "Name": "UTSEENDEFÖRÄNDRING",
+                "Description":
+                    "Du kan med blotta viljan förändra ditt utseende, till exempel ändra färg, längd, bredd och form. Om du kombinerar denna funktion med Mänsklig skepnad (ovan) kan du byta hår, hud- och ögonfärg. Även andra aspekter av ditt utseende kan ändras, från kroppsform till det kön du till synes har."
+            }
+        ],
+        "Samordning": [
+            {
+                "Name": "INSATSENHET",
+                "Description":
+                    "Du har förmågan att göra extremt snabba sannolikhetskalkyler. I praktiken innebär detta att du får slå ditt initiativslag (sid 87) med två tärningar, och välja den högsta."
+            }, {
+                "Name": "KOMMANDOKLASS",
+                "Description":
+                    "Du är en avancerad version med mer ansvar än en typisk samordningsmodell. Du har +2 i Hierarki.",
+                "Options": {
+                    "Attribute": "Hiearchy",
+                    "Value": 2
+                }
+            }, {
+                "Name": "STRIDSTAKTIK",
+                "Description":
+                    "Du är anpassad för att leda militära enheter i strid eller manöver. Alla slag för <span class=\"skill\">koordinera</span> som rör planer och order för strid sker med modifikation +1"
+            }
+        ],
+        "Skrot": [
+            {
+                "Name": "ATTRAPPMODUL",
+                "Description":
+                    "Du har en extra modul (välj valfri i kapitel 5), men den är inte äkta utan bara en attrapp. Attrappen har två funktioner - dels kan den lura andra robotar (det krävs ett lyckat <span class=\"skill\">datasöka</span> för att genomskåda den), dels kan attrappen bli den modul som blir utslagen när du tar en kritisk skada mot moduler (sid 100).",
+                "Options": {
+                    "Module": "Fake"
+                }
+            }, {
+                "Name": "HUGGVAPEN",
+                "Description":
+                    "Du har byggt in mycket närstridseffektiva och vassa huggvapen i dina armar. Dina obeväpnade attacker har vapenskada 2"
+            }, {
+                "Name": "SKRÄPKOMPANJON",
+                "Description":
+                    "Du har en liten drönarvän. Den är gjord av skrot och älskar dig över allt annat. Din kompanjon kan se ut hur som helst men är bara en bråkdel av din storlek. Den har SRV 1, STB 2, PRC 2 och NTV 1. Det enda program den kan utföra är <span class=\"skill\">sondera</span>, vilket den har PV 2 i."
+            }
+        ],
+        "Städ": [
+            {
+                "Name": "GUMMERAD",
+                "Description":
+                    "Du inklädd i grovt gummerat skydd för att tåla tufft arbete i svår terräng. Gummit ökar ditt skyddsvärde två steg, men bara mot skada från fall och närstridsattacker."
+            }, {
+                "Name": "SOPOMVANDLARE",
+                "Description":
+                    "Du har komponenter som kan omvandla avskräde och biologiskt material till energi. Processen är långsam - det tar T6 timmar att återhämta en EP, och du måste ha tillgång till sopor eller växter av något slag. "
+            }, {
+                "Name": "TRYCKLUFTSBLÅS",
+                "Description":
+                    "Du har en inbyggd tryckluftstub kopplad till en kraftig skräpblåsare som du kan rikta i valfri riktning. Du kan använda tryckluften mot ett mål på upp till nära avstånd. Slå för <span class=\"skill\">rengöra</span> - en lyckad attack gör ingen skada, men offret måste omedelbart slå för <span class=\"skill\">överbelasta</span> eller <span class=\"skill\">kämpa på</span>. Om det misslyckas mister offret sin nästa handling."
+            }
+        ],
+        "Allmänna": [
+            {
+                "Name": "ANALYSENHET",
+                "Description":
+                    "Du har särskilda sensorer som kan analysera olika material. När du lyckas med ett slag i analyserakan du avgöra om vatten, mat eller en plats innehåller smitta, gifter eller Röta."
+            }, {
+                "Name": "BATTERILADDARE",
+                "Description":
+                    "Du kan ladda upp artefakten E-pack från din interna kraftkälla. Att ladda upp ett uttömt E-pack kräver T6 EP. Du kan också ladda upp mindre batterier - det kostar bara en EP."
+            }, {
+                "Name": "DATAKOPPLING",
+                "Description":
+                    "Du samverkar särskilt väl med större datasystem. När du slår för <span class=\"skill\">datasöka</span> och är kopplad till Kollektivets dataarkiv eller mot ett annat större datasystem har du +1 på slaget. Du kan inte förflytta dig eller vara aktiv i övrigt när du använder sekundärfunktionen."
+            }, {
+                "Name": "EXTRAPANSAR",
+                "Description":
+                    "Extra skyddsplåtar har byggts på din robotkropp. De ökar ditt normala skyddsvärde med 3, men deras tyngd ger dig -1 på alla slag för <span class=\"skill\">retirera</span> som kräver snabbhet eller smidighet.",
+                "Options": {
+                    "Attribute": "SKYDD",
+                    "Value": 3
+                }
+            }, {
+                "Name": "FLYTKRAFT",
+                "Description":
+                    "Du är utrustad med lufttäta kammare och mycket tåliga kompositkuddar som blåser upp om du hamnar i vatten och gör att du inte sjunker. Om du inte vill, förstås. Du kan förutom dig själv också hålla upp till fyra människor eller cirka 300 kg flytande."
+            }, {
+                "Name": "GOURMETFUNKTION",
+                "Description":
+                    "Du kan tillreda utsökta ransoner med mat och dryck för levande varelser. Du kan rentav tillaga rötsmittad mat från Zonen så väl att Rötan försvinner. Du kan också rena rötsmittat vatten. Varje försök tar cirka en timme. Slå för <span class=\"skill\">analysera</span> – varje <span class=\"symbol\">/</span> du slår renar T6 ransoner krubb eller vatten."
+            }, {
+                "Name": "LARMFUNKTION",
+                "Description":
+                    "Du är utrustad med kraftfulla sensorer som kan uppfatta elektriska signaler i din närhet. Inom kort avstånd har du +1 på <span class=\"skill\">sondera</span> om en annan robot försöker <span class=\"skill\">infiltrera</span>."
+            }, {
+                "Name": "LASTMODELL",
+                "Description":
+                    "Du kan lastas med långt mer än en vanlig robot. När du räknar ut maximal bärförmåga (sid 25) multiplicerar du SRV med fyra, inte två.",
+                "Options": {
+                    "Attribute": "Belastning",
+                    "Value": 4
+                }
+            }, {
+                "Name": "LYFTKRAN",
+                "Description":
+                    "Ditt chassi är förstärkt med pistonger som ger dig extra lyftkraft. Alla slag för <span class=\"skill\">forcera</span> sker med +2 om ett lyft är avgörande."
+            }, {
+                "Name": "MOTORLADDARE",
+                "Description":
+                    "Du har en extra kraftkälla av något slag fastmonterad på din robotkropp. Kraftkällan kräver fossilt bränsle genom förbränning (sprit eller bensin). Det ryker och osar men en dos bränsle ger dig en EP. I Helium kan du få tag på bränsle genom att svarthandla med skrotrobotar. I Yttervärlden får du försöka förhandla med Zonens mutanter som har lärt sig konsten att destillera sprit (se <span class=\"reference\">Mutant: År Noll</span>)"
+            }, {
+                "Name": "PSILARM",
+                "Description":
+                    "Du har experimentella sensorer som gör att du kan avgöra om någon använder mentala mutationer inom kort avstånd från dig. Du kan inte avgöra vem det är, vem offret är eller vilken förmåga det rör sig om, bara notera att det sker. Exempel på förmågor du reagerar på är Mardrömmare, Mental dominans, Pyrokinesi och Telepati."
+            }, {
+                "Name": "RESERVKRAFT",
+                "Description":
+                    "Du har extra kraftceller inmonterade, vilka utökat mängden energi du kan lagra. I stället för normalt maximala 10 EP kan du lagra upp till 12 EP."
+            }, {
+                "Name": "SJÄLVFÖRSTÖRELSEMEKANISM",
+                "Description":
+                    "När du inte längre har någon annan utväg kan du spränga din kraftcell. Du totalförstörs på kuppen och avaktiveras permanent men du kanske kan rädda andra. Du väljer själv när du aktiverar mekanismen. Det kan till och med ske när du blivit permanent avaktiverad (sid 101) - men det måste då ske omedelbart. Sprängverkan från explosionen är 9 plus dina kvarvarande EP."
+            }, {
+                "Name": "SOLPANELER",
+                "Description":
+                    "Du har särskilt kraftfulla solpaneler som du kan fälla fram. Djupt under ytan gör de ingen nytta men om du befinner dig i Yttervärlden kan du en gång per dygn återvinna T6 EP om du under dagtid tillbringar några timmar under öppen himmel. Du måste vara helt inaktiv under tiden."
+            }, {
+                "Name": "STRÖMSNÅL",
+                "Description":
+                    "Ditt system är modifierat för att dra så lite ström som möjligt. Tyvärr ökar det risken för överhettning. När du aktiverar en modul (kapitel 5) rullar du en extra pryltärning. Det ökar alltså risken för överhettning – men om du rullar en eller flera <span class=\"symbol\">/</span> går det åt en mindre EP än normalt. Om du bara använde en EP för att aktivera modulen går det då inte åt någon EP alls."
+            }, {
+                "Name": "TELESKOPÖGA",
+                "Description":
+                    "Du har okulärsensorer som är mycket kraftfulla. Alla slag för <span class=\"skill\">sondera</span> där din förmåga att se detaljer är avgörande sker med modifikation +1"
+            }, {
+                "Name": "VAPENPLATTFORM",
+                "Description":
+                    "Du har ett specialfäste som snabbt och enkelt låter dig montera fast ett handeldvapen på din kropp. Monteringen går fort (en runda) och kräver inget <span class=\"skill\">reparera</span>-slag (sid 52)."
+            }, {
+                "Name": "VEVGENERATOR",
+                "Description":
+                    "Du är utrustad med en enkel generator kopplad till en handvev. Med någon timmes intensivt vevande och ett lyckat slag för <span class=\"skill\">kämpa på</span> (för människor och mutanter) eller <span class=\"skill\">överbelasta</span> (för robotar) får du en EP. När en annan robot vevar kostar ansträngningen en EP för denna robot. "
+            }, {
+                "Name": "VIRUSSKYDD",
+                "Description":
+                    "Du har särskilt kraftigt skydd mot maskinsmitta och logikparasiter. Du får modifikation +2 på slag för att skydda dig mot robotvirus (sid 103)."
+            }, {
+                "Name": "ÖVERLADDNING",
+                "Description":
+                    "Tack vare några fulkopplingar kan du pressa ditt system förbi normala säkerhetsparametrar. Du kan pressa ett tärningsslag när du använder ett program (kapitel 3) två gånger i stället för en gång. Självklart riskerar detta att orsaka skador på ditt system"
+            }
+        ]
+    },
     "Programs": [
         {
             "Name": "Överbelasta",
             "Attribute": "SRV",
             "Value": 0
-        },{
+        }, {
             "Name": "Forcera",
             "Attribute": "SRV",
             "Value": 0
-        },{
+        }, {
             "Name": "Bekämpa",
             "Attribute": "STB",
             "Value": 0
-        },{
+        }, {
             "Name": "Infiltrera",
             "Attribute": "STB",
             "Value": 0
-        },{
+        }, {
             "Name": "Retirera",
             "Attribute": "STB",
             "Value": 0
-        },{
+        }, {
             "Name": "Beskjuta",
             "Attribute": "STB",
             "Value": 0
-        },{
+        }, {
             "Name": "Sondera",
             "Attribute": "PRC",
             "Value": 0
-        },{
+        }, {
             "Name": "Datasöka",
             "Attribute": "PRC",
             "Value": 0
-        },{
+        }, {
             "Name": "Analysera",
             "Attribute": "PRC",
             "Value": 0
-        },{
+        }, {
             "Name": "Ifrågasätta",
             "Attribute": "NTV",
             "Value": 0
-        },{
+        }, {
             "Name": "Interagera",
             "Attribute": "NTV",
             "Value": 0
-        },{
+        }, {
             "Name": "Reparera",
             "Attribute": "NTV",
             "Value": 0
-        },
+        }
     ],
     "Torsos": [
         {
@@ -78,7 +391,9 @@
             "MOD": 1,
             "SKYDD": 1,
             "BESKRIVNING": "en universalbål som passar på de flesta modeller av huvud och underreden",
-            "BILD": "Content/Images/Chassikort---B_Ikea.png"
+            "BILD": "Content/Images/Chassikort---B_Ikea.png",
+            "HEADOFFSET": "-50px",
+            "LEGOFFSET": "-230px"
         },
         {
             "CHASSIDEL": "Bål",
@@ -90,7 +405,9 @@
             "MOD": 1,
             "SKYDD": 1,
             "BESKRIVNING": "en smal tub täckt av olika utbyggnader",
-            "BILD": "Content/Images/Chassikort---B_Diderot-MD34.png"
+            "BILD": "Content/Images/Chassikort---B_Diderot-MD34.png",
+            "HEADOFFSET": "-160px",
+            "LEGOFFSET": "-250px"
         },
         {
             "CHASSIDEL": "Bål",
@@ -102,7 +419,9 @@
             "MOD": 1,
             "SKYDD": 2,
             "BESKRIVNING": "en smal och kort robotbål",
-            "BILD": "Content/Images/Chassikort---B_ozkun.png"
+            "BILD": "Content/Images/Chassikort---B_ozkun.png",
+            "HEADOFFSET": "-40px",
+            "LEGOFFSET": "-270px"
         },
         {
             "CHASSIDEL": "Bål",
@@ -114,7 +433,9 @@
             "MOD": 1,
             "SKYDD": 3,
             "BESKRIVNING": "en smal och benig robotbål med synliga servon och pistonger",
-            "BILD": "Content/Images/Chassikort---B_ganymeda.png"
+            "BILD": "Content/Images/Chassikort---B_ganymeda.png",
+            "HEADOFFSET": "-40px",
+            "LEGOFFSET": "-130px"
         },
         {
             "CHASSIDEL": "Bål",
@@ -126,7 +447,9 @@
             "MOD": 1,
             "SKYDD": 2,
             "BESKRIVNING": "en robotkropp som inte går att skilja från en människas",
-            "BILD": "Content/Images/Chassikort---B_fenzhou.png"
+            "BILD": "Content/Images/Chassikort---B_fenzhou.png",
+            "HEADOFFSET": "-50px",
+            "LEGOFFSET": "-80px"
         },
         {
             "CHASSIDEL": "Bål",
@@ -138,7 +461,9 @@
             "MOD": 2,
             "SKYDD": 1,
             "BESKRIVNING": "en oproportitionerlig robotbål, byggd av skrot",
-            "BILD": "Content/Images/Chassikort---B_Skrot.png"
+            "BILD": "Content/Images/Chassikort---B_Skrot.png",
+            "HEADOFFSET": "-50px",
+            "LEGOFFSET": "-220px"
         },
         {
             "CHASSIDEL": "Bål",
@@ -150,7 +475,9 @@
             "MOD": 1,
             "SKYDD": 1,
             "BESKRIVNING": "en massiv tunnformad bål med rejäl pansar",
-            "BILD": "Content/Images/Chassikort---B_Kleenkorp.png"
+            "BILD": "Content/Images/Chassikort---B_Kleenkorp.png",
+            "HEADOFFSET": "-40px",
+            "LEGOFFSET": "-140px"
         },
         {
             "CHASSIDEL": "Bål",
@@ -162,7 +489,9 @@
             "MOD": 0,
             "SKYDD": 2,
             "BESKRIVNING": "en liten rörformad robotbål med lätt keramskal",
-            "BILD": "Content/Images/Chassikort---B_Modessi-RK.png"
+            "BILD": "Content/Images/Chassikort---B_Modessi-RK.png",
+            "HEADOFFSET": "-50px",
+            "LEGOFFSET": "-140px"
         },
         {
             "CHASSIDEL": "Bål",
@@ -174,7 +503,9 @@
             "MOD": 0,
             "SKYDD": 2,
             "BESKRIVNING": "en bred robotbål med överdimensionerade axelplåtar",
-            "BILD": "Content/Images/Chassikort---B_Pylon.png"
+            "BILD": "Content/Images/Chassikort---B_Pylon.png",
+            "HEADOFFSET": "-120px",
+            "LEGOFFSET": "-380px"
         }
     ],
     "Heads": [
@@ -419,7 +750,7 @@
             "SKYDD": 3,
             "BESKRIVNING":
                 "ett kraftfullt underrede, för att kunna stå stadigt när tunga vapen avfyras från enheten (ED209)",
-            "BILD": ""
+            "BILD": "Content/Images/Chassikort---U_Ikea.png"
         },
         {
             "CHASSIDEL": "Underrede",
@@ -443,7 +774,7 @@
             "MOD": 2,
             "SKYDD": 3,
             "BESKRIVNING": "fyrbent version av Necrosis. Aldrig släppt på öppna marknaden",
-            "BILD": ""
+            "BILD": "Content/Images/Chassikort---U_Ikea.png"
         }
     ],
     "Modules": [
@@ -643,6 +974,93 @@
                 "Utstöta ett riktat vrål som ger en människa eller mutant inom nära avstånd 1 poäng stress för varje EP du lägger.",
                 "Yla så skräckinjagande att alla levande varelser inom långt avstånd måste <span class=\"skill\">kämpa på</span> - misslyckande innebär att de tar 1 poäng stress. Ylet hörs i hela zonsektorn och kostar 1 EP."
             ]
+        }
+    ],
+    "Weapons": [
+        {
+            "Type": "Närstrid",
+            "Name": "Tillhygge",
+            "Bonus": 1,
+            "Skada": 1,
+            "Reach": "Armslängd",
+            "Kommentar": []
+        }, {
+            "Type": "Närstrid",
+            "Name": "Skrotkniv",
+            "Bonus": 1,
+            "Skada": 2,
+            "Reach": "Armslängd",
+            "Kommentar": []
+        }, {
+            "Type": "Närstrid",
+            "Name": "Skrotklubba",
+            "Bonus": 2,
+            "Skada": 1,
+            "Reach": "Armslängd",
+            "Kommentar": []
+        }, {
+            "Type": "Närstrid",
+            "Name": "Chockbatong",
+            "Bonus": 2,
+            "Skada": 1,
+            "Reach": "Armslängd",
+            "Kommentar": ["Ger T6 stress.", "Energivapen."]
+        }, {
+            "Type": "Närstrid",
+            "Name": "Lasersvets",
+            "Bonus": 2,
+            "Skada": 2,
+            "Reach": "Armslängd",
+            "Kommentar": ["Lätt vapen.", "Energivapen."]
+        }, {
+            "Type": "Närstrid",
+            "Name": "Vibrokniv",
+            "Bonus": 2,
+            "Skada": 2,
+            "Reach": "Armslängd",
+            "Kommentar": ["Ger T6 stress.", "Energivapen.", "Ignorerar pansar."]
+        }, {
+            "Type": "Närstrid",
+            "Name": "Stridssåg",
+            "Bonus": 2,
+            "Skada": 3,
+            "Reach": "Armslängd",
+            "Kommentar": ["Energivapen."]
+        }, {
+            "Type": "Avstånd",
+            "Name": "Chockpistol",
+            "Bonus": 2,
+            "Skada": 2,
+            "Reach": "Kort",
+            "Kommentar": ["Lätt vapen.", "Energivapen.", "Ger stress istället för skada."]
+        }, {
+            "Type": "Avstånd",
+            "Name": "Laserpistol",
+            "Bonus": 3,
+            "Skada": 2,
+            "Reach": "Lång",
+            "Kommentar": ["Lätt vapen.", "Energivapen."]
+        }, {
+            "Type": "Avstånd",
+            "Name": "Lasergevär",
+            "Bonus": 3,
+            "Skada": 2,
+            "Reach": "Distans",
+            "Kommentar": ["Energivapen."]
+        }, {
+            "Type": "Avstånd",
+            "Name": "Maserpistol",
+            "Bonus": 2,
+            "Skada": 3,
+            "Reach": "Kort",
+            "Kommentar": ["Lätt vapen.", "Energivapen."]
+        }, {
+            "Type": "Avstånd",
+            "Name": "Plasmakarbin",
+            "Bonus": 2,
+            "Skada": 3,
+            "Reach": "Lång",
+            "Kommentar": ["Energivapen."]
         }
     ]
 };

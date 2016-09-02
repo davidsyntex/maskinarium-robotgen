@@ -3,7 +3,7 @@ var app = angular.module("robotgen", ["ngSanitize"]);
 
 app.controller("robotgenController",
 [
-    "$scope", "$sce", function($scope, $sce) {
+    "$scope", function($scope) {
         $scope.Data = data;
 
         $scope.Robot = {};
@@ -13,9 +13,11 @@ app.controller("robotgenController",
         $scope.Robot.Leg = $scope.Data.Legs[0];
         $scope.Robot.TotalaStats = {};
         $scope.Robot.Name = "ROBiTiCA";
-        $scope.Robot.Modell = {};
+        $scope.Robot.Model = {};
+        $scope.Robot.Modules = [];
         $scope.RobotList = [];
         $scope.FillRobotList = fillRobotList;
+        $scope.GoNuts = false;
 
         function fillRobotList(numberOf) {
             $scope.RobotList = [];
@@ -44,23 +46,40 @@ app.controller("robotgenController",
             return robot;
         }
 
-        $scope.GetRandomRobot = function () {
-            $scope.Robot.Programs = $scope.Data.Programs.slice();
-
-            $scope.Robot.Model = getRandomStartModel();
-            $scope.Robot.Programs.push($scope.Robot.Model.SpecialProgram);
+        $scope.GetRandomRobot = function() {
 
             $scope.Robot.Head = getRandomHead();
             $scope.Robot.Torso = getRandomTorso();
             $scope.Robot.Leg = getRandomLeg();
-            calculateStats();
+
+            $scope.Robot.Model = getRandomStartModel($scope.GoNuts);
+            $scope.Robot.Programs = $scope.Data.Programs.slice();
+            $scope.Robot.Programs.push($scope.Robot.Model.SpecialProgram);
+
+            $scope.Robot.SecondaryFunctions = [];
+            $scope.Robot.SecondaryFunctions[0] = getFirstSecondaryFunction();
+
+            for (var i = 0; i < getRandomInt(1, 3); i++) {
+                $scope.Robot.SecondaryFunctions.push(getRandomSecondaryFunction());
+            }
             generateProgramValues();
+
+            $scope.Robot.Modules = [];
+            $scope.Robot.FakeModules = 0;
+
+            calculateStats();
+            addFakeModule();
             $scope.Robot.Modules = getRandomModules($scope.Robot.TotalaStats.MOD);
             createDisplayTexts();
+            $scope.GoNuts = false;
         };
 
         (function() { $scope.GetRandomRobot(); })();
 
+        $scope.GO_NUTS = function() {
+            $scope.GoNuts = true;
+            $scope.GetRandomRobot();
+        };
         $scope.GetPreviousHead = function() {
             var index = $scope.Data.Heads.findIndex(x => x.NAMN === $scope.Robot.Head.NAMN);
             index -= 1;
@@ -136,10 +155,10 @@ app.controller("robotgenController",
 
             $scope.Robot.ProgramPoints = 10;
 
-            $scope.Robot.Programs.forEach(function (program) {
+            $scope.Robot.Programs.forEach(function(program) {
                 program.Value = 0;
             });
-            $scope.Robot.Programs[$scope.Robot.Programs.length-1].Value = 1;
+            $scope.Robot.Programs[$scope.Robot.Programs.length - 1].Value = 1;
             $scope.Robot.ProgramPoints -= 1;
 
             var random = 0;
@@ -150,8 +169,31 @@ app.controller("robotgenController",
                     $scope.Robot.Programs[random].Value += 1;
                     $scope.Robot.ProgramPoints -= 1;
                 }
-                console.log($scope.Robot.ProgramPoints);
             }
+        }
+
+        function getFirstSecondaryFunction() {
+            return $scope.Data.SecondaryFunctions[$scope.Robot.Model
+                .Name][getRandomInt(0, $scope.Data.SecondaryFunctions[$scope.Robot.Model.Name].length)];
+        }
+
+        // Returns a random and unique Secondary Function from either the Models SFs or General SFs
+        function getRandomSecondaryFunction() {
+            var secondaryFunction = {};
+            var hasNotFoundUnique = true;
+
+            var listOfFunctions = $scope.Robot.Model.SecondaryFunctions.slice();
+            listOfFunctions.push.apply(listOfFunctions, $scope.Data.SecondaryFunctions.Allmänna);
+
+            while (hasNotFoundUnique === true) {
+                secondaryFunction = listOfFunctions[getRandomInt(0, listOfFunctions.length)];
+
+                if (!$scope.Robot.SecondaryFunctions.includes(secondaryFunction)) {
+                    hasNotFoundUnique = false;
+                }
+            }
+
+            return secondaryFunction;
         }
 
         function createDisplayTexts() {
@@ -160,9 +202,12 @@ app.controller("robotgenController",
             generateDescription();
         };
 
+        function capitalize(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+        }
+
         function generateDescription() {
-            $scope.Robot.Description = $scope.Robot.Head.BESKRIVNING.charAt(0).toUpperCase() +
-                $scope.Robot.Head.BESKRIVNING.slice(1) +
+            $scope.Robot.Description = capitalize($scope.Robot.Head.BESKRIVNING) +
                 " med " +
                 $scope.Robot.Torso.BESKRIVNING +
                 " och " +
@@ -203,7 +248,8 @@ app.controller("robotgenController",
         }
 
         function getRandomTorso() {
-            return $scope.Data.Torsos[getRandomInt(0, $scope.Data.Torsos.length)];
+            var torso = $scope.Data.Torsos[getRandomInt(0, $scope.Data.Torsos.length)];
+            return torso;
         };
 
         function getRandomLeg() {
@@ -214,31 +260,67 @@ app.controller("robotgenController",
             var model = {};
             var randomStartModell = $scope.Data.StartModels[getRandomInt(0, $scope.Data.StartModels.length)];
             model.Name = randomStartModell.Name;
-            model.Colour = randomStartModell.Colour[getRandomInt(0, randomStartModell.Colour.length)];
-            model.Features = randomStartModell.Features[getRandomInt(0, randomStartModell.Features.length)];
-            model.Voice = randomStartModell.Voice[getRandomInt(0, randomStartModell.Voice.length)];
-            model.Personality = randomStartModell.Personality[getRandomInt(0, randomStartModell.Personality.length)];
-            model.SecondaryFunctions = randomStartModell
-                .SecondaryFunctions[getRandomInt(0, randomStartModell.SecondaryFunctions.length)];
-            model.Artifacts = randomStartModell.Artifacts;
-            model.Hiearchy = randomStartModell.Hiearchy;
-            model.SpecialProgram = randomStartModell.SpecialProgram;
+
+            if ($scope.GoNuts) {
+
+                var allColours = [];
+                $scope.Data.StartModels.forEach(function(element, index, array) {
+                    Array.prototype.push.apply(allColours, element.Colour);
+                });
+                model.Colour = allColours[getRandomInt(0, allColours.length)];
+
+                console.log(allColours);
+            } else {
+
+
+                model.Colour = randomStartModell.Colour[getRandomInt(0, randomStartModell.Colour.length)];
+                model.Features = randomStartModell.Features[getRandomInt(0, randomStartModell.Features.length)];
+                model.Voice = getTwoRandomStrings(randomStartModell.Voice, "och");
+                model.Personality = randomStartModell
+                    .Personality[getRandomInt(0, randomStartModell.Personality.length)];
+                model.SecondaryFunctions = $scope.Data.SecondaryFunctions[model.Name];
+                model.Artifacts = randomStartModell.Artifacts;
+                model.Hiearchy = randomStartModell.Hiearchy;
+                model.SpecialProgram = randomStartModell.SpecialProgram;
+            }
+
+
             return model;
         }
 
         function getRandomModules(numberOfModules) {
-            var moduleList = [];
+            var moduleList = $scope.Robot.Modules.slice();
             for (var i = 0; i < numberOfModules; i++) {
                 var module = $scope.Data.Modules[getRandomInt(0, $scope.Data.Modules.length)];
-
                 while (contains(moduleList, module)) {
-                    console.log("kopia");
                     module = $scope.Data.Modules[getRandomInt(0, $scope.Data.Modules.length)];
+                }
+                if (i >= numberOfModules - 1 && $scope.Robot.FakeModules === 1) {
+                    module.Name += " (Attrapp)";
                 }
 
                 moduleList.push(module);
             }
             return moduleList;
+        }
+
+        function getTwoRandomStrings(list, separator) {
+
+            var item1 = "";
+            var item2 = "";
+
+            item1 = list[getRandomInt(0, list.length)];
+            item2 = list[getRandomInt(0, list.length)];
+
+            item1 = item1.toLowerCase();
+            item2 = item2.toLowerCase();
+
+            while (item1 === item2) {
+                item2 = list[getRandomInt(0, list.length)];
+                item2 = item2.toLowerCase();
+            }
+
+            return capitalize(item1 + " " + separator + " " + item2);
         }
 
         function contains(array, value) {
@@ -260,6 +342,8 @@ app.controller("robotgenController",
             $scope.Robot.TotalaStats.NTV = 0;
             $scope.Robot.TotalaStats.MOD = 0;
             $scope.Robot.TotalaStats.SKYDD = 0;
+            $scope.Robot.TotalaStats.Hiearchy = 0;
+            $scope.Robot.TotalaStats.Belastning = 0;
 
             $scope.Robot.TotalaStats.SRV = $scope.Robot.Head.SRV + $scope.Robot.Torso.SRV + $scope.Robot.Leg.SRV;
             $scope.Robot.TotalaStats.STB = $scope.Robot.Head.STB + $scope.Robot.Torso.STB + $scope.Robot.Leg.STB;
@@ -270,6 +354,36 @@ app.controller("robotgenController",
                 .SKYDD +
                 $scope.Robot.Torso.SKYDD +
                 $scope.Robot.Leg.SKYDD;
+
+            $scope.Robot.TotalaStats.Hiearchy = $scope.Robot.Model.Hiearchy;
+            $scope.Robot.TotalaStats.Belastning = $scope.Robot.TotalaStats.SRV * 2;
+
+            $scope.Robot.SecondaryFunctions.forEach(function(element, index, array) {
+                if (element.hasOwnProperty("Options")) {
+                    if (element.Options.hasOwnProperty("Attribute")) {
+                        $scope.Robot.TotalaStats[element.Options.Attribute] += element.Options.Value;
+                    }
+                }
+            });
+
+            $scope.Robot.SecondaryFunctions.forEach(function(element, index, array) {
+                if (element.hasOwnProperty("Options")) {
+                    if (element.Options.Attribute === "Belastning") {
+                        $scope.Robot.TotalaStats.Belastning = $scope.Robot.TotalaStats.SRV * element.Options.Value;
+                    }
+                }
+            });
+        }
+
+        function addFakeModule() {
+            $scope.Robot.SecondaryFunctions.forEach(function(element, index, array) {
+                if (element.hasOwnProperty("Options") && element.Options.hasOwnProperty("Module")) {
+                    if (element.Options.Module === "Fake") {
+                        $scope.Robot.TotalaStats.MOD += 1;
+                        $scope.Robot.FakeModules = 1;
+                    }
+                }
+            });
         }
     }
 ]);
