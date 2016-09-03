@@ -393,7 +393,7 @@
             "BESKRIVNING": "en universalbål som passar på de flesta modeller av huvud och underreden",
             "BILD": "Content/Images/Chassikort---B_Ikea.png",
             "HEADOFFSET": "-50px",
-            "LEGOFFSET": "-230px"
+            "LEGOFFSET": "-200px"
         },
         {
             "CHASSIDEL": "Bål",
@@ -406,8 +406,8 @@
             "SKYDD": 1,
             "BESKRIVNING": "en smal tub täckt av olika utbyggnader",
             "BILD": "Content/Images/Chassikort---B_Diderot-MD34.png",
-            "HEADOFFSET": "-160px",
-            "LEGOFFSET": "-250px"
+            "HEADOFFSET": "-140px",
+            "LEGOFFSET": "-100px"
         },
         {
             "CHASSIDEL": "Bål",
@@ -421,7 +421,7 @@
             "BESKRIVNING": "en smal och kort robotbål",
             "BILD": "Content/Images/Chassikort---B_ozkun.png",
             "HEADOFFSET": "-40px",
-            "LEGOFFSET": "-270px"
+            "LEGOFFSET": "-200px"
         },
         {
             "CHASSIDEL": "Bål",
@@ -435,7 +435,7 @@
             "BESKRIVNING": "en smal och benig robotbål med synliga servon och pistonger",
             "BILD": "Content/Images/Chassikort---B_ganymeda.png",
             "HEADOFFSET": "-40px",
-            "LEGOFFSET": "-130px"
+            "LEGOFFSET": "-100px"
         },
         {
             "CHASSIDEL": "Bål",
@@ -449,7 +449,7 @@
             "BESKRIVNING": "en robotkropp som inte går att skilja från en människas",
             "BILD": "Content/Images/Chassikort---B_fenzhou.png",
             "HEADOFFSET": "-50px",
-            "LEGOFFSET": "-80px"
+            "LEGOFFSET": "-20px"
         },
         {
             "CHASSIDEL": "Bål",
@@ -463,7 +463,7 @@
             "BESKRIVNING": "en oproportitionerlig robotbål, byggd av skrot",
             "BILD": "Content/Images/Chassikort---B_Skrot.png",
             "HEADOFFSET": "-50px",
-            "LEGOFFSET": "-220px"
+            "LEGOFFSET": "-200px"
         },
         {
             "CHASSIDEL": "Bål",
@@ -477,7 +477,7 @@
             "BESKRIVNING": "en massiv tunnformad bål med rejäl pansar",
             "BILD": "Content/Images/Chassikort---B_Kleenkorp.png",
             "HEADOFFSET": "-40px",
-            "LEGOFFSET": "-140px"
+            "LEGOFFSET": "-120px"
         },
         {
             "CHASSIDEL": "Bål",
@@ -491,7 +491,7 @@
             "BESKRIVNING": "en liten rörformad robotbål med lätt keramskal",
             "BILD": "Content/Images/Chassikort---B_Modessi-RK.png",
             "HEADOFFSET": "-50px",
-            "LEGOFFSET": "-140px"
+            "LEGOFFSET": "-100px"
         },
         {
             "CHASSIDEL": "Bål",
@@ -504,8 +504,8 @@
             "SKYDD": 2,
             "BESKRIVNING": "en bred robotbål med överdimensionerade axelplåtar",
             "BILD": "Content/Images/Chassikort---B_Pylon.png",
-            "HEADOFFSET": "-120px",
-            "LEGOFFSET": "-380px"
+            "HEADOFFSET": "-100px",
+            "LEGOFFSET": "-250px"
         }
     ],
     "Heads": [
