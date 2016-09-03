@@ -9,12 +9,12 @@ app.config(["$routeProvider", "$locationProvider",
         $routeProvider.
             when("/",
             {
-                templateUrl: "Views/create_robot.html",
+                templateUrl: "create_robot.html",
                 controller: "createRobot"
             }).
             when("/items",
             {
-                templateUrl: "Views/random_items.html",
+                templateUrl: "random_items.html",
                 controller: "randomItem"
             }).
             otherwise({
