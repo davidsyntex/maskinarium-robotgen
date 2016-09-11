@@ -70,6 +70,7 @@
   <ItemGroup>
     <Content Include="App\app.js" />
     <Content Include="App\data-genlab.js" />
+    <Content Include="App\data-zonen.js" />
     <Content Include="App\data.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -103,6 +104,7 @@
     <Content Include="Content\Images\Chassikort---U_Rougell_M19.png" />
     <Content Include="Content\Images\Chassikort---U_Skrot.png" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\zon.css" />
     <Content Include="genlab_moten.html" />
     <Content Include="index.html" />
     <Content Include="packages.config" />
@@ -885,6 +887,7 @@
     <Content Include="Content\Fonts\ArcherPro-Medium.woff" />
     <Content Include="Content\Fonts\FuturaStd-Book.woff" />
     <Content Include="Content\Fonts\workingsignstfb_gdi.woff" />
+    <Content Include="zonen.html" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

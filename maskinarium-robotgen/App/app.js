@@ -1,13 +1,13 @@
 ﻿"use strict";
-var app = angular.module("robotgen", ["ngSanitize", "ngRoute"]);
+var app = angular.module("robotgen", ["ngSanitize"]);
 
 app.controller("appController",
 [
     "$scope", function($scope) {
         $scope.Links = [
             {
-                name: "Home",
-                path: "index.html"
+                name: "Zonen",
+                path: "zonen.html"
             }, {
                 name: "Robot",
                 path: "robot.html"
@@ -19,6 +19,7 @@ app.controller("appController",
                 path: "genlab_moten.html"
             }
         ];
+        $scope.Version = "Pracownik fabryki wersja systemu głównego 0.0.4a";
     }
 ]);
 
@@ -31,12 +32,63 @@ app.controller("itemController",
 app.controller("genlabController",
 [
     "$scope", function($scope) {
+
+        //TODO: REGEX the {hot} and T6. Make it add the numbers together
         $scope.Data = genlabData;
-        $scope.Meeting = {};
-        $scope.RollThreat = function() {
-             $scope.Meeting.ThreatLevel = RollMutantDieSuccessesOnly($scope.Meeting.Terrain.threat);
-            $scope.Meeting.Place = $scope.Meeting.Terrain.name;
+        $scope.Meeting = { Terrain: {} };
+        $scope.Meeting.ThreatLevel = 0;
+
+        $scope.RollRandomThreat = function() {
+            $scope.Meeting.Terrain = getRandomFromList($scope.Data.terrain);
+            $scope.RollThreat();
         };
+        $scope.RollThreat = function() {
+            // Reset Meeting desc
+            $scope.Meeting.Description = "";
+            $scope.Meeting.Number = 0;
+            // Generate Threat
+            $scope.Meeting.ThreatLevel = RollMutantDieSuccessesOnly($scope.Meeting.Terrain.threat);
+            $scope.Meeting.Place = $scope.Meeting.Terrain.name;
+
+            if ($scope.Meeting.ThreatLevel > 0) {
+                var randomMeeting = getRandomMeeting();
+                $scope.Meeting.Description = randomMeeting.description;
+                $scope.Meeting.Number = randomMeeting.number;
+                console.log(randomMeeting);
+                var res = "";
+                if ($scope.Meeting.Description.indexOf("T6") !== -1) {
+
+                    res = $scope.Meeting.Description.replace("T6", (getRandomInt(0, 6) + 1) + "");
+                    $scope.Meeting.Description = res;
+                }
+
+                if ($scope.Meeting.Description.indexOf("{hot}") !== -1) {
+
+                    res = $scope.Meeting.Description.replace("{hot}", $scope.Meeting.ThreatLevel);
+                    $scope.Meeting.Description = res;
+                }
+            }
+        };
+
+        function getRandomMeeting() {
+            var meetings = $scope.Meeting.Terrain.meetings;
+            var randomMeetingNumber = getRandomFromList(meetings);
+            var randomMeeting = {};
+
+            $scope.Data.meetings.forEach(function(meeting) {
+                if (meeting.number === randomMeetingNumber) {
+                    randomMeeting = meeting;
+                }
+            });
+
+            return randomMeeting;
+        }
+    }
+]);
+app.controller("zonController",
+[
+    "$scope", function($scope) {
+        $scope.Data = zonenData;
     }
 ]);
 app.controller("robotController",
@@ -123,18 +175,18 @@ app.controller("robotController",
         function getModulesClass() {
             console.log($scope.Robot.Modules.length);
             var numberOfModules = $scope.Robot.Modules.length;
-            var modulesClass = "modules ";
+            var modulesClass = "modules col-xs-12 ";
             if (numberOfModules === 1) {
-                modulesClass += "col-xs-12";
+                modulesClass += "col-md-12";
             }
             if (numberOfModules === 2) {
-                modulesClass += "col-xs-6";
+                modulesClass += "col-md-6";
             }
             if (numberOfModules === 3) {
-                modulesClass += "col-xs-4";
+                modulesClass += "col-md-4";
             }
             if (numberOfModules >= 4) {
-                modulesClass += "col-xs-3";
+                modulesClass += "col-md-3";
             }
             return modulesClass;
         };
@@ -372,17 +424,6 @@ app.controller("robotController",
             return capitalize(item1 + " " + separator + " " + item2);
         }
 
-        function contains(array, value) {
-            var doesContain = false;
-            for (var i = 0, length = array.length; i < length; i++) {
-                if (array[i] === value) {
-                    doesContain = true;
-                    break;
-                }
-            }
-
-            return doesContain;
-        }
 
         function calculateStats() {
             $scope.Robot.TotalaStats.SRV = 0;
@@ -457,17 +498,22 @@ function getRandomLetter() {
     return alphabet.charAt(getRandomInt(0, alphabet.length));
 }
 
+function getRandomFromList(list) {
+    return list[getRandomInt(0, list.length)];
+}
+
 function RollMutantDieSuccessesOnly(numberOfDice) {
     var successes = 0;
     var roll = -1;
     for (var i = 0; i < numberOfDice; i++) {
-        roll = getRandomInt(0, 7);
+        roll = getRandomInt(0, 6) + 1;
         if (roll === 6) {
             successes += 1;
         }
     }
     return successes;
 }
+
 function RollMutantDicesddfae(numberOfDice, pressa) {
     pressa = pick(pressa, false);
     var rolls = [];
@@ -478,4 +524,16 @@ function RollMutantDicesddfae(numberOfDice, pressa) {
 
 function pick(arg, def) {
     return (typeof arg == "undefined" ? def : arg);
+}
+
+function contains(array, value) {
+    var doesContain = false;
+    for (var i = 0, length = array.length; i < length; i++) {
+        if (array[i] === value) {
+            doesContain = true;
+            break;
+        }
+    }
+
+    return doesContain;
 }

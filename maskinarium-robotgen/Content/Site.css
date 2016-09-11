@@ -45,6 +45,7 @@ html
 body
 {
     background-color: #24282d;
+    -ms-background-size: cover;
     background-size: cover;
     color: #fefefe;
     font-family: "ArcherPro-Medium";
@@ -87,10 +88,10 @@ textarea
     max-width: 280px;
 }
 
-h1, h2, h3
+h1, h2, h3,h4
 {
     font-family: bignoodletitlingregular;
-    color: #ff8300;
+    color: #0077bd;
 }
 
 h1
@@ -125,7 +126,7 @@ h4
     padding: 0.5rem 0;
     text-align: center;
     text-transform: uppercase;
-    color: #ff8300;
+    
 }
 
 .robot-visuals
@@ -273,6 +274,6 @@ h4
 .modules ul li
 {
     overflow: visible;
-    padding-left: 0rem;
+    padding-left: 0;
     position: relative;
 }

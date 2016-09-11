@@ -31,7 +31,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">MUTANT</a>
+                <a class="navbar-brand" href="index.html">MUTANT</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -44,37 +44,94 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
+    <div class="container">
+        <p class="computah">
+            {{Version}}
+        </p>
+    </div>
 </div>
 <div ng-controller="genlabController" class="container">
     <h1>GENLAB ALFA - MÖTEN GEN</h1>
-    <p class="computah">
-        Pracownik fabryki wersja systemu głównego
-        0.0.3a
-    </p>
     <div class="row">
-        <div class="col-xs-4 form">
-            <select
-                class="form-control"
-                ng-model="Meeting.Terrain"
-                ng-options="ter.name for ter in Data.terrain">>
+        <div class="col-xs-12"><p>
+    För varje påbörjad timme som RP är ute på vandring i dalen slår du ett hotslag.
+    2km/h i vild fjällterräng.
+    4km/h på vandringsled.
+    Dubbla hastighet = Kämpa på.
+    Du kan slå oftare om du vill. Hotslaget är ett antal grundtärningar lika med hotnivån, som avgörs av terrängen:
+</p></div>
+        <div class="col-xs-12 col-md-4 form">
+            <select class="form-control"
+                    ng-model="Meeting.Terrain"
+                    ng-options="ter.name for ter in Data.terrain">
+                >
             </select>
         </div>
-        <div class="col-xs-4">
-            <h3 class="rbt-btn" ng-click="RollThreat()">Hotslag</h3>
+        <div class="col-xs-12 col-md-4">
+            <h2 class="rbt-btn" ng-click="RollThreat()">Hotslag</h2>
         </div>
-        <div class="col-xs-4">
-            <h3 class="rbt-btn" ng-click="RollThreat()">Slumpat Hotslag</h3>
+        <div class="col-xs-12 col-md-4">
+            <h2 class="rbt-btn" ng-click="RollRandomThreat()">Slumpat Hotslag</h2>
         </div>
     </div>
+    <div class="row" ng-show="Meeting.ThreatLevel > 0">
+        <div class="col-xs-12">
+            <h3>Möte</h3>
+            <p>Plats: {{Meeting.Place}}</p>
+            <p>Antal hot: {{Meeting.ThreatLevel}}</p>
+            <p>Vad för hot: {{Meeting.Description}}</p>
+        </div>
+    </div>
+<div class="row" ng-show="Meeting.ThreatLevel === 0">
+        <div class="col-xs-12">
+            <h3>Inget möte</h3>
+            <p>Plats: {{Meeting.Place}}</p>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-xs-12">
-            <h4>Hotslag</h4>
-            <h4>{{Meeting.ThreatLevel}}</h4>
-            <h4>{{Meeting.Place}}</h4>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3>Variera slumpmöten</h3>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Svårt dilemma</h4>
+                        <p>
+                            Introducera ett hot, men samtidigt något som RP gärna vill ha. Spelarna måste fundera om det är värt att stanna och slåss eller bättre att lägga benen på ryggen.
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>En RP i trubbel</h4>
+                        <p>En av rollpersonerna råkar extra illa ut, kanske fångas han in eller fastnar någonstans. De andra måste välja om de ska riskera livet för att hjälpa honom.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>En SLP i trubbel. </h4>
+                        <p>
+                            Som ovan, men det är en SLP som drabbas - antingen någon som ingår i RP:s sällskap eller någon som de ser på håll. Helst bör detta vara en SLP som RP har en relation till och bryr sig om.
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Olycksbådande spår</h4>
+                        <p>RP ser spår av något monster eller fenomen, och inser att hotet finns i närheten. Bra sätt att bygga upp spänning. Du kan skapa spänning genom att sedan kasta in ett helt annat hot än det som de trodde att de skulle möta - eller båda två.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Ryktet går</h4>
+                        <p>
+                            En variant på ovanstående. RP får höra en historia om ett monster i närheten, i stället för att själva stöta på det direkt.
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Dubbelt upp</h4>
+                        <p>
+                            Kombinera två slumpmöten. När spelarna just tror att de har allt under kontroll kastar du i hot nummer två!
+                        </p>
+                    </div>
+                </div>
         </div>
     </div>
 </div>
-    <!--
+<!--
 <div class="row">
     <div class="col-xs-12 col-md-6 robot-visuals" ng-style="{'height':calc(100%-Robot.Torso.HEADOFFSET-Robot.Torso.LEGOFFSET)}">
         {{Robot.VisualHeight}}
