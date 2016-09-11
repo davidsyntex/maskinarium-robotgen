@@ -1,0 +1,277 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>RoBoT GeN</title>
+    <link href="Content/bootstrap.css" rel="stylesheet">
+    <link href="Content/Site.css" rel="stylesheet">
+    <script src="Scripts/modernizr-2.6.2.js">
+
+
+    
+    </script>
+    <script src="Scripts/angular.js" type="text/javascript">
+
+
+    
+    </script>
+    <script src="Scripts/angular-sanitize.min.js" type="text/javascript">
+
+
+    
+    </script>
+    <script src="Scripts/angular-route.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-1.10.2.min.js">
+
+
+    
+    </script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/name_generator.js">
+
+
+    
+    </script>
+    <script src="Scripts/NameSets/robot_set.js">
+
+
+    
+    </script>
+    <script src="Scripts/NameSets/mittlandare_set.js">
+
+
+    
+    </script>
+    <script src="App/app.js">
+
+
+    
+    </script>
+    <script src="App/data.js">
+
+
+    
+    </script>
+</head>
+<body class="container" ng-app="robotgen">
+<div ng-controller="appController">
+    <ul>
+        <li ng-repeat="link in Links">
+            <a href="{{link.path}}">{{link.name}}</a>
+        </li>
+    </ul>
+</div>
+<div ng-controller="robotController">
+<h1>RANDOM SKROT OCH ARTEFAKTER</h1>
+<p class="computah">Pracownik fabryki wersja systemu głównego 0.0.2a</p>
+
+<div class="row">
+    <div class="col-xs-6">
+        <h3 class="rbt-btn" ng-click="GetRandomRobot()">Skapa maskin</h3>
+    </div>
+
+    <div class="col-xs-6">
+        <h3 class="rbt-btn" ng-click="GO_NUTS()">GO NUTS!!!½1</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-md-6 robot-visuals" ng-style="{'height':calc(100%-Robot.Torso.HEADOFFSET-Robot.Torso.LEGOFFSET)}">
+        {{Robot.VisualHeight}}
+        <div class="part part-head part-image">
+            <div>
+                <img class="part-head-image" src="{{Robot.Head.BILD}}" alt="{{Robot.Head.NAMN}}"/>
+            </div>
+            <div class="navigation left" ng-click="GetPreviousHead()">
+                <span>[&#x2039;]</span>
+            </div>
+            <div class="navigation right" ng-click="GetNextHead()">
+                <span>[&#x203a;]</span>
+            </div>
+        </div>
+
+        <div class="part part-torso part-image" ng-style="{'margin-top': Robot.Torso.HEADOFFSET}">
+            <div>
+                <img src="{{Robot.Torso.BILD}}" alt="{{Robot.Torso.NAMN}}"/>
+            </div>
+            <div class="navigation left" ng-click="GetPreviousTorso()">
+                <span>[&#x2039;]</span>
+            </div>
+            <div class="navigation right" ng-click="GetNextTorso()">
+                <span>[&#x203a;]</span>
+            </div>
+        </div>
+
+        <div class="part part-image part-leg" ng-style="{'margin-top': Robot.Torso.LEGOFFSET}">
+            <div>
+                <img src="{{Robot.Leg.BILD}}" alt="{{Robot.Leg.NAMN}}"/>
+            </div>
+            <div class="navigation left" ng-click="GetPreviousLeg()">
+                <span>[&#x2039;]</span>
+            </div>
+            <div class="navigation right" ng-click="GetNextLeg()">
+                <span>[&#x203a;]</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-md-6 sheet">
+
+        <div class="row">
+            <div class="col-xs-12 row">
+                <div class="col-xs-12">
+                    <h2>Designation: {{Robot.Name}} - {{Robot.CodeName}}</h2>
+                </div>
+                <div class="col-xs-9">
+                    <ul class="stats">
+                        <li>Modell: {{Robot.Model.Name}}</li>
+                        <li>Färg: {{Robot.Model.Colour}}</li>
+                        <li>Röst: {{Robot.Model.Voice}}</li>
+                        <li>Kännetecken: {{Robot.Model.Features}}</li>
+                        <li>Personlighet: {{Robot.Model.Personality}}</li>
+                        <li>Hierarki: {{Robot.TotalaStats.Hiearchy}}</li>
+                    </ul>
+                </div>
+                <div class="col-xs-3 col-md-3">
+                    <ul class="stats">
+                        <li>SRV: {{Robot.TotalaStats.SRV}}</li>
+                        <li>STB: {{Robot.TotalaStats.STB}}</li>
+                        <li>PRC: {{Robot.TotalaStats.PRC}}</li>
+                        <li>NTV: {{Robot.TotalaStats.NTV}}</li>
+                        <li>MOD: {{Robot.TotalaStats.MOD}}</li>
+                        <li>SKYDD: {{Robot.TotalaStats.SKYDD}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 sheet">
+
+                <h3>Chassi</h3>
+
+                <ul class="stats">
+                    <li>HUVUD: {{Robot.Head.NAMN}}</li>
+                    <li>BÅL: {{Robot.Torso.NAMN}}</li>
+                    <li>UNDERREDE: {{Robot.Leg.NAMN}}</li>
+                </ul>
+
+                <p>{{Robot.Description}}</p>
+
+            </div>
+        </div>
+        <div class="col-xs-12 row">
+
+            <h3>Program</h3>
+            <table class="table skill">
+                <tr>
+                    <th>Program</th>
+                    <th>PV</th>
+                </tr>
+                <tr ng-repeat="program in Robot.Programs track by $index">
+                    <td>{{program.Name}} ({{program.Attribute}})</td>
+                    <td>{{program.Value}}</td>
+                </tr>
+
+            </table>
+
+        </div>
+    </div>
+
+</div>
+<div class="row sheet">
+    <div class="col-xs-12">
+        <h3>Moduler</h3>
+    </div>
+    <div class="col-xs-12" ng-repeat="module in Robot.Modules track by $index">
+        <div id="modules" ng-class="Robot.Visual.ModulesClass">
+            <h4>{{module.Name}}</h4>
+            <p>{{module.Description}}</p>
+            <ul ng-repeat="option in module.Options">
+                <li ng-bind-html="option | trust"></li>
+            </ul>
+        </div>
+        <div ng-if="$index%(Robot.Visual.ModulesClassNumber)===0 && $index != 0">
+            <div class="clearfix visible-xs-block"></div>
+        </div>
+    </div>
+</div>
+<div class="row sheet">
+
+    <div class="col-xs-6">
+        <h3>Sekundärfunktioner</h3>
+        <div class="col-xs-12" ng-repeat="secondaryFunction in Robot.SecondaryFunctions track by $index">
+            <div class="modules">
+                <h4>{{secondaryFunction.Name}}</h4>
+                <p ng-bind-html="secondaryFunction.Description | trust"></p>
+            </div>
+            <div ng-if="$index%2===0 && $index != 0">
+                <div class="clearfix visible-xs-block"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <h3>Utrustning</h3>
+        <ul class="stats">
+            <li>Belastning: {{Robot.Model.Artifacts.length}} / {{Robot.TotalaStats.Belastning}}</li>
+        </ul>
+
+        <ul ng-repeat="art in Robot.Model.Artifacts">
+            <li ng-bind-html="art"></li>
+        </ul>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-8">
+        <h2>TYPISKA MASKINER</h2>
+    </div>
+    <div class="col-xs-4">
+        <h3 class="rbt-btn" ng-click="FillRobotList(5)">BYGG FLER</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <table class="table">
+            <tr>
+                <th>DESIGNATION</th>
+                <th>SRV</th>
+                <th>STB</th>
+                <th>PRC</th>
+                <th>NTV</th>
+                <th>MOD</th>
+                <th>SKYDD</th>
+            </tr>
+            <tr ng-repeat="robot in RobotList">
+                <td>{{robot.Name}} - {{robot.CodeName}}</td>
+                <td>{{robot.TotalaStats.SRV}}</td>
+                <td>{{robot.TotalaStats.STB}}</td>
+                <td>{{robot.TotalaStats.PRC}}</td>
+                <td>{{robot.TotalaStats.NTV}}</td>
+                <td>{{robot.TotalaStats.MOD}}</td>
+                <td>{{robot.TotalaStats.SKYDD}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<table class="table">
+    <tr>
+        <th>Vapen</th>
+        <th>Bonus</th>
+        <th>Skada</th>
+        <th>Räckvidd</th>
+        <th>Kommentar</th>
+    </tr>
+    <tr ng-repeat="vapen in Data.Weapons track by $index">
+        <td>{{vapen.Name}}</td>
+        <td>+{{vapen.Bonus}}</td>
+        <td>{{vapen.Skada}}</td>
+        <td>{{vapen.Reach}}</td>
+        <td>
+            <span ng-repeat="kommentar in vapen.Kommentar">{{kommentar}} </span>
+        </td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

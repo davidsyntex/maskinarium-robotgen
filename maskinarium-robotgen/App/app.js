@@ -1,29 +1,45 @@
 ﻿"use strict";
 var app = angular.module("robotgen", ["ngSanitize", "ngRoute"]);
 
-app.config(["$routeProvider", "$locationProvider",
-    function ($routeProvider, $locationProvider) {
-        $locationProvider.hashPrefix("!");
-        $locationProvider.html5Mode(true);
-
-        $routeProvider.
-            when("/",
+app.controller("appController",
+[
+    "$scope", function($scope) {
+        $scope.Links = [
             {
-                templateUrl: "create_robot.html",
-                controller: "createRobot"
-            }).
-            when("/items",
-            {
-                templateUrl: "random_items.html",
-                controller: "randomItem"
-            }).
-            otherwise({
-                redirectTo: "/"
-            });
-    }]);
+                name: "Home",
+                path: "index.html"
+            }, {
+                name: "Robot",
+                path: "robot.html"
+            }, {
+                name: "Prylar",
+                path: "prylar.html"
+            }, {
+                name: "Genlab Alfa",
+                path: "genlab_moten.html"
+            }
+        ];
+    }
+]);
 
-app.controller("randomItem", []);
-app.controller("createRobot",
+app.controller("itemController",
+[
+    "$scope", function($scope) {
+
+    }
+]);
+app.controller("genlabController",
+[
+    "$scope", function($scope) {
+        $scope.Data = genlabData;
+        $scope.Meeting = {};
+        $scope.RollThreat = function() {
+             $scope.Meeting.ThreatLevel = RollMutantDieSuccessesOnly($scope.Meeting.Terrain.threat);
+            $scope.Meeting.Place = $scope.Meeting.Terrain.name;
+        };
+    }
+]);
+app.controller("robotController",
 [
     "$scope", function($scope) {
         $scope.Data = data;
@@ -259,17 +275,6 @@ app.controller("createRobot",
                 ".";
         };
 
-        function getRandomInt(min, max) {
-            min = Math.ceil(min);
-            max = Math.floor(max);
-            return Math.floor(Math.random() * (max-- - min)) + min;
-        }
-
-        function getRandomLetter() {
-            var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ";
-            return alphabet.charAt(getRandomInt(0, alphabet.length));
-        }
-
         function getRandomName() {
             var name = generate_name("robot");
             if (name.charAt(name.lastIndex) === "-") {
@@ -440,3 +445,37 @@ app.filter("trust",
         };
     }
 ]);
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max-- - min)) + min;
+}
+
+function getRandomLetter() {
+    var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ";
+    return alphabet.charAt(getRandomInt(0, alphabet.length));
+}
+
+function RollMutantDieSuccessesOnly(numberOfDice) {
+    var successes = 0;
+    var roll = -1;
+    for (var i = 0; i < numberOfDice; i++) {
+        roll = getRandomInt(0, 7);
+        if (roll === 6) {
+            successes += 1;
+        }
+    }
+    return successes;
+}
+function RollMutantDicesddfae(numberOfDice, pressa) {
+    pressa = pick(pressa, false);
+    var rolls = [];
+    for (var i = 0; i < numberOfDice; i++) {
+        rolls.push();
+    }
+}
+
+function pick(arg, def) {
+    return (typeof arg == "undefined" ? def : arg);
+}

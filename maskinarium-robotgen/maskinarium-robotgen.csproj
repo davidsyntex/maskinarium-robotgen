@@ -69,9 +69,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\app.js" />
+    <Content Include="App\data-genlab.js" />
     <Content Include="App\data.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\genlab.css" />
     <Content Include="Content\Images\Chassikort---B_Diderot-MD34.png" />
     <Content Include="Content\Images\Chassikort---B_fenzhou.png" />
     <Content Include="Content\Images\Chassikort---B_ganymeda.png" />
@@ -101,8 +103,10 @@
     <Content Include="Content\Images\Chassikort---U_Rougell_M19.png" />
     <Content Include="Content\Images\Chassikort---U_Skrot.png" />
     <Content Include="Content\Site.css" />
+    <Content Include="genlab_moten.html" />
     <Content Include="index.html" />
     <Content Include="packages.config" />
+    <Content Include="robot.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -913,8 +917,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="random_items.html" />
-    <Content Include="create_robot.html" />
+    <Content Include="prylar.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
