@@ -60,7 +60,7 @@
     "Goddamphon",
     "Gundanen V",
     "EVE",
-    "HARLIE",
+    "CHARLIE",
     "S.A.M.",
     "BEN",
     "R.I.C. 2.0",

@@ -37,6 +37,7 @@ app.controller("genlabController",
         $scope.Data = genlabData;
         $scope.Meeting = { Terrain: {} };
         $scope.Meeting.ThreatLevel = 0;
+        var matchers = ["{expression}", "{artifact}"];
 
         $scope.RollRandomThreat = function() {
             $scope.Meeting.Terrain = getRandomFromList($scope.Data.terrain);
@@ -53,22 +54,76 @@ app.controller("genlabController",
             if ($scope.Meeting.ThreatLevel > 0) {
                 var randomMeeting = getRandomMeeting();
                 $scope.Meeting.Description = randomMeeting.description;
+                $scope.Meeting.Expression = randomMeeting.expression;
                 $scope.Meeting.Number = randomMeeting.number;
-                console.log(randomMeeting);
-                var res = "";
-                if ($scope.Meeting.Description.indexOf("T6") !== -1) {
 
-                    res = $scope.Meeting.Description.replace("T6", (getRandomInt(0, 6) + 1) + "");
-                    $scope.Meeting.Description = res;
+
+                if ($scope.Meeting.Description.indexOf("{expression}") !== -1) {
+                    if (Array.isArray($scope.Meeting.Expression)) {
+                        $scope.Meeting.Expression.forEach(function(expr) {
+                            $scope.Meeting.Description = $scope.Meeting.Description
+                                .replace("{expression}",
+                                    stringToInt(expr,
+                                        $scope.Meeting
+                                        .ThreatLevel));
+                        });
+                    } else {
+                        $scope.Meeting.Description = $scope.Meeting.Description
+                            .replace("{expression}",
+                                stringToInt($scope.Meeting.Expression,
+                                    $scope.Meeting
+                                    .ThreatLevel));
+                    }
+                }
+                if ($scope.Meeting.Description.indexOf("{artifact}") !== -1) {
+                    var artifact = getRandomFromList(generalData.artifacts);
+                    console.log(artifact);
+                    $scope.Meeting.Description = $scope.Meeting.Description
+                            .replace("{artifact}",
+                                artifact.name);
                 }
 
-                if ($scope.Meeting.Description.indexOf("{hot}") !== -1) {
 
-                    res = $scope.Meeting.Description.replace("{hot}", $scope.Meeting.ThreatLevel);
-                    $scope.Meeting.Description = res;
+                if ($scope.Meeting.Description.indexOf("{expression}") !== -1) {
+                    $scope.Meeting.Description = $scope.Meeting.Description
+                        .replace("{expression}", stringToInt($scope.Meeting.Expression, $scope.Meeting.ThreatLevel));
                 }
+
             }
         };
+
+        function stringToInt(input, threat) {
+            var array = [];
+            var sum = 0;
+            console.log(input);
+            if (input.indexOf("T6") !== -1) {
+                input = input.replace("T6", getRandomInt(1, 7));
+            }
+
+            if (input.indexOf("hot") !== -1) {
+                input = input.replace("hot", threat);
+            }
+
+            if (input.indexOf("+") !== -1) {
+                array = input.split("+");
+                array.forEach(function(value) {
+                    if (parseInt(value) !== NaN) {
+                        sum += parseInt(value);
+                    }
+                    console.log("Adding");
+                });
+
+            } else if (input.indexOf("-") !== -1) {
+                array = input.split("-");
+                sum = array[0];
+                for (var i = 1; i < array.length; i++) {
+                    sum -= array[i];
+                }
+            } else {
+                sum += parseInt(input);
+            }
+            return sum;
+        }
 
         function getRandomMeeting() {
             var meetings = $scope.Meeting.Terrain.meetings;
@@ -536,4 +591,8 @@ function contains(array, value) {
     }
 
     return doesContain;
+}
+
+function GetRandomArtifact() {
+    return 
 }
