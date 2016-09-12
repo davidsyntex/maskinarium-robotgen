@@ -1,0 +1,28 @@
+﻿body
+{
+}
+
+h1, h2, h3, h4,h5
+{
+    color: #ff004d;
+}
+
+h5
+{
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.modules p strong
+{
+    color: #ff004d;
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th
+{
+    background-color: #383e46;
+}
+.table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th
+{
+    background-color: #626c7a;
+}

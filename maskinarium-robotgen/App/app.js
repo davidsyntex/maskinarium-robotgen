@@ -12,6 +12,9 @@ app.controller("appController",
                 name: "Robot",
                 path: "robot.html"
             }, {
+                name: "Faror",
+                path: "faror.html"
+            },{
                 name: "Prylar",
                 path: "prylar.html"
             }, {
@@ -19,7 +22,7 @@ app.controller("appController",
                 path: "genlab_moten.html"
             }
         ];
-        $scope.Version = "Pracownik fabryki wersja systemu głównego 0.0.4a";
+        $scope.Version = "Pracownik fabryki wersja systemu głównego 0.0.5a";
     }
 ]);
 
@@ -144,6 +147,38 @@ app.controller("zonController",
 [
     "$scope", function($scope) {
         $scope.Data = zonenData;
+    }
+]);
+app.controller("farorController",
+[
+    "$scope", function($scope) {
+        $scope.Data = farorData;
+        $scope.Faror = [];
+        $scope.Data.robots.military.forEach(function(milRob) {
+            $scope.Faror.push(milRob);
+        });
+
+        $scope.ChosenDanger = {};
+        
+        $scope.ShowDanger = function(name) {
+            $scope.Faror.forEach(function(element) {
+                if (element.hasOwnProperty("name")) {
+                    if (element.name === name) {
+                        $scope.ChosenDanger.Name = element.name;
+                        $scope.ChosenDanger.Description = element.description;
+                        $scope.ChosenDanger.Head = element.head;
+                        $scope.ChosenDanger.Torso = element.torso;
+                        $scope.ChosenDanger.Leg = element.leg;
+                        $scope.ChosenDanger.Attributes = "CalcAttributes()";
+                        $scope.ChosenDanger.Armour = "CalcArmour()";
+                        $scope.ChosenDanger.Programs = element.programs;
+                        $scope.ChosenDanger.Modules = element.modules;
+                        $scope.ChosenDanger.SecondaryFunctions = element.secondaryFunctions;
+                        $scope.ChosenDanger.Things = element.things;
+                    }
+                }
+            });
+        }
     }
 ]);
 app.controller("robotController",
