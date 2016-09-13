@@ -14,7 +14,7 @@ app.controller("appController",
             }, {
                 name: "Faror",
                 path: "faror.html"
-            },{
+            }, {
                 name: "Prylar",
                 path: "prylar.html"
             }, {
@@ -29,7 +29,7 @@ app.controller("appController",
 app.controller("itemController",
 [
     "$scope", function($scope) {
-
+        $scope.hej = "hej";
     }
 ]);
 app.controller("genlabController",
@@ -40,7 +40,6 @@ app.controller("genlabController",
         $scope.Data = genlabData;
         $scope.Meeting = { Terrain: {} };
         $scope.Meeting.ThreatLevel = 0;
-        var matchers = ["{expression}", "{artifact}"];
 
         $scope.RollRandomThreat = function() {
             $scope.Meeting.Terrain = getRandomFromList($scope.Data.terrain);
@@ -82,8 +81,8 @@ app.controller("genlabController",
                     var artifact = getRandomFromList(generalData.artifacts);
                     console.log(artifact);
                     $scope.Meeting.Description = $scope.Meeting.Description
-                            .replace("{artifact}",
-                                artifact.name);
+                        .replace("{artifact}",
+                            artifact.name);
                 }
 
 
@@ -96,7 +95,7 @@ app.controller("genlabController",
         };
 
         function stringToInt(input, threat) {
-            var array = [];
+            var array;
             var sum = 0;
             console.log(input);
             if (input.indexOf("T6") !== -1) {
@@ -153,31 +152,134 @@ app.controller("farorController",
 [
     "$scope", function($scope) {
         $scope.Data = farorData;
+        $scope.Data.General = generalData;
         $scope.Faror = [];
         $scope.Data.robots.military.forEach(function(milRob) {
             $scope.Faror.push(milRob);
         });
+        $scope.Data.monster.forEach(function(monster) {
+            $scope.Faror.push(monster);
+        });
+        $scope.Data.fenomen.forEach(function(fenomen) {
+            $scope.Faror.push(fenomen);
+        });
 
         $scope.ChosenDanger = {};
-        
+
         $scope.ShowDanger = function(name) {
+            $scope.ChosenDanger = {};
             $scope.Faror.forEach(function(element) {
                 if (element.hasOwnProperty("name")) {
                     if (element.name === name) {
                         $scope.ChosenDanger.Name = element.name;
                         $scope.ChosenDanger.Description = element.description;
-                        $scope.ChosenDanger.Head = element.head;
-                        $scope.ChosenDanger.Torso = element.torso;
-                        $scope.ChosenDanger.Leg = element.leg;
-                        $scope.ChosenDanger.Attributes = "CalcAttributes()";
-                        $scope.ChosenDanger.Armour = "CalcArmour()";
-                        $scope.ChosenDanger.Programs = element.programs;
-                        $scope.ChosenDanger.Modules = element.modules;
-                        $scope.ChosenDanger.SecondaryFunctions = element.secondaryFunctions;
-                        $scope.ChosenDanger.Things = element.things;
+                        $scope.ChosenDanger.Image = element.image;
+
+                        $scope.ChosenDanger.Inline = element.inline.slice();
+
+                        $scope.ChosenDanger.BlockValues = element.blockValues;
+                        $scope.ChosenDanger.Block = element.block;
+
+                        element.functions.forEach(function(func) {
+                            if (angular.isFunction($scope["_" + func.function])) {
+                                $scope["_" + func.function](func);
+                            }
+                        });
+
+                        if ($scope.ChosenDanger.Block.things != null) {
+                            $scope.ChosenDanger.Weapons = getWeapons();
+                        }
                     }
                 }
             });
+
+            for (var blockKey in $scope.ChosenDanger.Block) {
+                if ($scope.ChosenDanger.Block.hasOwnProperty(blockKey)) {
+                    if ($scope.ChosenDanger.Block[blockKey].hasOwnProperty("properties")) {
+                        var properties = $scope.ChosenDanger.Block[blockKey].properties;
+                        if (Array.isArray(properties) && properties != null) {
+                            for (var i = 0; i < properties.length; i++) {
+                               if (angular.isString(properties[i])) {
+                                    if (properties[i].indexOf("{/}") !== -1) {
+                                        properties[i] = properties[i].replaceAll("{/}", "<span class=\"symbol\">/</span>");
+                                    }
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
+
+        };
+
+        $scope._CalcArmour = function() {
+            var skydd = 0;
+            var propSkydd = [];
+
+            $scope.ChosenDanger.Inline.forEach(function(element) {
+                if (element.hasOwnProperty("properties")) {
+                    if (element.properties.hasOwnProperty("skydd")) {
+                        skydd += element.properties.skydd;
+                    }
+                }
+            });
+            propSkydd.push(skydd);
+            var skyddsObjekt = {
+                "name": "Skydd",
+                "description": "",
+                "properties": propSkydd
+            };
+            $scope.ChosenDanger.Block.armour = skyddsObjekt;
+        };
+
+        $scope._CalcAttributes = function() {
+            var attributes = {
+                "srv": 0,
+                "stb": 0,
+                "prc": 0,
+                "ntv": 0
+            };
+            $scope.ChosenDanger.Inline.forEach(function(element) {
+                if (element.hasOwnProperty("properties")) {
+                    if (element.properties.hasOwnProperty("srv")) {
+                        attributes.srv += element.properties.srv;
+                    }
+                    if (element.properties.hasOwnProperty("stb")) {
+                        attributes.stb += element.properties.stb;
+                    }
+                    if (element.properties.hasOwnProperty("prc")) {
+                        attributes.prc += element.properties.prc;
+                    }
+                    if (element.properties.hasOwnProperty("ntv")) {
+                        attributes.ntv += element.properties.ntv;
+                    }
+                }
+            });
+            var attributesObjekt = {
+                "name": "Grundegenskaper",
+                "description": "",
+                "properties": attributes
+            };
+            $scope.ChosenDanger.Inline.push(attributesObjekt);
+        };
+
+        function getWeapons() {
+            var weapons = [];
+            var weaponNames = [];
+            $scope.Data.General.weapons.forEach(function(weapon) {
+                weaponNames.push(weapon.name);
+            });
+
+            $scope.ChosenDanger.Block.things.properties.forEach(function(thing) {
+                $scope.Data.General.weapons.forEach(function(weapon) {
+                    if (weapon.name === thing) {
+                        weapons.push(weapon);
+                    }
+                });
+            });
+
+            return weapons;
         }
     }
 ]);
@@ -185,6 +287,7 @@ app.controller("robotController",
 [
     "$scope", function($scope) {
         $scope.Data = data;
+        $scope.Data.General = generalData;
 
         $scope.Robot = {};
         $scope.Robot.ProgramPoints = 10;
@@ -362,7 +465,7 @@ app.controller("robotController",
             $scope.Robot.Programs[$scope.Robot.Programs.length - 1].Value = 1;
             $scope.Robot.ProgramPoints -= 1;
 
-            var random = 0;
+            var random;
             while ($scope.Robot.ProgramPoints > 0) {
                 random = getRandomInt(0, $scope.Robot.Programs.length);
 
@@ -455,7 +558,7 @@ app.controller("robotController",
             if ($scope.GoNuts) {
 
                 var allColours = [];
-                $scope.Data.StartModels.forEach(function(element, index, array) {
+                $scope.Data.StartModels.forEach(function(element) {
                     Array.prototype.push.apply(allColours, element.Colour);
                 });
                 model.Colour = allColours[getRandomInt(0, allColours.length)];
@@ -497,8 +600,8 @@ app.controller("robotController",
 
         function getTwoRandomStrings(list, separator) {
 
-            var item1 = "";
-            var item2 = "";
+            var item1;
+            var item2;
 
             item1 = list[getRandomInt(0, list.length)];
             item2 = list[getRandomInt(0, list.length)];
@@ -538,7 +641,7 @@ app.controller("robotController",
             $scope.Robot.TotalaStats.Hiearchy = $scope.Robot.Model.Hiearchy;
             $scope.Robot.TotalaStats.Belastning = $scope.Robot.TotalaStats.SRV * 2;
 
-            $scope.Robot.SecondaryFunctions.forEach(function(element, index, array) {
+            $scope.Robot.SecondaryFunctions.forEach(function(element) {
                 if (element.hasOwnProperty("Options")) {
                     if (element.Options.hasOwnProperty("Attribute")) {
                         $scope.Robot.TotalaStats[element.Options.Attribute] += element.Options.Value;
@@ -546,7 +649,7 @@ app.controller("robotController",
                 }
             });
 
-            $scope.Robot.SecondaryFunctions.forEach(function(element, index, array) {
+            $scope.Robot.SecondaryFunctions.forEach(function(element) {
                 if (element.hasOwnProperty("Options")) {
                     if (element.Options.Attribute === "Belastning") {
                         $scope.Robot.TotalaStats.Belastning = $scope.Robot.TotalaStats.SRV * element.Options.Value;
@@ -556,7 +659,7 @@ app.controller("robotController",
         }
 
         function addFakeModule() {
-            $scope.Robot.SecondaryFunctions.forEach(function(element, index, array) {
+            $scope.Robot.SecondaryFunctions.forEach(function(element) {
                 if (element.hasOwnProperty("Options") && element.Options.hasOwnProperty("Module")) {
                     if (element.Options.Module === "Fake") {
                         $scope.Robot.TotalaStats.MOD += 1;
@@ -577,6 +680,46 @@ app.filter("trust",
     }
 ]);
 
+app.directive(
+    "bnRepeatDelimiter",
+    function() {
+        // I compile the list, injecting in the conditionally
+        // visible delimiter onto the end of the template.
+        function compile(element, attributes) {
+            // Get the delimiter that goes between each item.
+            var delimiter = (attributes.bnRepeatDelimiter || ",");
+            // The delimiter will show on all BUT the last
+            // item in the list.
+            var delimiterHtml = (
+                "<span ng-show=' ! $last '>" +
+                    delimiter +
+                    " </span>"
+            );
+            // Add the delimiter to the end of the list item,
+            // making sure to add the existing whitespace back
+            // in after the delimiter.
+            var html = element.html()
+                .replace(
+                    /(\s*$)/i,
+                    function(whitespace) {
+                        return(delimiterHtml + whitespace);
+                    }
+                );
+            // Update the compiled HTML.
+            element.html(html);
+        }
+
+        // Return the directive configuration. Notice that
+        // our priority is 1 higher than ngRepeat - this will
+        // be compiled before the ngRepeat compiles.
+        return({
+            compile: compile,
+            priority: 1001,
+            restirct: "A"
+        });
+    }
+);
+
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -594,7 +737,7 @@ function getRandomFromList(list) {
 
 function RollMutantDieSuccessesOnly(numberOfDice) {
     var successes = 0;
-    var roll = -1;
+    var roll;
     for (var i = 0; i < numberOfDice; i++) {
         roll = getRandomInt(0, 6) + 1;
         if (roll === 6) {
@@ -604,8 +747,8 @@ function RollMutantDieSuccessesOnly(numberOfDice) {
     return successes;
 }
 
-function RollMutantDicesddfae(numberOfDice, pressa) {
-    pressa = pick(pressa, false);
+function RollMutantDicesddfae(numberOfDice) {
+    //pressa = pick(pressa, false);
     var rolls = [];
     for (var i = 0; i < numberOfDice; i++) {
         rolls.push();
@@ -629,5 +772,13 @@ function contains(array, value) {
 }
 
 function GetRandomArtifact() {
-    return 
+    return;
 }
+
+// ReSharper disable once NativeTypePrototypeExtending
+String.prototype.replaceAll = function(search, replace) {
+    if (replace === undefined) {
+        return this.toString();
+    }
+    return this.split(search).join(replace);
+};

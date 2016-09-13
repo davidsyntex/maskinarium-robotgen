@@ -90,5 +90,92 @@
         { "name": "Harpun", "weight": 1 },
         { "name": "Kastspö", "weight": 1 },
         { "name": "Luftkompressor", "weight": 1 }
+    ],
+    "weapons": [
+        {
+            "type": "Närstrid",
+            "name": "Tillhygge",
+            "bonus": 1,
+            "skada": 1,
+            "reach": "Armslängd",
+            "kommentar": []
+        }, {
+            "type": "Närstrid",
+            "name": "Skrotkniv",
+            "bonus": 1,
+            "skada": 2,
+            "reach": "Armslängd",
+            "kommentar": []
+        }, {
+            "type": "Närstrid",
+            "name": "Skrotklubba",
+            "bonus": 2,
+            "skada": 1,
+            "reach": "Armslängd",
+            "kommentar": []
+        }, {
+            "type": "Närstrid",
+            "name": "Chockbatong",
+            "bonus": 2,
+            "skada": 1,
+            "reach": "Armslängd",
+            "kommentar": ["Ger T6 stress.", "Energivapen."]
+        }, {
+            "type": "Närstrid",
+            "name": "Lasersvets",
+            "bonus": 2,
+            "skada": 2,
+            "reach": "Armslängd",
+            "kommentar": ["Lätt vapen.", "Energivapen."]
+        }, {
+            "type": "Närstrid",
+            "name": "Vibrokniv",
+            "bonus": 2,
+            "skada": 2,
+            "reach": "Armslängd",
+            "kommentar": ["Ger T6 stress.", "Energivapen.", "Ignorerar pansar."]
+        }, {
+            "type": "Närstrid",
+            "name": "Stridssåg",
+            "bonus": 2,
+            "skada": 3,
+            "reach": "Armslängd",
+            "kommentar": ["Energivapen."]
+        }, {
+            "type": "Avstånd",
+            "name": "Chockpistol",
+            "bonus": 2,
+            "skada": 2,
+            "reach": "Kort",
+            "kommentar": ["Lätt vapen.", "Energivapen.", "Ger stress istället för skada."]
+        }, {
+            "type": "Avstånd",
+            "name": "Laserpistol",
+            "bonus": 3,
+            "skada": 2,
+            "reach": "Lång",
+            "kommentar": ["Lätt vapen.", "Energivapen."]
+        }, {
+            "type": "Avstånd",
+            "name": "Lasergevär",
+            "bonus": 3,
+            "skada": 2,
+            "reach": "Distans",
+            "kommentar": ["Energivapen."]
+        }, {
+            "type": "Avstånd",
+            "name": "Maserpistol",
+            "bonus": 2,
+            "skada": 3,
+            "reach": "Kort",
+            "kommentar": ["Lätt vapen.", "Energivapen."]
+        }, {
+            "type": "Avstånd",
+            "name": "Plasmakarbin",
+            "bonus": 2,
+            "skada": 3,
+            "reach": "Lång",
+            "kommentar": ["Energivapen."]
+        }
     ]
 }

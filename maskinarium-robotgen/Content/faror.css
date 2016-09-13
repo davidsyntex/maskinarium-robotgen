@@ -15,7 +15,9 @@ h5
 
 .modules p strong
 {
-    color: #ff004d;
+    /*color: #ff004d;*/
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th

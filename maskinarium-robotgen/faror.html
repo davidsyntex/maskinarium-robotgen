@@ -69,43 +69,64 @@
                 <h3>Vald fara</h3>
             </div>
             <div class="col-xs-12">
-                <div class="modules">
-                    <h4>{{ChosenDanger.Name}}</h4>
-                    <p>{{ChosenDanger.Description}}</p>
-                    <h5>Huvud</h5>
-                    <p>{{ChosenDanger.Head}}</p>
-                    <h5>Bål</h5>
-                    <p>{{ChosenDanger.Torso}}</p>
-                    <h5>Underrede</h5>
-                    <p>{{ChosenDanger.Leg}}</p>
-                    <h5>Grundegenskaper</h5>
-                    <p>{{ChosenDanger.Attributes}}</p>
-                    <p><strong>Skydd</strong>: {{ChosenDanger.Armour}}</p>
-                    <p><strong>Program</strong>: {{ChosenDanger.Programs}}</p>
-                    <p><strong>Moduler</strong>: {{ChosenDanger.Modules}}</p>
-                    <p><strong>Sekundärfunktioner</strong>: {{ChosenDanger.SecondaryFunctions}}</p>
-                    <p><strong>Prylar</strong>: {{ChosenDanger.Things}}</p>
+                <div class="modules row">
+                    <div class="col-xs-12 col-md-8">
+                        <h4>{{ChosenDanger.Name}}</h4>
+                        <p>{{ChosenDanger.Description}}</p>
+                        <div ng-repeat="item in ChosenDanger.Inline">
+                            <h5>{{item.name}}</h5>
+                            <p><span ng-repeat="(key, value) in item.properties" bn-repeat-delimiter=","><strong>{{key}}</strong>: {{value}}</span><span ng-show="item.description">, {{item.description}}</span>
+                        </div>
+                        <div ng-repeat="item in ChosenDanger.BlockValues">
+                            <p><strong>{{item.name}}: </strong><span ng-repeat="(key, value) in item.properties" bn-repeat-delimiter=",">{{key}}: {{value}}</span></p>
+                        </div>
+                        <div ng-repeat="item in ChosenDanger.Block">
+                            <p><strong>{{item.name}}: </strong><span ng-repeat="(key, value) in item.properties" bn-repeat-delimiter=","><span ng-bind-html="value.toString() | trust"></span></span></p>
+                        </div>
+                        <div ng-show="ChosenDanger.Weapons">
+                            <table class="table">
+                                <tr>
+                                    <th>Vapen</th>
+                                    <th>Bonus</th>
+                                    <th>Skada</th>
+                                    <th>Räckvidd</th>
+                                    <th>Kommentar</th>
+                                </tr>
+                                <tr ng-repeat="vapen in ChosenDanger.Weapons track by $index">
+                                    <td>{{vapen.name}}</td>
+                                    <td>+{{vapen.bonus}}</td>
+                                    <td>{{vapen.skada}}</td>
+                                    <td>{{vapen.reach}}</td>
+                                    <td>
+                                        <span ng-repeat="kommentar in vapen.kommentar">{{kommentar}}</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <img src="{{ChosenDanger.Image}}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3>Faror</h3>
+                </div>
+                <div class="col-xs-12">
+                    <table class="table table-striped table-hover">
+                        <tr>
+                            <th>Namn</th>
+                            <th>Beskrivning</th>
+                        </tr>
+                        <tr ng-repeat="fara in Faror track by $index" ng-click="ShowDanger(fara.name)">
+                            <td>{{fara.name}}</td>
+                            <td>Kort beskrivning</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <h3>Faror</h3>
-            </div>
-            <div class="col-xs-12">
-                <table class="table table-striped table-hover">
-                    <tr>
-                        <th>Namn</th>
-                        <th>Beskrivning</th>
-                    </tr>
-                    <tr ng-repeat="fara in Faror track by $index" ng-click="ShowDanger(fara.name)">
-                        <td>{{fara.name}}</td>
-                        <td>Kort beskrivning</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
         <!--
         <div class="row">
             <div class="col-xs-12 col-md-6 robot-visuals" ng-style="{'height':calc(100%-Robot.Torso.HEADOFFSET-Robot.Torso.LEGOFFSET)}">

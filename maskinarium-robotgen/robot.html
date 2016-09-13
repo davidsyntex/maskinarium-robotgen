@@ -17,6 +17,7 @@
     <script src="Scripts/NameSets/mittlandare_set.js"></script>
     <script src="App/app.js"></script>
     <script src="App/data.js"></script>
+    <script src="App/data-general.js"></script>
 </head><body class="container-fluid" ng-app="robotgen">
     <div ng-controller="appController">
         <nav class="navbar navbar-inverse">
@@ -231,13 +232,13 @@
                 <th>Räckvidd</th>
                 <th>Kommentar</th>
             </tr>
-            <tr ng-repeat="vapen in Data.Weapons track by $index">
-                <td>{{vapen.Name}}</td>
-                <td>+{{vapen.Bonus}}</td>
-                <td>{{vapen.Skada}}</td>
-                <td>{{vapen.Reach}}</td>
+            <tr ng-repeat="vapen in Data.General.weapons track by $index">
+                <td>{{vapen.name}}</td>
+                <td>+{{vapen.bonus}}</td>
+                <td>{{vapen.skada}}</td>
+                <td>{{vapen.reach}}</td>
                 <td>
-                    <span ng-repeat="kommentar in vapen.Kommentar">{{kommentar}}</span>
+                    <span ng-repeat="kommentar in vapen.kommentar">{{kommentar}}</span>
                 </td>
             </tr>
         </table>
