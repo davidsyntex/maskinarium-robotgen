@@ -4,13 +4,21 @@
 
 h1, h2, h3, h4,h5
 {
-    color: #ff004d;
+    color: #b4ff00;
 }
 
 h5
 {
     font-size: 0.75rem;
     font-weight: bold;
+}
+
+.modules p
+{
+    font-family: "FuturaStd-Book";
+    border-bottom: 0.0625rem solid #b4ff00;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
 }
 
 .modules p strong
@@ -27,4 +35,15 @@ h5
 .table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th
 {
     background-color: #626c7a;
+}
+
+th a,th a:visited,th a:focus
+{
+    color: #b4ff00;
+    text-decoration: none;
+}
+th a:hover,th a:active
+{
+    color:#fefefe;
+    text-decoration: none;
 }

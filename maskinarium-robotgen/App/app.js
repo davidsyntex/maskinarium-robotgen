@@ -22,7 +22,7 @@ app.controller("appController",
                 path: "genlab_moten.html"
             }
         ];
-        $scope.Version = "Pracownik fabryki wersja systemu głównego 0.0.5a";
+        $scope.Version = "Pracownik fabryki wersja systemu głównego 0.0.6a";
     }
 ]);
 
@@ -36,7 +36,6 @@ app.controller("genlabController",
 [
     "$scope", function($scope) {
 
-        //TODO: REGEX the {hot} and T6. Make it add the numbers together
         $scope.Data = genlabData;
         $scope.Meeting = { Terrain: {} };
         $scope.Meeting.ThreatLevel = 0;
@@ -151,17 +150,24 @@ app.controller("zonController",
 app.controller("farorController",
 [
     "$scope", function($scope) {
+        $scope.sortType = "Name"; // set the default sort type
+        $scope.sortReverse = false; // set the default sort order
+        $scope.searchDanger = ""; // set the default search/filter term
+        $scope.filtered = []; // variable to store filtered results
+
+        $scope.$watch("filtered", function (newValue) {
+            if (newValue.length === 1) {
+                console.log(newValue[0].name);
+                $scope.ShowDanger(newValue[0].name);
+            }
+        }, true);
+
         $scope.Data = farorData;
         $scope.Data.General = generalData;
         $scope.Faror = [];
-        $scope.Data.robots.military.forEach(function(milRob) {
-            $scope.Faror.push(milRob);
-        });
-        $scope.Data.monster.forEach(function(monster) {
-            $scope.Faror.push(monster);
-        });
-        $scope.Data.fenomen.forEach(function(fenomen) {
-            $scope.Faror.push(fenomen);
+
+        $scope.Data.faror.forEach(function(danger) {
+            $scope.Faror.push(danger);
         });
 
         $scope.ChosenDanger = {};
@@ -175,10 +181,10 @@ app.controller("farorController",
                         $scope.ChosenDanger.Description = element.description;
                         $scope.ChosenDanger.Image = element.image;
 
-                        $scope.ChosenDanger.Inline = element.inline.slice();
-
-                        $scope.ChosenDanger.BlockValues = element.blockValues;
-                        $scope.ChosenDanger.Block = element.block;
+                        var stats = getStats();
+                        $scope.ChosenDanger.Inline = stats.inline.slice();
+                        $scope.ChosenDanger.BlockValues = stats.blockValue.slice();
+                        $scope.ChosenDanger.Block = stats.block.slice();
 
                         element.functions.forEach(function(func) {
                             if (angular.isFunction($scope["_" + func.function])) {
@@ -199,12 +205,13 @@ app.controller("farorController",
                         var properties = $scope.ChosenDanger.Block[blockKey].properties;
                         if (Array.isArray(properties) && properties != null) {
                             for (var i = 0; i < properties.length; i++) {
-                               if (angular.isString(properties[i])) {
+                                if (angular.isString(properties[i])) {
                                     if (properties[i].indexOf("{/}") !== -1) {
-                                        properties[i] = properties[i].replaceAll("{/}", "<span class=\"symbol\">/</span>");
+                                        properties[i] = properties[i]
+                                            .replaceAll("{/}", "<span class=\"symbol\">/</span>");
                                     }
                                 }
-                                
+
                             }
                         }
                     }
@@ -262,6 +269,44 @@ app.controller("farorController",
                 "properties": attributes
             };
             $scope.ChosenDanger.Inline.push(attributesObjekt);
+        };
+
+        function getStats() {
+            var stats = {
+                "inline": [],
+                "blockValue": [],
+                "block": []
+            };
+
+            $scope.Faror.forEach(function(danger, index, dangers) {
+                if (danger.name === $scope.ChosenDanger.Name) {
+                    if (danger.hasOwnProperty("statBlock")) {
+
+                        danger.statBlock.forEach(function(stat, statIndex, statArray) {
+                            if (stat.hasOwnProperty("type")) {
+                                switch (stat.type) {
+                                case "inline":
+                                    stats.inline.push(stat);
+                                    break;
+
+                                case "blockValue":
+                                    stats.blockValue.push(stat);
+                                    break;
+
+                                case "block":
+                                    stats.block.push(stat);
+                                    break;
+                                default:
+                                    break;
+                                }
+                            }
+                        });
+                    }
+
+                }
+
+            });
+            return stats;
         };
 
         function getWeapons() {
