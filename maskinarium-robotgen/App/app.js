@@ -296,8 +296,8 @@ app.controller("genlabController",
                     }
                 }
                 if ($scope.Meeting.Description.indexOf("{artifact}") !== -1) {
-                    var artifact = getRandomFromList(generalData.artifacts);
-                    console.log(artifact);
+                    var artifact = Helper.GetRandomFromList(generalData.artifacts);
+
                     $scope.Meeting.Description = $scope.Meeting.Description
                         .replace("{artifact}",
                             artifact.name);
@@ -315,7 +315,6 @@ app.controller("genlabController",
         function stringToInt(input, threat) {
             var array;
             var sum = 0;
-            console.log(input);
             if (input.indexOf("T6") !== -1) {
                 input = input.replace("T6", Helper.GetRandomInt(1, 7));
             }
@@ -330,7 +329,6 @@ app.controller("genlabController",
                     if (parseInt(value) !== NaN) {
                         sum += parseInt(value);
                     }
-                    console.log("Adding");
                 });
 
             } else if (input.indexOf("-") !== -1) {
@@ -381,7 +379,6 @@ app.controller("farorController",
         $scope.$watch("filtered",
             function(newValue) {
                 if (newValue.length === 1) {
-                    console.log(newValue[0].name);
                     $scope.ShowDanger(newValue[0].name);
                 }
             },
@@ -397,6 +394,7 @@ app.controller("farorController",
 
         $scope.ShowDanger = function(name) {
             $scope.ChosenDanger = {};
+            $scope.ChosenDanger.Weapons = [];
             $scope.Faror.forEach(function(element) {
                 if (element.hasOwnProperty("name")) {
                     if (element.name === name) {
@@ -410,14 +408,11 @@ app.controller("farorController",
                         $scope.ChosenDanger.Block = stats.block.slice();
 
                         element.functions.forEach(function(func) {
-                            if (angular.isFunction($scope[`_${func.function}`])) {
-                                $scope[`_${func.function}`](func);
+                            if (angular.isFunction($scope["_" + func.function])) {
+                                $scope["_" + func.function](func);
                             }
                         });
 
-                        if ($scope.ChosenDanger.Block.things != null) {
-                            $scope.ChosenDanger.Weapons = getWeapons();
-                        }
                     }
                 }
             });
@@ -426,32 +421,48 @@ app.controller("farorController",
                 if ($scope.ChosenDanger.Block.hasOwnProperty(blockKey)) {
                     if ($scope.ChosenDanger.Block[blockKey].hasOwnProperty("properties")) {
                         var properties = $scope.ChosenDanger.Block[blockKey].properties;
+
+                        getWeapons(properties);
+
                         if (Array.isArray(properties) && properties != null) {
                             for (let i = 0; i < properties.length; i++) {
+
                                 if (angular.isString(properties[i])) {
                                     if (properties[i].indexOf("{/}") !== -1) {
                                         properties[i] = properties[i]
                                             .replaceAll("{/}", "<span class=\"symbol\">/</span>");
                                     }
                                 }
-
                             }
                         }
                     }
                 }
             }
 
+           
         };
 
         $scope.GetRandomRobot = function() {
             var robot = robotService.GetRandomRobot();
-            console.log(robot);
 
             $scope.ChosenDanger = {};
             $scope.ChosenDanger.Name = robot.Name + " - " + robot.CodeName;
             $scope.ChosenDanger.Description = robot.Description;
-            $scope.ChosenDanger.Image = "";
-
+            $scope.ChosenDanger.Image = [
+                {
+                    "path":robot.Head.BILD,
+                    "offSet": 0,
+                    "zIndex":4
+                },{
+                    "path":robot.Torso.BILD,
+                    "offSet": robot.Torso.HEADOFFSET,
+                    "zIndex":3
+                },{
+                    "path":robot.Leg.BILD,
+                    "offSet": robot.Torso.LEGOFFSET,
+                    "zIndex":1
+                }
+            ];
             var stats = convertRobotStats(robot);
             $scope.ChosenDanger.Inline = stats.inline.slice();
             $scope.ChosenDanger.BlockValues = stats.blockValue.slice();
@@ -460,7 +471,9 @@ app.controller("farorController",
             if ($scope.ChosenDanger.Block.things != null) {
                 $scope.ChosenDanger.Weapons = getWeapons();
             }
+            //jQuery("#chosenDangerVisuals").height(jQuery("#chosenDangerStats").height());
         };
+
         $scope._CalcArmour = function() {
             var skydd = 0;
             var propSkydd = [];
@@ -472,13 +485,16 @@ app.controller("farorController",
                     }
                 }
             });
+
             propSkydd.push(skydd);
+
             var skyddsObjekt = {
                 "name": "Skydd",
+                "type": "block",
                 "description": "",
                 "properties": propSkydd
             };
-            $scope.ChosenDanger.Block.armour = skyddsObjekt;
+            $scope.ChosenDanger.Block.push(skyddsObjekt);
         };
 
         $scope._CalcAttributes = function() {
@@ -558,7 +574,7 @@ app.controller("farorController",
             };
 
             var stat = {
-                "name": "Huvud: "+robot.Head.NAMN,
+                "name": "Huvud: " + robot.Head.NAMN,
                 "type": "inline",
                 "description": robot.Head.BESKRIVNING,
                 "properties": {
@@ -568,11 +584,11 @@ app.controller("farorController",
                     "ntv": robot.Head.NTV,
                     "skydd": robot.Head.SKYDD
                 }
-            }
+            };
             stats.inline.push(stat);
 
             stat = {
-                "name": "Bål: "+robot.Torso.NAMN,
+                "name": "Bål: " + robot.Torso.NAMN,
                 "type": "inline",
                 "description": robot.Torso.BESKRIVNING,
                 "properties": {
@@ -582,7 +598,7 @@ app.controller("farorController",
                     "ntv": robot.Torso.NTV,
                     "skydd": robot.Torso.SKYDD
                 }
-            }
+            };
             stats.inline.push(stat);
 
             stat = {
@@ -596,7 +612,7 @@ app.controller("farorController",
                     "ntv": robot.Leg.NTV,
                     "skydd": robot.Leg.SKYDD
                 }
-            }
+            };
             stats.inline.push(stat);
 
             stat = {
@@ -611,11 +627,11 @@ app.controller("farorController",
                     "skydd": robot.TotalaStats.SKYDD,
                     "Moduler": robot.TotalaStats.MOD
                 }
-            }
+            };
             stats.inline.push(stat);
 
             var skills = {};
-            robot.Programs.forEach(function (program, index,array) {
+            robot.Programs.forEach(function(program, index, array) {
                 var string = array[index].Name + " (" + array[index].Attribute + ")";
                 skills[string] = array[index].Value;
             });
@@ -624,41 +640,67 @@ app.controller("farorController",
                 "type": "blockValue",
                 "description": "",
                 "properties": skills
-                }
+            };
             stats.blockValue.push(stat);
 
             var modules = [];
-            robot.Modules.forEach(function (module, index, array) {
-                modules.push(array[index].Name);
+            robot.Modules.forEach(function(module, index, array) {
+                modules.push(helper.Capitalize(array[index].Name));
             });
             stat = {
                 "name": "Moduler",
                 "type": "block",
                 "description": "",
                 "properties": modules
-            }
-
+            };
             stats.block.push(stat);
+
+            var secondaryFunctions = [];
+            robot.SecondaryFunctions.forEach(function(secondaryFunction, index, array) {
+                secondaryFunctions.push(helper.Capitalize(array[index].Name));
+            });
+            stat = {
+                "name": "Sekundärfunktioner",
+                "type": "block",
+                "description": "",
+                "properties": secondaryFunctions
+            };
+            stats.block.push(stat);
+
+            stat = {
+                "name": "Information",
+                "type": "inline",
+                "description": "",
+                "properties": {
+                    "Modell": robot.Model.Name,
+                    "Färg": robot.Model.Colour,
+                    "Röst": robot.Model.Voice,
+                    "Kännetecken": robot.Model.Features,
+                    "Personlighet": robot.Model.Personality,
+                    "Hierarki": robot.TotalaStats.Hiearchy
+                }
+            };
+            stats.inline.unshift(stat);
 
             return stats;
         }
 
-        function getWeapons() {
-            var weapons = [];
+        // Takes a String array and compares it to the weapons data
+        function getWeapons(list) {
             var weaponNames = [];
-            $scope.Data.General.weapons.forEach(function(weapon) {
+
+            Data.General.weapons.forEach(function(weapon) {
                 weaponNames.push(weapon.name);
             });
 
-            $scope.ChosenDanger.Block.things.properties.forEach(function(thing) {
-                $scope.Data.General.weapons.forEach(function(weapon) {
+            list.forEach(function(thing) {
+                Data.General.weapons.forEach(function(weapon) {
                     if (weapon.name === thing) {
-                        weapons.push(weapon);
+                        $scope.ChosenDanger.Weapons.push(weapon);
                     }
+
                 });
             });
-
-            return weapons;
         }
     }
 ]);
@@ -711,7 +753,6 @@ app.controller("robotController",
         (function() { $scope.GetRandomRobot(); })();
 
         function getModulesClass() {
-            console.log($scope.Robot.Modules.length);
             var numberOfModules = $scope.Robot.Modules.length;
             var modulesClass = "modules col-xs-12 ";
             if (numberOfModules === 1) {
@@ -877,6 +918,13 @@ function Helper() {
     };
     this.Capitalize = function(string) {
         return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    };
+    this.CapitalizeEachWord = function(string) {
+        var strings = string.split(" ");
+        for (var i = 0; i < strings.length; i++) {
+            strings[i] = this.Capitalize(strings[i]);
+        }
+        return strings.join(" ");
     };
     this.Contains = function(array, value) {
         var doesContain = false;

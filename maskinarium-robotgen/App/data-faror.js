@@ -131,10 +131,15 @@
                     "function": "CalcAttributes"
                 }
             ],
-            "image":
-                "Content/Images/Danger/drönarsoldat-methusalem.png"
+            "image":[
+            {
+                "path": "Content/Images/Danger/drönarsoldat-methusalem.png",
+                "offSet": 0,
+                "zIndex": 0
+            }]
+                
         },{
-            "name": "HUSHÅLLSROBOT HEM-ANTOINE",
+            "name": "Hushållsrobot Hem-Antoine",
             "type": "Robot",
             "subtype": "Konsument",
             "book": "Maskinarium",
@@ -212,8 +217,13 @@
                     "function": "GetRobotModules"
                 }
             ],
-            "image":
-                "Content/Images/Danger/hushallsrobot.png"
+            "image":[
+            {
+                "path": "Content/Images/Danger/hushallsrobot.png",
+                "offSet": 0,
+                "zIndex":0
+            }]
+                
         },
         {
             "name": "Asgnagare",

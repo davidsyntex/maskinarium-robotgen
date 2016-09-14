@@ -47,3 +47,14 @@ th a:hover,th a:active
     color:#fefefe;
     text-decoration: none;
 }
+
+.visuals-container
+{
+    position: relative;
+}
+
+.visuals-container-image
+{
+    position: relative;
+    width: 100%;
+}
