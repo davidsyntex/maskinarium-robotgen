@@ -18,6 +18,7 @@
     <script src="Scripts/NameSets/robot_set.js"></script>
     <script src="Scripts/NameSets/mittlandare_set.js"></script>
     <script src="App/app.js"></script>
+    <script src="App/data.js"></script>
     <script src="App/data-faror.js"></script>
     <script src="App/data-general.js"></script>
 </head>
@@ -62,7 +63,7 @@
         <h2 class="rbt-btn" ng-click="RollThreat()">Visa faror från Maskinarium</h2>
     </div>
     <div class="col-xs-12 col-md-6">
-        <h2 class="rbt-btn" ng-click="RollRandomThreat()">Slumpa Maskinarium-fara</h2>
+        <h2 class="rbt-btn" ng-click="GetRandomRobot()">Slumpa Robot</h2>
     </div>
 </div>
 <div class="row sheet" ng-show="ChosenDanger != null">
@@ -78,15 +79,15 @@
         <div class="modules row">
             <div class="col-xs-12 col-sm-8">
                 <p>{{ChosenDanger.Description}}</p>
-                <div ng-repeat="item in ChosenDanger.Inline">
+                <div ng-repeat="item in ChosenDanger.Inline track by $index">
                     <h5>{{item.name}}</h5>
                     <p><span ng-repeat="(key, value) in item.properties" bn-repeat-delimiter=","><strong>{{key}}</strong>: {{value}}</span><span ng-show="item.description">, {{item.description}}</span>
                 </div>
-                <div ng-repeat="item in ChosenDanger.BlockValues">
+                <div ng-repeat="item in ChosenDanger.BlockValues track by $index">
                     <p>
                         <strong>{{item.name}}: </strong><span ng-repeat="(key, value) in item.properties" bn-repeat-delimiter=",">{{key}}: {{value}}</span></p>
                 </div>
-                <div ng-repeat="item in ChosenDanger.Block">
+                <div ng-repeat="item in ChosenDanger.Block track by $index">
                     <p>
                         <strong>{{item.name}}: </strong><span ng-repeat="(key, value) in item.properties" bn-repeat-delimiter=","><span ng-bind-html="value.toString() | trust"></span></span></p>
                 </div>
@@ -126,7 +127,7 @@
                     <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-search"></i>
                         </div>
-                        <input type="text" class="form-control" placeholder="Sök Fara" ng-model="searchDanger" ng-minlength="1">
+                        <input type="text" class="form-control" placeholder="Sök Fara" ng-model="searchDanger.name" ng-minlength="1">
                     </div>
                 </div>
             </form>
@@ -156,7 +157,7 @@
                 </tr>
                 <tr ng-repeat="fara in filtered = (Faror | orderBy:sortType:sortReverse | filter:searchDanger) track by $index" ng-click="ShowDanger(fara.name)">
                     <td>{{fara.name}}</td>
-                    <td>{{fara.type}}</td>
+                    <td>{{fara.type}} <span ng-if="fara.subtype">({{fara.subtype}})</span></td>
                     <td>{{fara.book}} ({{fara.bookContraction}})</td>
                 </tr>
             </table>

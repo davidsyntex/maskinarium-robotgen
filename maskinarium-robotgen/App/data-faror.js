@@ -1,7 +1,53 @@
 ﻿var farorData = {
     "faror": [
         {
-            "name": "123 Drönarsoldat Methusalem",
+            "name": "Hushållsdrönare",
+            "type": "Robot",
+            "subtype": "Konsument",
+            "book": "Maskinarium",
+            "bookContraction": "MM",
+            "isChassiUsable": false,
+            "description":
+                "Alla upptänkliga maskiner i människans hem fanns i drönarformat. DynaKorps köksassistent Fortunato och mattillredaren Sikander-2 spreds till många hushåll. Serien CHINOBA blev dock inte någon succé – de udda möbeldrönarna tilltalade få köpare och få aktiva exemplar återstår. De flesta hushållsdrönare är små, har sällan avancerad tankekapacitet och om de ännu fungerar vill de mest ha en ägare att lyda så gott det går.",
+            "statBlock": [
+                {
+                    "name": "Grundegenskaper",
+                    "type": "inline",
+                    "description": "",
+                    "properties": {
+                        "srv": 1,
+                        "stb": 1
+                    }
+                },
+                {
+                    "name": "Program",
+                    "type": "block",
+                    "description": "",
+                    "properties": ["-"]
+                }, {
+                    "name": "Moduler",
+                    "type": "block",
+                    "description": "",
+                    "properties": ["-"]
+                },
+                {
+                    "name": "Skydd",
+                    "type": "block",
+                    "description": "",
+                    "properties": [1]
+                },
+                {
+                    "name": "Prylar",
+                    "type": "block",
+                    "description": "",
+                    "properties": ["Inmonterad hushållsapparat av lämplig sort"]
+                }
+            ],
+            "functions": [],
+            "image": ""
+        },
+        {
+            "name": "Drönarsoldat Methusalem",
             "type": "Robot",
             "subtype": "Militär",
             "book": "Maskinarium",
@@ -87,9 +133,90 @@
             ],
             "image":
                 "Content/Images/Danger/drönarsoldat-methusalem.png"
+        },{
+            "name": "HUSHÅLLSROBOT HEM-ANTOINE",
+            "type": "Robot",
+            "subtype": "Konsument",
+            "book": "Maskinarium",
+            "bookContraction": "MM",
+            "isChassiUsable": true,
+            "description":
+                "Tillverkaren Alsudd-Pierott hade ett rykte om sig att producera lika många urusla som superba modeller. Bland de senare fanns en av de mer utvecklade modellerna av hushållsrobotar: Hem-Antoine. Enheten är långt smartare än den typiska hushållsdrönaren, kan effektivt kan sköta det mesta i ett hem, och är dessutom utrustad med avancerade versioner av programmet interagera.",
+            "statBlock": [
+                {
+                    "name": "Huvud",
+                    "type": "inline",
+                    "description": "Minimalt och ofta inbyggt.",
+                    "properties": {
+                        "srv": 1,
+                        "stb": 1,
+                        "prc": 0,
+                        "ntv": 0,
+                        "skydd": 0
+                    }
+                },
+                {
+                    "name": "Bål",
+                    "type": "inline",
+                    "description": "Fyrkantig eller tubformad.",
+                    "properties": {
+                        "srv": 1,
+                        "stb": 1,
+                        "prc": 1,
+                        "ntv": 2,
+                        "skydd": 1,
+                        "modul":1
+                    }
+                },
+                {
+                    "name": "Underrede",
+                    "type": "inline",
+                    "description": "Smala diskreta larvfötter. ",
+                    "properties": {
+                        "srv": 0,
+                        "stb": 1,
+                        "prc": 0,
+                        "ntv": 1,
+                        "skydd": 1
+                    }
+                },
+                {
+                    "name": "Program",
+                    "type": "blockValue",
+                    "description": "",
+                    "properties": {
+                        "Interagera": 4
+                    }
+                }, {
+                    "name": "Moduler",
+                    "type": "block",
+                    "description": "",
+                    "properties": []
+                },
+                {
+                    "name": "Sekundärfunktioner",
+                    "type": "block",
+                    "description": "",
+                    "properties": ["-"]
+                },
+                {
+                    "name": "Prylar",
+                    "type": "block",
+                    "description": "",
+                    "properties": ["Inbyggd dammsugare", "tvättmaskin", "mangel", "uniformspress och ficklampa"]
+                }
+            ],
+            "functions":
+            [
+                {
+                    "function": "GetRobotModules"
+                }
+            ],
+            "image":
+                "Content/Images/Danger/hushallsrobot.png"
         },
         {
-            "name": "123 Asgnagare",
+            "name": "Asgnagare",
             "type": "Monster",
             "book": "Maskinarium",
             "bookContraction": "MM",
