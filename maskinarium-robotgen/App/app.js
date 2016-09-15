@@ -254,13 +254,13 @@ app.controller("itemController",
 app.controller("genlabController",
 [
     "$scope", function($scope) {
-
-        $scope.Data = genlabData;
+        var Data = genlabData;
+        var helper = new Helper();
         $scope.Meeting = { Terrain: {} };
         $scope.Meeting.ThreatLevel = 0;
 
         $scope.RollRandomThreat = function() {
-            $scope.Meeting.Terrain = getRandomFromList($scope.Data.terrain);
+            $scope.Meeting.Terrain = helper.GetRandomFromList(Data.terrain);
             $scope.RollThreat();
         };
         $scope.RollThreat = function() {
@@ -268,7 +268,7 @@ app.controller("genlabController",
             $scope.Meeting.Description = "";
             $scope.Meeting.Number = 0;
             // Generate Threat
-            $scope.Meeting.ThreatLevel = RollMutantDieSuccessesOnly($scope.Meeting.Terrain.threat);
+            $scope.Meeting.ThreatLevel = helper.RollMutantDieSuccessesOnly($scope.Meeting.Terrain.threat);
             $scope.Meeting.Place = $scope.Meeting.Terrain.name;
 
             if ($scope.Meeting.ThreatLevel > 0) {
@@ -296,7 +296,7 @@ app.controller("genlabController",
                     }
                 }
                 if ($scope.Meeting.Description.indexOf("{artifact}") !== -1) {
-                    var artifact = Helper.GetRandomFromList(generalData.artifacts);
+                    var artifact = Helper.GetRandomFromList(Data.artifacts);
 
                     $scope.Meeting.Description = $scope.Meeting.Description
                         .replace("{artifact}",
@@ -316,7 +316,7 @@ app.controller("genlabController",
             var array;
             var sum = 0;
             if (input.indexOf("T6") !== -1) {
-                input = input.replace("T6", Helper.GetRandomInt(1, 7));
+                input = input.replace("T6", helper.GetRandomInt(1, 7));
             }
 
             if (input.indexOf("hot") !== -1) {
@@ -345,10 +345,10 @@ app.controller("genlabController",
 
         function getRandomMeeting() {
             var meetings = $scope.Meeting.Terrain.meetings;
-            var randomMeetingNumber = getRandomFromList(meetings);
+            var randomMeetingNumber = helper.GetRandomFromList(meetings);
             var randomMeeting = {};
 
-            $scope.Data.meetings.forEach(function(meeting) {
+            Data.meetings.forEach(function(meeting) {
                 if (meeting.number === randomMeetingNumber) {
                     randomMeeting = meeting;
                 }
@@ -361,7 +361,7 @@ app.controller("genlabController",
 app.controller("zonController",
 [
     "$scope", function($scope) {
-        $scope.Data = zonenData;
+        var Data = zonenData;
     }
 ]);
 app.controller("farorController",
@@ -439,7 +439,7 @@ app.controller("farorController",
                 }
             }
 
-           
+
         };
 
         $scope.GetRandomRobot = function() {
@@ -450,17 +450,17 @@ app.controller("farorController",
             $scope.ChosenDanger.Description = robot.Description;
             $scope.ChosenDanger.Image = [
                 {
-                    "path":robot.Head.BILD,
+                    "path": robot.Head.BILD,
                     "offSet": 0,
-                    "zIndex":4
-                },{
-                    "path":robot.Torso.BILD,
+                    "zIndex": 4
+                }, {
+                    "path": robot.Torso.BILD,
                     "offSet": robot.Torso.HEADOFFSET,
-                    "zIndex":3
-                },{
-                    "path":robot.Leg.BILD,
+                    "zIndex": 3
+                }, {
+                    "path": robot.Leg.BILD,
                     "offSet": robot.Torso.LEGOFFSET,
-                    "zIndex":1
+                    "zIndex": 1
                 }
             ];
             var stats = convertRobotStats(robot);
@@ -854,8 +854,7 @@ app.filter("trust",
     }
 ]);
 
-app.directive(
-    "bnRepeatDelimiter",
+app.directive("bnRepeatDelimiter",
     function() {
         // I compile the list, injecting in the conditionally
         // visible delimiter onto the end of the template.
@@ -889,8 +888,7 @@ app.directive(
             priority: 1001,
             restirct: "A"
         });
-    }
-);
+    });
 
 function Helper() {
     this.GetRandomInt = function(min, max) {
