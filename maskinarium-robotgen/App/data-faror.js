@@ -1,4 +1,4 @@
-﻿var farorData = {
+﻿window.farorData = {
     "faror": [
         {
             "name": "Hushållsdrönare",

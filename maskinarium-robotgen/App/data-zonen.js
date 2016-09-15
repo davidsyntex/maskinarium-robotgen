@@ -1,1 +1,1 @@
-﻿var zonenData = {};
+﻿window.zonenData = {};

@@ -1,4 +1,4 @@
-﻿var generalData = {
+﻿window.generalData = {
     "artifacts": [
         { "name": "Antidepressiva tabletter", "weight": 1 },
         { "name": "Armborst", "weight": 1 },
