@@ -16,7 +16,7 @@ function Robot() {
         Data.Robot = dataStoreService.getRobot();
     };
     // Priviliged functions
-    this.GetRandomRobot = function () {
+    this.GetRandomRobot = function() {
         robot.Head = getRandomHead();
         robot.Torso = getRandomTorso();
         robot.Leg = getRandomLeg();
@@ -356,7 +356,7 @@ app.controller("genlabController",
             var array;
             var sum = 0;
             if (input.indexOf("T6") !== -1) {
-                input = input.replace("T6", helper.GetRandomInt(1, 7));
+                input = input.replace("T6", helper.RullaT6());
             }
 
             if (input.indexOf("hot") !== -1) {
@@ -406,7 +406,7 @@ app.controller("zonController",
 ]);
 app.controller("farorController",
 [
-    "$scope", "RobotService", "DataStoreService", function ($scope, RobotService, DataStoreService) {
+    "$scope", "RobotService", "DataStoreService", function($scope, RobotService, DataStoreService) {
         var robotService = RobotService;
         var helper = new Helper();
         var Data = {};
@@ -483,7 +483,7 @@ app.controller("farorController",
 
         };
 
-        $scope.GetRandomRobot = function () {
+        $scope.GetRandomRobot = function() {
             robotService.Robot(DataStoreService);
             var robot = robotService.GetRandomRobot();
 
@@ -748,7 +748,7 @@ app.controller("farorController",
 ]);
 app.controller("robotController",
 [
-    "$scope", "RobotService","DataStoreService", function($scope, RobotService, DataStoreService) {
+    "$scope", "RobotService", "DataStoreService", function($scope, RobotService, DataStoreService) {
         var robotService = RobotService;
         var Data = {};
         //Data.General = DataStoreService.getGeneral();
@@ -786,7 +786,7 @@ app.controller("robotController",
             return robot;
         }
 
-        $scope.GetRandomRobot = function () {
+        $scope.GetRandomRobot = function() {
             robotService.Robot(DataStoreService);
             $scope.Robot = robotService.GetRandomRobot();
             $scope.Robot.Visual = {};
@@ -927,6 +927,12 @@ function Helper() {
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max-- - min)) + min;
+    };
+    this.RullaT6 = function() {
+        return this.GetRandomInt(0, 6) + 1;
+    };
+    this.RullaT66 = function() {
+        return (this.RullaT6() * 10) + this.RullaT6();
     };
     this.GetRandomLetter = function() {
         var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ";

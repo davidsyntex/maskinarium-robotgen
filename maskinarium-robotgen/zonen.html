@@ -6,7 +6,8 @@
     <title>RoBoT GeN</title>
     <link href="Content/bootstrap.css" rel="stylesheet">
     <link href="Content/Site.css" rel="stylesheet">
-    <link href="Content/zon.css" rel="stylesheet">
+    <link href="Content/faror.css" rel="stylesheet">
+    <link href="Content/font-awesome.css" rel="stylesheet">
     <script src="Scripts/modernizr-2.6.2.js"></script>
     <script src="Scripts/angular.js" type="text/javascript"></script>
     <script src="Scripts/angular-sanitize.min.js" type="text/javascript"></script>
@@ -17,231 +18,337 @@
     <script src="Scripts/NameSets/robot_set.js"></script>
     <script src="Scripts/NameSets/mittlandare_set.js"></script>
     <script src="App/app.js"></script>
-    <script src="App/data-zonen.js"></script>
+    <script src="App/data-robot.js"></script>
+    <script src="App/data-faror.js"></script>
+    <script src="App/data-general.js"></script>
 </head>
 <body class="container-fluid" ng-app="robotgen">
-    <div ng-controller="appController">
-        <nav class="navbar navbar-inverse">
-            <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index.html">MUTANT</a>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li ng-repeat="link in Links">
-                            <a href="{{link.path}}">{{link.name}}</a>
-                        </li>
-                    </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
+<div ng-controller="appController">
+    <nav class="navbar navbar-inverse">
         <div class="container">
-            <p class="computah">
-                {{Version}}
-            </p>
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">MUTANT</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li ng-repeat="link in Links">
+                        <a href="{{link.path}}">{{link.name}}</a>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container">
+        <p class="computah">
+            {{Version}}
+        </p>
+    </div>
+</div>
+<div ng-controller="farorController" class="container">
+<h1>FAROR</h1>
+<div class="row">
+    <div class="col-xs-12">
+        <p>Enkel och rolig förklarande text som beskriver vad man kan göra på sidan.</p>
+    </div>
+    <div class="col-xs-12 col-md-6">
+        <h2 class="rbt-btn" ng-click="RollThreat()">Visa faror från Maskinarium</h2>
+    </div>
+    <div class="col-xs-12 col-md-6">
+        <h2 class="rbt-btn" ng-click="GetRandomRobot()">Slumpa Robot</h2>
+    </div>
+</div>
+<div class="row sheet" ng-show="ChosenDanger != null">
+<div class="col-xs-12">
+    <h3>Vald fara</h3>
+</div>
+<div class="col-xs-12">
+    <div class="modules row">
+        <div class="col-xs-12">
+            <h4>{{ChosenDanger.Name}}</h4>
         </div>
     </div>
-    <div ng-controller="zonController" class="container">
-        <h1>ZONEN GEN</h1>
-        <div class="row">
-            <div class="col-xs-12">
+    <div class="modules row">
+        <div class="col-xs-12 col-sm-8" id="chosenDangerStats">
+            <p>{{ChosenDanger.Description}}</p>
+            <div ng-repeat="item in ChosenDanger.Inline track by $index">
+                <h5>{{item.name}}</h5>
+                <p><span ng-repeat="(key, value) in item.properties" bn-repeat-delimiter=","><strong>{{key}}</strong>: {{value}}</span><span ng-show="item.description">, {{item.description}}</span>
+            </div>
+            <div ng-repeat="item in ChosenDanger.BlockValues track by $index">
                 <p>
-                    Slumpa fram Zonsektorer WIP
+                    <strong>{{item.name}}: </strong><span ng-repeat="(key, value) in item.properties" bn-repeat-delimiter=",">{{key}}: {{value}}</span>
                 </p>
             </div>
-            <div class="col-xs-12 col-md-4">
-                <h2 class="rbt-btn" ng-click="RollThreat()">Slumpa Zonsektor</h2>
+            <div ng-repeat="item in ChosenDanger.Block track by $index">
+                <p>
+                    <strong>{{item.name}}: </strong><span ng-repeat="(key, value) in item.properties" bn-repeat-delimiter=","><span ng-bind-html="value.toString() | trust"></span></span>
+                </p>
             </div>
-        </div>
-    </div>
-    <!--
-    <div class="row">
-        <div class="col-xs-12 col-md-6 robot-visuals" ng-style="{'height':calc(100%-Robot.Torso.HEADOFFSET-Robot.Torso.LEGOFFSET)}">
-            {{Robot.VisualHeight}}
-            <div class="part part-head part-image">
-                <div>
-                    <img class="part-head-image" src="{{Robot.Head.BILD}}" alt="{{Robot.Head.NAMN}}">
-                </div>
-                <div class="navigation left" ng-click="GetPreviousHead()">
-                    <span>[‹]</span>
-                </div>
-                <div class="navigation right" ng-click="GetNextHead()">
-                    <span>[›]</span>
-                </div>
-            </div>
-            <div class="part part-torso part-image" ng-style="{'margin-top': Robot.Torso.HEADOFFSET}">
-                <div>
-                    <img src="{{Robot.Torso.BILD}}" alt="{{Robot.Torso.NAMN}}">
-                </div>
-                <div class="navigation left" ng-click="GetPreviousTorso()">
-                    <span>[‹]</span>
-                </div>
-                <div class="navigation right" ng-click="GetNextTorso()">
-                    <span>[›]</span>
-                </div>
-            </div>
-            <div class="part part-image part-leg" ng-style="{'margin-top': Robot.Torso.LEGOFFSET}">
-                <div>
-                    <img src="{{Robot.Leg.BILD}}" alt="{{Robot.Leg.NAMN}}">
-                </div>
-                <div class="navigation left" ng-click="GetPreviousLeg()">
-                    <span>[‹]</span>
-                </div>
-                <div class="navigation right" ng-click="GetNextLeg()">
-                    <span>[›]</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-md-6 sheet">
-            <div class="row">
-                <div class="col-xs-12 row">
-                    <div class="col-xs-12">
-                        <h2>Designation: {{Robot.Name}} - {{Robot.CodeName}}</h2>
-                    </div>
-                    <div class="col-xs-9">
-                        <ul class="stats">
-                            <li>Modell: {{Robot.Model.Name}}</li>
-                            <li>Färg: {{Robot.Model.Colour}}</li>
-                            <li>Röst: {{Robot.Model.Voice}}</li>
-                            <li>Kännetecken: {{Robot.Model.Features}}</li>
-                            <li>Personlighet: {{Robot.Model.Personality}}</li>
-                            <li>Hierarki: {{Robot.TotalaStats.Hiearchy}}</li>
-                        </ul>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <ul class="stats">
-                            <li>SRV: {{Robot.TotalaStats.SRV}}</li>
-                            <li>STB: {{Robot.TotalaStats.STB}}</li>
-                            <li>PRC: {{Robot.TotalaStats.PRC}}</li>
-                            <li>NTV: {{Robot.TotalaStats.NTV}}</li>
-                            <li>MOD: {{Robot.TotalaStats.MOD}}</li>
-                            <li>SKYDD: {{Robot.TotalaStats.SKYDD}}</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 sheet">
-                    <h3>Chassi</h3>
-                    <ul class="stats">
-                        <li>HUVUD: {{Robot.Head.NAMN}}</li>
-                        <li>BÅL: {{Robot.Torso.NAMN}}</li>
-                        <li>UNDERREDE: {{Robot.Leg.NAMN}}</li>
-                    </ul>
-                    <p>{{Robot.Description}}</p>
-                </div>
-            </div>
-            <div class="col-xs-12 row">
-                <h3>Program</h3>
-                <table class="table skill">
+            <div ng-show="ChosenDanger.Weapons">
+                <table class="table">
                     <tr>
-                        <th>Program</th>
-                        <th>PV</th>
+                        <th>Vapen</th>
+                        <th>Bonus</th>
+                        <th>Skada</th>
+                        <th>Räckvidd</th>
+                        <th>Kommentar</th>
                     </tr>
-                    <tr ng-repeat="program in Robot.Programs track by $index">
-                        <td>{{program.Name}} ({{program.Attribute}})</td>
-                        <td>{{program.Value}}</td>
+                    <tr ng-repeat="vapen in ChosenDanger.Weapons track by $index">
+                        <td>{{vapen.name}}</td>
+                        <td>+{{vapen.bonus}}</td>
+                        <td>{{vapen.skada}}</td>
+                        <td>{{vapen.reach}}</td>
+                        <td>
+                            <span ng-repeat="kommentar in vapen.kommentar">{{kommentar}}</span>
+                        </td>
                     </tr>
                 </table>
             </div>
         </div>
+        <div class="col-xs-12 col-sm-4 visuals-container" id="chosenDangerVisuals">
+            <div ng-repeat="image in ChosenDanger.Image" class="visuals-container-image">
+                <img ng-style="{'margin-top':image.offSet,'z-index':image.zIndex}" class="part-head-image" src="{{image.path}}" alt="{{ChosenDanger.Name}}">
+            </div>
+        </div>
     </div>
-    <div class="row sheet">
+    <div class="row">
         <div class="col-xs-12">
-            <h3>Moduler</h3>
+            <h3>Faror</h3>
         </div>
-        <div class="col-xs-12" ng-repeat="module in Robot.Modules track by $index">
-            <div id="modules" ng-class="Robot.Visual.ModulesClass">
-                <h4>{{module.Name}}</h4>
-                <p>{{module.Description}}</p>
-                <ul ng-repeat="option in module.Options"></ul>
-            </div>
-            <div ng-if="$index%(Robot.Visual.ModulesClassNumber)===0 &amp;&amp; $index != 0">
-                <div class="clearfix visible-xs-block"></div>
-            </div>
-        </div>
-    </div>
-    <div class="row sheet">
-        <div class="col-xs-6">
-            <h3>Sekundärfunktioner</h3>
-            <div class="col-xs-12" ng-repeat="secondaryFunction in Robot.SecondaryFunctions track by $index">
-                <div class="modules">
-                    <h4>{{secondaryFunction.Name}}</h4>
-                    <p ng-bind-html="secondaryFunction.Description | trust"></p>
+        <div class="col-xs-12">
+            <form>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-search"></i>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Sök Fara" ng-model="searchDanger.name" ng-minlength="1">
+                    </div>
                 </div>
-
-            </div>
-        </div>
-        <div class="col-xs-6">
-            <h3>Utrustning</h3>
-            <ul class="stats">
-                <li>
-                    Belastning: {{Robot.Model.Artifacts.length}} /
-                    {{Robot.TotalaStats.Belastning}}
-                </li>
-            </ul>
-            <ul ng-repeat="art in Robot.Model.Artifacts"></ul>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-8">
-            <h2>TYPISKA MASKINER</h2>
-        </div>
-        <div class="col-xs-4">
-            <h3 class="rbt-btn" ng-click="FillRobotList(5)">BYGG FLER</h3>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <table class="table">
+            </form>
+            <table class="table table-striped table-hover">
                 <tr>
-                    <th>DESIGNATION</th>
-                    <th>SRV</th>
-                    <th>STB</th>
-                    <th>PRC</th>
-                    <th>NTV</th>
-                    <th>MOD</th>
-                    <th>SKYDD</th>
+                    <th>
+                        <a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                            Namn
+                            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="sortType = 'type'; sortReverse = !sortReverse">
+                            Typ
+                            <span ng-show="sortType == 'type' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'type' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="sortType = 'book'; sortReverse = !sortReverse">
+                            Bok
+                            <span ng-show="sortType == 'book' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'book' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </th>
                 </tr>
-                <tr ng-repeat="robot in RobotList">
-                    <td>{{robot.Name}} - {{robot.CodeName}}</td>
-                    <td>{{robot.TotalaStats.SRV}}</td>
-                    <td>{{robot.TotalaStats.STB}}</td>
-                    <td>{{robot.TotalaStats.PRC}}</td>
-                    <td>{{robot.TotalaStats.NTV}}</td>
-                    <td>{{robot.TotalaStats.MOD}}</td>
-                    <td>{{robot.TotalaStats.SKYDD}}</td>
+                <tr ng-repeat="fara in filtered = (Faror | orderBy:sortType:sortReverse | filter:searchDanger) track by $index" ng-click="ShowDanger(fara.name)">
+                    <td>{{fara.name}}</td>
+                    <td>{{fara.type}} <span ng-if="fara.subtype">({{fara.subtype}})</span></td>
+                    <td>{{fara.book}} ({{fara.bookContraction}})</td>
                 </tr>
             </table>
         </div>
     </div>
-    <table class="table">
-        <tr>
-            <th>Vapen</th>
-            <th>Bonus</th>
-            <th>Skada</th>
-            <th>Räckvidd</th>
-            <th>Kommentar</th>
-        </tr>
-        <tr ng-repeat="vapen in Data.Weapons track by $index">
-            <td>{{vapen.Name}}</td>
-            <td>+{{vapen.Bonus}}</td>
-            <td>{{vapen.Skada}}</td>
-            <td>{{vapen.Reach}}</td>
-            <td>
-                <span ng-repeat="kommentar in vapen.Kommentar">{{kommentar}}</span>
-            </td>
-        </tr>
-    </table>
-    </div>-->
+</div>
+<!--
+<div class="row">
+    <div class="col-xs-12 col-md-6 robot-visuals" ng-style="{'height':calc(100%-Robot.Torso.HEADOFFSET-Robot.Torso.LEGOFFSET)}">
+        {{Robot.VisualHeight}}
+        <div class="part part-head part-image">
+            <div>
+                <img class="part-head-image" src="{{Robot.Head.BILD}}" alt="{{Robot.Head.NAMN}}">
+            </div>
+            <div class="navigation left" ng-click="GetPreviousHead()">
+                <span>[‹]</span>
+            </div>
+            <div class="navigation right" ng-click="GetNextHead()">
+                <span>[›]</span>
+            </div>
+        </div>
+        <div class="part part-torso part-image" ng-style="{'margin-top': Robot.Torso.HEADOFFSET}">
+            <div>
+                <img src="{{Robot.Torso.BILD}}" alt="{{Robot.Torso.NAMN}}">
+            </div>
+            <div class="navigation left" ng-click="GetPreviousTorso()">
+                <span>[‹]</span>
+            </div>
+            <div class="navigation right" ng-click="GetNextTorso()">
+                <span>[›]</span>
+            </div>
+        </div>
+        <div class="part part-image part-leg" ng-style="{'margin-top': Robot.Torso.LEGOFFSET}">
+            <div>
+                <img src="{{Robot.Leg.BILD}}" alt="{{Robot.Leg.NAMN}}">
+            </div>
+            <div class="navigation left" ng-click="GetPreviousLeg()">
+                <span>[‹]</span>
+            </div>
+            <div class="navigation right" ng-click="GetNextLeg()">
+                <span>[›]</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-6 sheet">
+        <div class="row">
+            <div class="col-xs-12 row">
+                <div class="col-xs-12">
+                    <h2>Designation: {{Robot.Name}} - {{Robot.CodeName}}</h2>
+                </div>
+                <div class="col-xs-9">
+                    <ul class="stats">
+                        <li>Modell: {{Robot.Model.Name}}</li>
+                        <li>Färg: {{Robot.Model.Colour}}</li>
+                        <li>Röst: {{Robot.Model.Voice}}</li>
+                        <li>Kännetecken: {{Robot.Model.Features}}</li>
+                        <li>Personlighet: {{Robot.Model.Personality}}</li>
+                        <li>Hierarki: {{Robot.TotalaStats.Hiearchy}}</li>
+                    </ul>
+                </div>
+                <div class="col-xs-3 col-md-3">
+                    <ul class="stats">
+                        <li>SRV: {{Robot.TotalaStats.SRV}}</li>
+                        <li>STB: {{Robot.TotalaStats.STB}}</li>
+                        <li>PRC: {{Robot.TotalaStats.PRC}}</li>
+                        <li>NTV: {{Robot.TotalaStats.NTV}}</li>
+                        <li>MOD: {{Robot.TotalaStats.MOD}}</li>
+                        <li>SKYDD: {{Robot.TotalaStats.SKYDD}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 sheet">
+                <h3>Chassi</h3>
+                <ul class="stats">
+                    <li>HUVUD: {{Robot.Head.NAMN}}</li>
+                    <li>BÅL: {{Robot.Torso.NAMN}}</li>
+                    <li>UNDERREDE: {{Robot.Leg.NAMN}}</li>
+                </ul>
+                <p>{{Robot.Description}}</p>
+            </div>
+        </div>
+        <div class="col-xs-12 row">
+            <h3>Program</h3>
+            <table class="table skill">
+                <tr>
+                    <th>Program</th>
+                    <th>PV</th>
+                </tr>
+                <tr ng-repeat="program in Robot.Programs track by $index">
+                    <td>{{program.Name}} ({{program.Attribute}})</td>
+                    <td>{{program.Value}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row sheet">
+    <div class="col-xs-12">
+        <h3>Moduler</h3>
+    </div>
+    <div class="col-xs-12" ng-repeat="module in Robot.Modules track by $index">
+        <div id="modules" ng-class="Robot.Visual.ModulesClass">
+            <h4>{{module.Name}}</h4>
+            <p>{{module.Description}}</p>
+            <ul ng-repeat="option in module.Options"></ul>
+        </div>
+        <div ng-if="$index%(Robot.Visual.ModulesClassNumber)===0 &amp;&amp; $index != 0">
+            <div class="clearfix visible-xs-block"></div>
+        </div>
+    </div>
+</div>
+<div class="row sheet">
+    <div class="col-xs-6">
+        <h3>Sekundärfunktioner</h3>
+        <div class="col-xs-12" ng-repeat="secondaryFunction in Robot.SecondaryFunctions track by $index">
+            <div class="modules">
+                <h4>{{secondaryFunction.Name}}</h4>
+                <p ng-bind-html="secondaryFunction.Description | trust"></p>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <h3>Utrustning</h3>
+        <ul class="stats">
+            <li>
+                Belastning: {{Robot.Model.Artifacts.length}} /
+                {{Robot.TotalaStats.Belastning}}
+            </li>
+        </ul>
+        <ul ng-repeat="art in Robot.Model.Artifacts"></ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-8">
+        <h2>TYPISKA MASKINER</h2>
+    </div>
+    <div class="col-xs-4">
+        <h3 class="rbt-btn" ng-click="FillRobotList(5)">BYGG FLER</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <table class="table">
+            <tr>
+                <th>DESIGNATION</th>
+                <th>SRV</th>
+                <th>STB</th>
+                <th>PRC</th>
+                <th>NTV</th>
+                <th>MOD</th>
+                <th>SKYDD</th>
+            </tr>
+            <tr ng-repeat="robot in RobotList">
+                <td>{{robot.Name}} - {{robot.CodeName}}</td>
+                <td>{{robot.TotalaStats.SRV}}</td>
+                <td>{{robot.TotalaStats.STB}}</td>
+                <td>{{robot.TotalaStats.PRC}}</td>
+                <td>{{robot.TotalaStats.NTV}}</td>
+                <td>{{robot.TotalaStats.MOD}}</td>
+                <td>{{robot.TotalaStats.SKYDD}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>Vapen</th>
+        <th>Bonus</th>
+        <th>Skada</th>
+        <th>Räckvidd</th>
+        <th>Kommentar</th>
+    </tr>
+    <tr ng-repeat="vapen in Data.Weapons track by $index">
+        <td>{{vapen.Name}}</td>
+        <td>+{{vapen.Bonus}}</td>
+        <td>{{vapen.Skada}}</td>
+        <td>{{vapen.Reach}}</td>
+        <td>
+            <span ng-repeat="kommentar in vapen.Kommentar">{{kommentar}}</span>
+        </td>
+    </tr>
+</table>
+</div>-->
+</div>
+</div>
 </body>
 </html>
