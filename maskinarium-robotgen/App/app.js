@@ -237,8 +237,8 @@ function DataStore() {
     if (typeof window.farorData !== "undefined" || window.farorData !== null) {
         Data.Faror = window.farorData;
     }
-    if (typeof window.itemData !== "undefined" || window.itemData !== null) {
-        Data.Items = window.itemData;
+    if (typeof window.itemsData !== "undefined" || window.itemsData !== null) {
+        Data.Items = window.itemsData;
     }
     this.getRobot = function() {
         return angular.copy(Data.Robot);
@@ -251,6 +251,9 @@ function DataStore() {
     };
     this.getFaror = function() {
         return angular.copy(Data.Faror);
+    };
+    this.getItemsData = function() {
+        return angular.copy(Data.Items);
     };
 }
 
@@ -281,12 +284,6 @@ app.controller("appController",
     }
 ]);
 
-app.controller("itemController",
-[
-    "$scope", function($scope) {
-        $scope.hej = "hej";
-    }
-]);
 app.controller("genlabController",
 [
     "$scope", "DataStoreService", function($scope, DataStoreService) {
@@ -398,10 +395,35 @@ app.controller("genlabController",
         }
     }
 ]);
-app.controller("zonController",
+app.controller("zonenController",
 [
     "$scope", function($scope) {
-        var Data = zonenData;
+        console.log("prylar");
+    }
+]);
+app.controller("prylarController",
+[
+    "$scope", "DataStoreService", function($scope, DataStoreService) {
+        var helper = new Helper();
+        var Data = {};
+        Data.Items = DataStoreService.getItemsData();
+        $scope.Things = {};
+        $scope.Things.Artifacts = [];
+        $scope.RollArtifacts = function (book) {
+            $scope.Things.Artifacts = [];
+            switch (book) {
+                case 'maskinarium':
+                    {
+                $scope.Things.Artifacts.push(Data.Items.artifacts[helper.GetRandomInt(0, Data.Items.artifacts.length)]);
+                
+                break;
+            }
+            default:
+            {
+                console.log("default");
+            }
+            }
+        };
     }
 ]);
 app.controller("farorController",
