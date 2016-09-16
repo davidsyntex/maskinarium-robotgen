@@ -236,10 +236,13 @@ h4
 .skill
 {
     font-family: "FuturaStd-Book";
-    font-size: 0.75rem;
-    font-weight: bold;
     letter-spacing: 0.05rem;
-    text-transform: uppercase;
+    font-weight: bold;
+    -webkit-font-variant: all-small-caps;
+    -moz-font-variant: all-small-caps;
+    -ms-font-variant: all-small-caps;
+    -o-font-variant: all-small-caps;
+    font-variant: all-small-caps;
 }
 
 .table.skill
@@ -248,9 +251,10 @@ h4
     font-weight: normal;
 }
 
-.reference
+.reference, .ref
 {
     font-style: italic;
+
 }
 
 .symbol

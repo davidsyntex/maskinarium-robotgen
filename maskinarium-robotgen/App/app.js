@@ -291,8 +291,6 @@ app.controller("genlabController",
         var data = {};
         data.Genlab = DataStoreService.getGenlab();
         data.General = DataStoreService.getGeneral();
-        console.log(data.Genlab);
-        console.log(DataStoreService);
         $scope.Meeting = { Terrain: {} };
         $scope.Meeting.ThreatLevel = 0;
 
@@ -409,6 +407,7 @@ app.controller("prylarController",
         data.Items = DataStoreService.getItemsData();
         $scope.Things = {};
         $scope.Things.Artifacts = [];
+
         $scope.RollArtifacts = function(book) {
             $scope.Things.Artifacts = [];
             switch (book) {
@@ -420,30 +419,7 @@ app.controller("prylarController",
                 for (var item in $scope.Things.Artifacts) {
                     if ($scope.Things.Artifacts.hasOwnProperty(item)) {
                         if (angular.isString($scope.Things.Artifacts[item].effect)) {
-                            if ($scope.Things.Artifacts[item].effect.indexOf("{/}") !== -1) {
-                                $scope.Things.Artifacts[item].effect = $scope.Things.Artifacts[item].effect
-                                    .replaceAll("{/}", "<span class=\"symbol\">/</span>");
-                            }
-                            if ($scope.Things.Artifacts[item].effect.indexOf("{bekämpa}") !== -1) {
-
-                                $scope.Things.Artifacts[item].effect = $scope.Things.Artifacts[item].effect
-                                    .replaceAll("{bekämpa}", "<span class=\"skill\">bekämpa</span>");
-                            }
-                            if ($scope.Things.Artifacts[item].effect.indexOf("{reparera}") !== -1) {
-
-                                $scope.Things.Artifacts[item].effect = $scope.Things.Artifacts[item].effect
-                                    .replaceAll("{reparera}", "<span class=\"skill\">reparera</span>");
-                            }
-                            if ($scope.Things.Artifacts[item].effect.indexOf("{tillverka}") !== -1) {
-
-                                $scope.Things.Artifacts[item].effect = $scope.Things.Artifacts[item].effect
-                                    .replaceAll("{tillverka}", "<span class=\"skill\">tillverka</span>");
-                            }
-                            if ($scope.Things.Artifacts[item].effect.indexOf("{mecka}") !== -1) {
-
-                                $scope.Things.Artifacts[item].effect = $scope.Things.Artifacts[item].effect
-                                    .replaceAll("{mecka}", "<span class=\"skill\">mecka</span>");
-                            }
+                            $scope.Things.Artifacts[item].effect = getHtmlOutput($scope.Things.Artifacts[item].effect);
                         }
                     }
                 }
@@ -458,6 +434,110 @@ app.controller("prylarController",
             }
 
             }
+        };
+
+        function getHtmlOutput(string) {
+            var matchIndex;
+            var hasMoreSkillMatches = true;
+            while (hasMoreSkillMatches) {
+                matchIndex = string.indexOf("{skill:");
+
+                if (matchIndex !== -1) {
+                    string = helper.CSSify(string);
+                } else {
+                    hasMoreSkillMatches = false;
+                }
+            }
+
+            var hasMoreSymbolMatches = true;
+            while (hasMoreSymbolMatches) {
+                matchIndex = string.indexOf("{symbol:");
+
+                if (matchIndex !== -1) {
+                    string = helper.CSSify(string);
+                } else {
+                    hasMoreSymbolMatches = false;
+                }
+            }
+
+            var hasMoreRefMatches = true;
+            while (hasMoreRefMatches) {
+                matchIndex = string.indexOf("{ref:");
+
+                if (matchIndex !== -1) {
+                    string = helper.CSSify(string);
+                } else {
+                    hasMoreRefMatches = false;
+                }
+            }
+            return string;
+        }
+
+        ////////// D E V /////////////
+        $scope._dev = {};
+        $scope._dev
+            .area =
+            "KLASERPISTOL\r\nEtt smäckert högteknologiskt skjutvapen \r\nmed enhandsgrepp. Vapnet avlossar en \r\nröd ljusstråle som avger ett fräsande ljud.\r\nEffekt: Lätt vapen med prylbonus +3 på \r\nbeskjutaoch vapenskada 2. Lång räckvidd. \r\nEnergivapen. Elektroniskt föremål. \r\nUN-krav: Tek nologi 70\r\nUN-bonus: Tek nologi +T6";
+        $scope._dev.done = "";
+        $scope._dev.do = function() {
+            var lines = $scope._dev.area.match(/^.*([\n\r]+|$)/gm);
+            for (var line in lines) {
+                if (lines.hasOwnProperty(line)) {
+                    lines[line] = lines[line].replace(/\r\n/g, "");
+                    lines[line] = lines[line].replace(/\n/g, "");
+                }
+            }
+            var header = lines[0].slice();
+            if (header[0] === "K") {
+                header = header.slice(1, header.length);
+            }
+
+            lines.shift();
+
+            var effektLine = -1;
+            for (var i = 0; i < lines.length; i++) {
+                if (lines[i].indexOf("Effekt:") !== -1) {
+                    effektLine = i;
+                }
+            }
+
+            var desc = "";
+            for (var j = 0; j < effektLine; j++) {
+                desc += lines[j];
+                lines.shift();
+            }
+
+            var unkravline = -1;
+            for (var i2 = 0; i2 < lines.length; i2++) {
+                if (lines[i2].indexOf("UN-krav:") !== -1) {
+                    unkravline = i2;
+                }
+            }
+
+            var effekt = "";
+            for (var k = 0; k < unkravline - 1; k++) {
+                console.log(lines[k]);
+                effekt += lines[k];
+                lines.shift();
+            }
+            lines.shift();
+
+            if (lines[0].indexOf("Tek nologi")) {
+                lines[0] = lines[0].replace("Tek nologi", "Teknologi");
+            }
+            if (lines[1].indexOf("Tek nologi")) {
+                lines[1] = lines[1].replace("Tek nologi", "Teknologi");
+            }
+
+            var obj = {
+                "name": header,
+                "book": "Maskinarium",
+                "description": desc,
+                "effect": getHtmlOutput(effekt),
+                "unKrav": lines[0],
+                "unBonus": lines[1]
+            };
+            $scope._dev.done = JSON.stringify(obj, null, 4) + ",";
         };
     }
 ]);
@@ -1044,6 +1124,12 @@ function Helper() {
         }
 
         return this.Capitalize(item1 + " " + separator + " " + item2);
+    };
+    this.CSSify = function(string) {
+        var stuffInside = string.match(/{([^}]*)}/);
+        var tokens = stuffInside[1].split(":");
+        string = string.replaceAll(stuffInside[0], "<span class=\"" + tokens[0] + "\">" + tokens[1] + "</span>");
+        return string;
     };
 }
 
