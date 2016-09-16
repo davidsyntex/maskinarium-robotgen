@@ -72,6 +72,7 @@
     <Content Include="App\data-faror.js" />
     <Content Include="App\data-general.js" />
     <Content Include="App\data-genlab.js" />
+    <Content Include="App\data-item.js" />
     <Content Include="App\data-robot.js" />
     <Content Include="App\data-zonen.js" />
     <Content Include="Content\bootstrap.css" />
@@ -109,6 +110,8 @@
     <Content Include="Content\Images\Chassikort---U_Rougell_M19.png" />
     <Content Include="Content\Images\Chassikort---U_Skrot.png" />
     <Content Include="Content\Images\Danger\drönarsoldat-methusalem.png" />
+    <Content Include="Content\Images\Danger\hushallsrobot.png" />
+    <Content Include="Content\prylar.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\zon.css" />
     <Content Include="genlab_moten.html" />

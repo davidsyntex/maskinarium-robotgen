@@ -4,7 +4,7 @@
 function Robot() {
     var robot = {};
     var helper = new Helper();
-    var Data = {};
+    var data = {};
     robot.ProgramPoints = 10;
     robot.TotalaStats = {};
     robot.Name = "ROBiTiCA";
@@ -12,8 +12,8 @@ function Robot() {
     robot.Modules = [];
     // Public functions
     this.Robot = function(dataStoreService) {
-        Data = {};
-        Data.Robot = dataStoreService.getRobot();
+        data = {};
+        data.Robot = dataStoreService.getRobot();
     };
     // Priviliged functions
     this.GetRandomRobot = function() {
@@ -31,7 +31,7 @@ function Robot() {
         robot.Modules = [];
         robot.FakeModules = 0;
 
-        robot.Programs = Data.Robot.Programs.slice();
+        robot.Programs = data.Robot.Programs.slice();
         robot.Programs.push(robot.Model.SpecialProgram);
         generateProgramValues();
 
@@ -44,20 +44,20 @@ function Robot() {
 
     // Private functions
     function getRandomHead() {
-        return Data.Robot.Heads[helper.GetRandomInt(0, Data.Robot.Heads.length)];
+        return data.Robot.Heads[helper.GetRandomInt(0, data.Robot.Heads.length)];
     }
 
     function getRandomTorso() {
-        return Data.Robot.Torsos[helper.GetRandomInt(0, Data.Robot.Torsos.length)];
+        return data.Robot.Torsos[helper.GetRandomInt(0, data.Robot.Torsos.length)];
     };
 
     function getRandomLeg() {
-        return Data.Robot.Legs[helper.GetRandomInt(0, Data.Robot.Legs.length)];
+        return data.Robot.Legs[helper.GetRandomInt(0, data.Robot.Legs.length)];
     }
 
     function getRandomStartModel() {
         var model = {};
-        var randomStartModell = Data.Robot.StartModels[helper.GetRandomInt(0, Data.Robot.StartModels.length)];
+        var randomStartModell = data.Robot.StartModels[helper.GetRandomInt(0, data.Robot.StartModels.length)];
         model.Name = randomStartModell.Name;
 
         model.Colour = randomStartModell.Colour[helper.GetRandomInt(0, randomStartModell.Colour.length)];
@@ -65,7 +65,7 @@ function Robot() {
         model.Voice = helper.GetTwoRandomStrings(randomStartModell.Voice, "och");
         model.Personality = randomStartModell
             .Personality[helper.GetRandomInt(0, randomStartModell.Personality.length)];
-        model.SecondaryFunctions = Data.Robot.SecondaryFunctions[model.Name];
+        model.SecondaryFunctions = data.Robot.SecondaryFunctions[model.Name];
         model.Artifacts = randomStartModell.Artifacts;
         model.Hiearchy = randomStartModell.Hiearchy;
         model.SpecialProgram = randomStartModell.SpecialProgram;
@@ -95,8 +95,8 @@ function Robot() {
     }
 
     function getFirstSecondaryFunction() {
-        return Data.Robot.SecondaryFunctions[robot.Model
-            .Name][helper.GetRandomInt(0, Data.Robot.SecondaryFunctions[robot.Model.Name].length)];
+        return data.Robot.SecondaryFunctions[robot.Model
+            .Name][helper.GetRandomInt(0, data.Robot.SecondaryFunctions[robot.Model.Name].length)];
     }
 
     // Returns a random and unique Secondary Function from either the Models SFs or General SFs
@@ -105,7 +105,7 @@ function Robot() {
         var hasNotFoundUnique = true;
 
         var listOfFunctions = robot.Model.SecondaryFunctions.slice();
-        listOfFunctions.push.apply(listOfFunctions, Data.Robot.SecondaryFunctions.Allmänna);
+        listOfFunctions.push.apply(listOfFunctions, data.Robot.SecondaryFunctions.Allmänna);
 
         while (hasNotFoundUnique === true) {
             secondaryFunction = listOfFunctions[helper.GetRandomInt(0, listOfFunctions.length)];
@@ -121,9 +121,9 @@ function Robot() {
     function getRandomModules(numberOfModules) {
         var moduleList = robot.Modules.slice();
         for (var i = 0; i < numberOfModules; i++) {
-            var module = Data.Robot.Modules[helper.GetRandomInt(0, Data.Robot.Modules.length)];
+            var module = data.Robot.Modules[helper.GetRandomInt(0, data.Robot.Modules.length)];
             while (helper.Contains(moduleList, module)) {
-                module = Data.Robot.Modules[helper.GetRandomInt(0, Data.Robot.Modules.length)];
+                module = data.Robot.Modules[helper.GetRandomInt(0, data.Robot.Modules.length)];
             }
             if (i >= numberOfModules - 1 && robot.FakeModules === 1) {
                 module.Name += " (Attrapp)";
@@ -221,39 +221,39 @@ function Robot() {
 }
 
 function DataStore() {
-    var Data = {};
+    var data = {};
     if (typeof window.generalData !== "undefined" || window.generalData !== null) {
-        Data.General = window.generalData;
+        data.General = window.generalData;
     }
     if (typeof window.zonenData !== "undefined" || window.zonenData !== null) {
-        Data.Zonen = window.zonenData;
+        data.Zonen = window.zonenData;
     }
     if (typeof window.genlabData !== "undefined" || window.genlabData !== null) {
-        Data.Genlab = window.genlabData;
+        data.Genlab = window.genlabData;
     }
     if (typeof window.robotData !== "undefined" || window.robotData !== null) {
-        Data.Robot = window.robotData;
+        data.Robot = window.robotData;
     }
     if (typeof window.farorData !== "undefined" || window.farorData !== null) {
-        Data.Faror = window.farorData;
+        data.Faror = window.farorData;
     }
     if (typeof window.itemsData !== "undefined" || window.itemsData !== null) {
-        Data.Items = window.itemsData;
+        data.Items = window.itemsData;
     }
     this.getRobot = function() {
-        return angular.copy(Data.Robot);
+        return angular.copy(data.Robot);
     };
     this.getGeneral = function() {
-        return angular.copy(Data.General);
+        return angular.copy(data.General);
     };
     this.getGenlab = function() {
-        return angular.copy(Data.Genlab);
+        return angular.copy(data.Genlab);
     };
     this.getFaror = function() {
-        return angular.copy(Data.Faror);
+        return angular.copy(data.Faror);
     };
     this.getItemsData = function() {
-        return angular.copy(Data.Items);
+        return angular.copy(data.Items);
     };
 }
 
@@ -288,16 +288,16 @@ app.controller("genlabController",
 [
     "$scope", "DataStoreService", function($scope, DataStoreService) {
         var helper = new Helper();
-        var Data = {};
-        Data.Genlab = DataStoreService.getGenlab();
-        Data.General = DataStoreService.getGeneral();
-        console.log(Data.Genlab);
+        var data = {};
+        data.Genlab = DataStoreService.getGenlab();
+        data.General = DataStoreService.getGeneral();
+        console.log(data.Genlab);
         console.log(DataStoreService);
         $scope.Meeting = { Terrain: {} };
         $scope.Meeting.ThreatLevel = 0;
 
         $scope.RollRandomThreat = function() {
-            $scope.Meeting.Terrain = helper.GetRandomFromList(Data.Genlab.terrain);
+            $scope.Meeting.Terrain = helper.GetRandomFromList(data.Genlab.terrain);
             $scope.RollThreat();
         };
         $scope.RollThreat = function() {
@@ -333,7 +333,7 @@ app.controller("genlabController",
                     }
                 }
                 if ($scope.Meeting.Description.indexOf("{artifact}") !== -1) {
-                    var artifact = Helper.GetRandomFromList(Data.General.artifacts);
+                    var artifact = Helper.GetRandomFromList(data.General.artifacts);
 
                     $scope.Meeting.Description = $scope.Meeting.Description
                         .replace("{artifact}",
@@ -385,7 +385,7 @@ app.controller("genlabController",
             var randomMeetingNumber = helper.GetRandomFromList(meetings);
             var randomMeeting = {};
 
-            Data.Genlab.meetings.forEach(function(meeting) {
+            data.Genlab.meetings.forEach(function(meeting) {
                 if (meeting.number === randomMeetingNumber) {
                     randomMeeting = meeting;
                 }
@@ -398,30 +398,65 @@ app.controller("genlabController",
 app.controller("zonenController",
 [
     "$scope", function($scope) {
-        console.log("prylar");
+        console.log($scope);
     }
 ]);
 app.controller("prylarController",
 [
     "$scope", "DataStoreService", function($scope, DataStoreService) {
         var helper = new Helper();
-        var Data = {};
-        Data.Items = DataStoreService.getItemsData();
+        var data = {};
+        data.Items = DataStoreService.getItemsData();
         $scope.Things = {};
         $scope.Things.Artifacts = [];
-        $scope.RollArtifacts = function (book) {
+        $scope.RollArtifacts = function(book) {
             $scope.Things.Artifacts = [];
             switch (book) {
-                case 'maskinarium':
-                    {
-                $scope.Things.Artifacts.push(Data.Items.artifacts[helper.GetRandomInt(0, Data.Items.artifacts.length)]);
-                
+            case "maskinarium":
+            {
+                $scope.Things.Artifacts.push(data.Items.artifacts[helper
+                    .GetRandomInt(0, data.Items.artifacts.length)]);
+
+                for (var item in $scope.Things.Artifacts) {
+                    if ($scope.Things.Artifacts.hasOwnProperty(item)) {
+                        if (angular.isString($scope.Things.Artifacts[item].effect)) {
+                            if ($scope.Things.Artifacts[item].effect.indexOf("{/}") !== -1) {
+                                $scope.Things.Artifacts[item].effect = $scope.Things.Artifacts[item].effect
+                                    .replaceAll("{/}", "<span class=\"symbol\">/</span>");
+                            }
+                            if ($scope.Things.Artifacts[item].effect.indexOf("{bekämpa}") !== -1) {
+
+                                $scope.Things.Artifacts[item].effect = $scope.Things.Artifacts[item].effect
+                                    .replaceAll("{bekämpa}", "<span class=\"skill\">bekämpa</span>");
+                            }
+                            if ($scope.Things.Artifacts[item].effect.indexOf("{reparera}") !== -1) {
+
+                                $scope.Things.Artifacts[item].effect = $scope.Things.Artifacts[item].effect
+                                    .replaceAll("{reparera}", "<span class=\"skill\">reparera</span>");
+                            }
+                            if ($scope.Things.Artifacts[item].effect.indexOf("{tillverka}") !== -1) {
+
+                                $scope.Things.Artifacts[item].effect = $scope.Things.Artifacts[item].effect
+                                    .replaceAll("{tillverka}", "<span class=\"skill\">tillverka</span>");
+                            }
+                            if ($scope.Things.Artifacts[item].effect.indexOf("{mecka}") !== -1) {
+
+                                $scope.Things.Artifacts[item].effect = $scope.Things.Artifacts[item].effect
+                                    .replaceAll("{mecka}", "<span class=\"skill\">mecka</span>");
+                            }
+                        }
+                    }
+                }
+
                 break;
             }
+
             default:
             {
                 console.log("default");
+                break;
             }
+
             }
         };
     }
@@ -431,9 +466,9 @@ app.controller("farorController",
     "$scope", "RobotService", "DataStoreService", function($scope, RobotService, DataStoreService) {
         var robotService = RobotService;
         var helper = new Helper();
-        var Data = {};
-        Data.Faror = DataStoreService.getFaror();
-        Data.General = DataStoreService.getGeneral();
+        var data = {};
+        data.Faror = DataStoreService.getFaror();
+        data.General = DataStoreService.getGeneral();
         $scope.sortType = "Name"; // set the default sort type
         $scope.sortReverse = false; // set the default sort order
         $scope.searchDanger = {}; // set the default search/filter term
@@ -449,7 +484,7 @@ app.controller("farorController",
 
         $scope.Faror = [];
 
-        Data.Faror.faror.forEach(function(danger) {
+        data.Faror.faror.forEach(function(danger) {
             $scope.Faror.push(danger);
         });
 
@@ -599,11 +634,11 @@ app.controller("farorController",
                 "block": []
             };
 
-            $scope.Faror.forEach(function(danger, index, dangers) {
+            $scope.Faror.forEach(function(danger) {
                 if (danger.name === $scope.ChosenDanger.Name) {
                     if (danger.hasOwnProperty("statBlock")) {
 
-                        danger.statBlock.forEach(function(stat, statIndex, statArray) {
+                        danger.statBlock.forEach(function(stat) {
                             if (stat.hasOwnProperty("type")) {
                                 switch (stat.type) {
                                 case "inline":
@@ -753,12 +788,12 @@ app.controller("farorController",
         function getWeapons(list) {
             var weaponNames = [];
 
-            Data.General.weapons.forEach(function(weapon) {
+            data.General.weapons.forEach(function(weapon) {
                 weaponNames.push(weapon.name);
             });
 
             list.forEach(function(thing) {
-                Data.General.weapons.forEach(function(weapon) {
+                data.General.weapons.forEach(function(weapon) {
                     if (weapon.name === thing) {
                         $scope.ChosenDanger.Weapons.push(weapon);
                     }
@@ -772,9 +807,6 @@ app.controller("robotController",
 [
     "$scope", "RobotService", "DataStoreService", function($scope, RobotService, DataStoreService) {
         var robotService = RobotService;
-        var Data = {};
-        //Data.General = DataStoreService.getGeneral();
-        //Data.Robot = DataStoreService.getRobot();
         $scope.Robot = {};
         $scope.RobotList = [];
         $scope.FillRobotList = fillRobotList;
@@ -795,8 +827,8 @@ app.controller("robotController",
             robot.Leg = $scope.Data.Legs[Helper.GetRandomInt(0, $scope.Data.Legs.length)];
 
             robot["TotalaStats"] = [];
-            robot["Name"] = getRandomName();
-            robot["CodeName"] = getRandomCodeName();
+            //robot["Name"] = getRandomName();
+            //robot["CodeName"] = getRandomCodeName();
 
             robot["TotalaStats"]["SRV"] = robot.Head.SRV + robot.Torso.SRV + robot.Leg.SRV;
             robot["TotalaStats"]["STB"] = robot.Head.STB + robot.Torso.STB + robot.Leg.STB;

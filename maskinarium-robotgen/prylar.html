@@ -21,65 +21,69 @@
     <script src="App/data-item.js"></script>
 </head>
 <body class="container-fluid" ng-app="robotgen">
-<div ng-controller="appController">
-    <nav class="navbar navbar-inverse">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">MUTANT</a>
-            </div>
+    <div ng-controller="appController">
+        <nav class="navbar navbar-inverse">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">MUTANT</a>
+                </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li ng-repeat="link in Links">
-                        <a href="{{link.path}}">{{link.name}}</a>
-                    </li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
-    <div class="container">
-        <p class="computah">
-            {{Version}}
-        </p>
-    </div>
-</div>
-<div ng-controller="prylarController" class="container">
-    <h1>Prylar</h1>
-    <div class="row">
-        <div class="col-xs-12">
-            <p>Enkel och rolig förklarande text som beskriver vad man kan göra på sidan.</p>
-        </div>
-        <div class="col-xs-12 col-md-6">
-            <h2 class="rbt-btn" ng-click="RollArtifacts('maskinarium')">Slumpa artefakt</h2>
-        </div>
-        <div class="col-xs-12 col-md-6">
-            <!--<h2 class="rbt-btn" ng-click="GetRandomRobot()">Slumpa Robot</h2>-->
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li ng-repeat="link in Links">
+                            <a href="{{link.path}}">{{link.name}}</a>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <div class="container">
+            <p class="computah">
+                {{Version}}
+            </p>
         </div>
     </div>
-    <div class="row sheet">
-        <div class="col-xs-12">
-            <div class="modules row">
-                <div class="col-xs-12" ng-repeat="art in Things.Artifacts">
-                    <h3>¤ {{art.name}} ({{art.book}})</h3>
-                    <p>{{art.description}}</p>
-                    <p><strong>Effekt: </strong>{{art.effect}}
-                    </p>
-                    <p><strong>UN-krav: </strong>{{art.unKrav}}
-                    </p>
-                    <p><strong>UN-bonus: </strong>{{art.unBonus}}
-                    </p>
+    <div ng-controller="prylarController" class="container">
+        <h1>Prylar</h1>
+        <div class="row">
+            <div class="col-xs-12">
+                <p>Enkel och rolig förklarande text som beskriver vad man kan göra på sidan.</p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <h2 class="rbt-btn" ng-click="RollArtifacts('maskinarium')">Slumpa artefakt</h2>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <!--<h2 class="rbt-btn" ng-click="GetRandomRobot()">Slumpa Robot</h2>-->
+            </div>
+        </div>
+        <div class="row sheet">
+            <div class="col-xs-12">
+                <div class="modules row">
+                    <div class="col-xs-12" ng-repeat="art in Things.Artifacts">
+                        <h3>¤ {{art.name}} ({{art.book}})</h3>
+                        <p>{{art.description}}</p>
+                        <p>
+                            <strong>Effekt: </strong>
+                            <span ng-bind-html="art.effect | trust"></span>
+                        </p>
+                        <p>
+                            <strong>UN-krav: </strong>{{art.unKrav}}
+                        </p>
+                        <p>
+                            <strong>UN-bonus: </strong>{{art.unBonus}}
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>
