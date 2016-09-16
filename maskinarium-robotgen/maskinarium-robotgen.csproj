@@ -114,6 +114,7 @@
     <Content Include="Content\prylar.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\zon.css" />
+    <Content Include="dev.html" />
     <Content Include="genlab_moten.html" />
     <Content Include="index.html" />
     <Content Include="faror.html" />
