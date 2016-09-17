@@ -2,6 +2,7 @@
     "artifacts": [
         {
             "name": "Chockbatong",
+            "type": "Artefakt",
             "source": "Maskinarium",
             "description": "Ett högteknologiskt närstridsvapen byggt för att oskadliggöra målet utan att döda.",
             "effect":
@@ -10,6 +11,7 @@
             "unBonus": "Teknologi +T6"
         },{
             "name": "Chockbatong",
+            "type": "Artefakt",
             "source": "År Noll",
             "description": "Ett högteknologiskt närstridsvapen byggt för att oskadliggöra målet utan att döda.",
             "effect":
@@ -18,6 +20,7 @@
             "unBonus": "Teknologi +T6"
         },{
             "name": "Chockbatong",
+            "type": "Artefakt",
             "source": "Tredje part",
             "description": "Ett högteknologiskt närstridsvapen byggt för att oskadliggöra målet utan att döda.",
             "effect":
@@ -26,6 +29,7 @@
             "unBonus": "Teknologi +T6"
         }, {
             "name": "CHOCKPISTOL",
+            "type": "Artefakt",
             "source": "Maskinarium",
             "description":
                 "En handhållen apparat i grön och grå komposit. Olika huvuden i repig metall går att fästa längst fram. Huvudena förvaras i hylsor i handtaget.",
@@ -35,6 +39,7 @@
             "unBonus": "Teknologi +T6"
         }, {
             "name": "DRAGMASKIN",
+            "type": "Artefakt",
             "source": "Maskinarium",
             "description":
                 "En liten och diskret tingest som går att dölja i handen. Avfyrar en stark ljusblixt som fräser högt, avsedd att tillfälligt slå ut människor och levande varelser utan att skada dem.",
@@ -44,6 +49,7 @@
             "unBonus": "Teknologi +T6"
         }, {
             "name": "DRÖNARVERKTYG",
+            "type": "Artefakt",
             "source": "Maskinarium",
             "description":
                 "En liten drönare som går att hålla i en griphand. Chassit är repigt och den ström av uppmuntrande förslag den lille gynnaren häver ur sig tar aldrig slut. Drönare fäller på kommando ut det verktyg användaren behöver.",
@@ -53,6 +59,7 @@
             "unBonus": "Teknologi +T6"
         }, {
             "name": "ELEKTRONIKVERKTYG",
+            "type": "Artefakt",
             "source": "Maskinarium",
             "description":
                 "En liten verktygssats med högteknologiska verktyg för reparation av elektroniska apparater, som laserpistoler och robotar.",
@@ -63,6 +70,7 @@
             //----------------------
         }, {
             "name": "E-PACK",
+            "type": "Artefakt",
             "source": "Maskinarium",
             "description": "En knappt knytnävsstor kapsel i plast och kompositmaterial.",
             "effect":
@@ -71,6 +79,7 @@
             "unBonus": "Teknologi +T6"
         }, {
             "name": "GUMMIBAND",
+            "type": "Artefakt",
             "source": "Maskinarium",
             "description": "En elastisk grön snodd som är rejält tålig, bra att ha till hemmabyggen.",
             "effect":
@@ -80,6 +89,7 @@
         },
         {
             "name": "LASERGEVÄR",
+            "type": "Artefakt",
             "source": "Maskinarium",
             "description":
                 "Ett mycket långt och smalt högteknologiskt skjutvapen i ljus plast och komposit. Kräver tvåhandsgrepp. När det avfyras syns en röd ljusstråle som avger ett fräsande ljud",
@@ -89,6 +99,7 @@
             "unBonus": "Teknologi +T6"
         }, {
             "name": "LASERPISTOL",
+            "type": "Artefakt",
             "source": "Maskinarium",
             "description":
                 "Ett smäckert högteknologiskt skjutvapen med enhandsgrepp. Vapnet avlossar en röd ljusstråle som avger ett fräsande ljud.",
@@ -97,5 +108,27 @@
             "unKrav": "Teknologi 50",
             "unBonus": "Teknologi +T6"
         },
-    ]
+    ],
+    "junk":[
+    {
+        "name": "T-Shirt",
+        "type":"Skrot",
+        "source": "Tredje part",
+        "description": "En tshirt"
+    },{
+        "name": "T-Shirt",
+        "type":"Skrot",
+        "source": "Tredje part",
+        "description": "En tshirt"
+    },{
+        "name": "T-Shirt",
+        "type": "Skrot",
+        "source": "Tredje part",
+        "description": "En tshirt"
+    },{
+        "name": "T-Shirt",
+        "type": "Skrot",
+        "source": "Tredje part",
+        "description": "En tshirt"
+    },]
 };
