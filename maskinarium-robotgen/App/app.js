@@ -406,7 +406,9 @@ app.controller("prylarController",
         var data = {};
         data.Items = DataStoreService.getItemsData();
         $scope.Things = {};
+        $scope.Things.Sources = getSources();
         $scope.Things.Artifacts = [];
+        $scope.Things.Junk = [];
 
         $scope.RollArtifacts = function(book) {
             $scope.Things.Artifacts = [];
@@ -435,6 +437,17 @@ app.controller("prylarController",
 
             }
         };
+
+        function getSources() {
+            var sources = [];
+            console.log(data.Items);
+            data.Items.artifacts.forEach(function(element, index, array) {
+                if (!helper.Contains(sources,element.source)) {
+                    sources.push(element.source);
+                }
+            });
+            return sources;
+        }
 
         function getHtmlOutput(string) {
             var matchIndex;

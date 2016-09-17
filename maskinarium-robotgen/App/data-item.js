@@ -2,7 +2,23 @@
     "artifacts": [
         {
             "name": "Chockbatong",
-            "book": "Maskinarium",
+            "source": "Maskinarium",
+            "description": "Ett högteknologiskt närstridsvapen byggt för att oskadliggöra målet utan att döda.",
+            "effect":
+                "Prylbonus +2 på {skill:bekämpa}, vapenskada 1. Vid träff tar levande varelser T6 poäng stress utöver vanlig skada. Rustning skyddar inte mot chockbatongens effekter, men det gör däremot monsters pansar. Energivapen. Elektroniskt föremål.",
+            "unKrav": "Teknologi 60",
+            "unBonus": "Teknologi +T6"
+        },{
+            "name": "Chockbatong",
+            "source": "År Noll",
+            "description": "Ett högteknologiskt närstridsvapen byggt för att oskadliggöra målet utan att döda.",
+            "effect":
+                "Prylbonus +2 på {skill:bekämpa}, vapenskada 1. Vid träff tar levande varelser T6 poäng stress utöver vanlig skada. Rustning skyddar inte mot chockbatongens effekter, men det gör däremot monsters pansar. Energivapen. Elektroniskt föremål.",
+            "unKrav": "Teknologi 60",
+            "unBonus": "Teknologi +T6"
+        },{
+            "name": "Chockbatong",
+            "source": "Tredje part",
             "description": "Ett högteknologiskt närstridsvapen byggt för att oskadliggöra målet utan att döda.",
             "effect":
                 "Prylbonus +2 på {skill:bekämpa}, vapenskada 1. Vid träff tar levande varelser T6 poäng stress utöver vanlig skada. Rustning skyddar inte mot chockbatongens effekter, men det gör däremot monsters pansar. Energivapen. Elektroniskt föremål.",
@@ -10,7 +26,7 @@
             "unBonus": "Teknologi +T6"
         }, {
             "name": "CHOCKPISTOL",
-            "book": "Maskinarium",
+            "source": "Maskinarium",
             "description":
                 "En handhållen apparat i grön och grå komposit. Olika huvuden i repig metall går att fästa längst fram. Huvudena förvaras i hylsor i handtaget.",
             "effect":
@@ -19,7 +35,7 @@
             "unBonus": "Teknologi +T6"
         }, {
             "name": "DRAGMASKIN",
-            "book": "Maskinarium",
+            "source": "Maskinarium",
             "description":
                 "En liten och diskret tingest som går att dölja i handen. Avfyrar en stark ljusblixt som fräser högt, avsedd att tillfälligt slå ut människor och levande varelser utan att skada dem.",
             "effect":
@@ -28,7 +44,7 @@
             "unBonus": "Teknologi +T6"
         }, {
             "name": "DRÖNARVERKTYG",
-            "book": "Maskinarium",
+            "source": "Maskinarium",
             "description":
                 "En liten drönare som går att hålla i en griphand. Chassit är repigt och den ström av uppmuntrande förslag den lille gynnaren häver ur sig tar aldrig slut. Drönare fäller på kommando ut det verktyg användaren behöver.",
             "effect":
@@ -37,7 +53,7 @@
             "unBonus": "Teknologi +T6"
         }, {
             "name": "ELEKTRONIKVERKTYG",
-            "book": "Maskinarium",
+            "source": "Maskinarium",
             "description":
                 "En liten verktygssats med högteknologiska verktyg för reparation av elektroniska apparater, som laserpistoler och robotar.",
             "effect":
@@ -47,7 +63,7 @@
             //----------------------
         }, {
             "name": "E-PACK",
-            "book": "Maskinarium",
+            "source": "Maskinarium",
             "description": "En knappt knytnävsstor kapsel i plast och kompositmaterial.",
             "effect":
                 "Ger elström till energivapen (se kapitel 6 i {ref:Bok 1: Roboten}). Kan även fylla på en robots interna energikälla med T6 EP, men blir då uttömd. Småsak",
@@ -55,7 +71,7 @@
             "unBonus": "Teknologi +T6"
         }, {
             "name": "GUMMIBAND",
-            "book": "Maskinarium",
+            "source": "Maskinarium",
             "description": "En elastisk grön snodd som är rejält tålig, bra att ha till hemmabyggen.",
             "effect":
                 "Ger +1 på {skill:tillverka} och {skill:mecka} (enbart vid tillverkning, ej reparation), men kan bara användas till en pryl i taget.",
@@ -64,7 +80,7 @@
         },
         {
             "name": "LASERGEVÄR",
-            "book": "Maskinarium",
+            "source": "Maskinarium",
             "description":
                 "Ett mycket långt och smalt högteknologiskt skjutvapen i ljus plast och komposit. Kräver tvåhandsgrepp. När det avfyras syns en röd ljusstråle som avger ett fräsande ljud",
             "effect":
@@ -73,7 +89,7 @@
             "unBonus": "Teknologi +T6"
         }, {
             "name": "LASERPISTOL",
-            "book": "Maskinarium",
+            "source": "Maskinarium",
             "description":
                 "Ett smäckert högteknologiskt skjutvapen med enhandsgrepp. Vapnet avlossar en röd ljusstråle som avger ett fräsande ljud.",
             "effect":

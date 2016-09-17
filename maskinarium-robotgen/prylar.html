@@ -63,12 +63,19 @@
             <div class="col-xs-12 col-md-6">
                 <!--<h2 class="rbt-btn" ng-click="GetRandomRobot()">Slumpa Robot</h2>-->
             </div>
+            <div class="col-xs-12 col-md-6">
+                VÄLJA SKROT ELLER ARTEFAKT SAMT BESTÄMMA PROCENT ARTEFAKTER MOT SKROT
+            </div> <div class="col-xs-12 col-md-6">
+                <div ng-repeat="source in Things.Sources">
+                    <input type="checkbox"/>{{source}}
+                </div>
+            </div>
         </div>
         <div class="row sheet">
             <div class="col-xs-12">
                 <div class="modules row">
                     <div class="col-xs-12" ng-repeat="art in Things.Artifacts">
-                        <h3>¤ {{art.name}} ({{art.book}})</h3>
+                        <h3>¤ {{art.name}} ({{art.source}})</h3>
                         <p>{{art.description}}</p>
                         <p>
                             <strong>Effekt: </strong>
@@ -82,6 +89,21 @@
                         </p>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row sheet">
+            <div class="col-xs-12">
+                <p>Slå 1T6 för att avgöra dess skick:</p>
+                <ol>
+                    <li>Vid första anblick kan den verka ok, men i själva verket är den troligen rent av farlig.</li>
+                    <li>Uruselt skick. Håller knappt ihop, sönderrostad, tom burk eller liknande.</li>
+                    <li>Dålig skick. Går nog att använda men risken är nog överhängande att den går sönder, smakar konstigt eller tar helt slut.</li>
+                    <li>Ok skick. Välanvänd men funktionsduglig ännu. Har objektet någon typ av innehåll, så finns nog ca hälften kvar.</li>
+                    <li>Bra skick. Prima vara, och även om eventuella bäst-före datum gått ut, så är den nog helt ok att använda, dricka eller så. Stor del av innehållet finns kvar.</li>
+                    <li>Perfekt nyskick, kanske t o m helt oöppnad och fortfarande inplastad. Ovanligt välbevarad under omständigheterna.</li>
+                </ol>
+
+
             </div>
         </div>
     </div>
