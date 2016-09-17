@@ -21,70 +21,103 @@
     <script src="App/data-item.js"></script>
 </head>
 <body class="container-fluid" ng-app="robotgen">
-    <div ng-controller="appController">
-        <nav class="navbar navbar-inverse">
-            <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index.html">MUTANT</a>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li ng-repeat="link in Links">
-                            <a href="{{link.path}}">{{link.name}}</a>
-                        </li>
-                    </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
+<div ng-controller="appController">
+    <nav class="navbar navbar-inverse">
         <div class="container">
-            <p class="computah">
-                {{Version}}
-            </p>
-        </div>
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">MUTANT</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li ng-repeat="link in Links">
+                        <a href="{{link.path}}">{{link.name}}</a>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container">
+        <p class="computah">
+            {{Version}}
+        </p>
     </div>
-    <div ng-controller="prylarController" class="container">
-        <h1>Prylar</h1>
-        <div class="row">
-            <div class="col-xs-12">
-                <p>Enkel och rolig förklarande text som beskriver vad man kan göra på sidan.</p>
-            </div>
-            <div class="col-xs-12 col-md-6">
-                <h2 class="rbt-btn" ng-click="RollArtifacts('maskinarium')">Slumpa artefakt</h2>
-            </div>
-            <div class="col-xs-12 col-md-6">
-                <!--<h2 class="rbt-btn" ng-click="GetRandomRobot()">Slumpa Robot</h2>-->
-            </div>
-            <div class="col-xs-12 col-md-6">
-                VÄLJA SKROT ELLER ARTEFAKT SAMT BESTÄMMA PROCENT ARTEFAKTER MOT SKROT
-            </div> <div class="col-xs-12 col-md-6">
-                <div ng-repeat="source in Things.Sources">
-                    <input type="checkbox"/>{{source}}
+</div>
+<div ng-controller="prylarController" class="container">
+    <h1>Prylar</h1>
+    <div class="row">
+        <div class="col-xs-12">
+            <p>Enkel och rolig förklarande text som beskriver vad man kan göra på sidan.</p>
+        </div>
+        <div class="col-xs-12 col-md-12">
+            <h2 class="rbt-btn" ng-click="RollArtifacts('maskinarium')">Slumpa artefakt</h2>
+        </div>
+        <div class="col-xs-12 col-md-12">
+            <!--<h2 class="rbt-btn" ng-click="GetRandomRobot()">Slumpa Robot</h2>-->
+        </div>
+        <div class="col-xs-12 col-md-12">
+            VÄLJA SKROT ELLER ARTEFAKT SAMT BESTÄMMA PROCENT ARTEFAKTER MOT SKROT
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <h2>Källor</h2>
+            <div class="form-inline">
+                <div class="form-group">
+                    <div class="checkbox" ng-repeat="source in Things.Sources">
+                        <label for="{{source}}" class="checkbox-inline">
+                            <input type="checkbox"
+                                   id="{{source}}"
+                                   name="ThingsSources[]"
+                                   value="{{source}}"
+                                   ng-checked="Things.SelectedSources.indexOf(source) > -1"
+                                   ng-click="toggleSelection(source)"> {{source}}
+                        </label>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <h2>Typer</h2>
+            <div class="form-inline">
+                <div class="form-group">
+                    <div class="checkbox" ng-repeat="type in Things.Types">
+                        <label for="{{type}}" class="checkbox-inline">
+                            <input type="checkbox"
+                                   id="{{type}}"
+                                   name="ThingsTypes[]"
+                                   value="{{type}}"
+                                   ng-checked="Things.SelectedTypes.indexOf(type) > -1"
+                                   ng-click="toggleTypeSelection(type)"> {{type}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
         <div class="row sheet">
             <div class="col-xs-12">
                 <div class="modules row">
-                    <div class="col-xs-12" ng-repeat="art in Things.Artifacts">
+                    <div class="col-xs-12" ng-repeat="art in Things.RandomList">
                         <h3>¤ {{art.name}} ({{art.source}})</h3>
-                        <p>{{art.description}}</p>
                         <p>
+                            <strong>{{art.type}}</strong>
+                        </p>
+                        <p ng-if="art.description">{{art.description}}</p>
+                        <p ng-if="art.effect">
                             <strong>Effekt: </strong>
                             <span ng-bind-html="art.effect | trust"></span>
                         </p>
-                        <p>
+                        <p ng-if="art.unKrav">
                             <strong>UN-krav: </strong>{{art.unKrav}}
                         </p>
-                        <p>
+                        <p ng-if="art.unBonus">
                             <strong>UN-bonus: </strong>{{art.unBonus}}
                         </p>
                     </div>
@@ -93,7 +126,7 @@
         </div>
         <div class="row sheet">
             <div class="col-xs-12">
-                <p>Slå 1T6 för att avgöra dess skick:</p>
+                <h4>Slå 1T6 för att avgöra dess skick:</h4>
                 <ol>
                     <li>Vid första anblick kan den verka ok, men i själva verket är den troligen rent av farlig.</li>
                     <li>Uruselt skick. Håller knappt ihop, sönderrostad, tom burk eller liknande.</li>

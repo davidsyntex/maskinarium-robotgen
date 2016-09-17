@@ -407,45 +407,90 @@ app.controller("prylarController",
         data.Items = DataStoreService.getItemsData();
         $scope.Things = {};
         $scope.Things.Sources = getSources();
-        $scope.Things.Artifacts = [];
-        $scope.Things.Junk = [];
+        $scope.Things.SelectedSources = $scope.Things.Sources.slice();
+
+        $scope.Things.Types = ["Artefakt", "Skrot"];
+        $scope.Things.SelectedTypes = ["Artefakt", "Skrot"];
+
+        $scope.Things.Filtered = [];
+        $scope.Things.RandomList = [];
 
         $scope.RollArtifacts = function(book) {
-            $scope.Things.Artifacts = [];
-            switch (book) {
-            case "maskinarium":
-            {
-                $scope.Things.Artifacts.push(data.Items.artifacts[helper
-                    .GetRandomInt(0, data.Items.artifacts.length)]);
+            $scope.Things.Filtered = filterThings();
+            if ($scope.Things.Filtered.length <= 0) {
+                return;
+            }
+            $scope.Things.RandomList = [];
 
-                for (var item in $scope.Things.Artifacts) {
-                    if ($scope.Things.Artifacts.hasOwnProperty(item)) {
-                        if (angular.isString($scope.Things.Artifacts[item].effect)) {
-                            $scope.Things.Artifacts[item].effect = getHtmlOutput($scope.Things.Artifacts[item].effect);
+            $scope.Things.RandomList.push($scope.Things.Filtered[helper
+                .GetRandomInt(0, $scope.Things.Filtered.length)]);
+
+            for (var thing in $scope.Things.RandomList) {
+                if ($scope.Things.RandomList.hasOwnProperty(thing)) {
+                    if (angular.isString($scope.Things.RandomList[thing].effect)) {
+                        $scope.Things.RandomList[thing].effect = getHtmlOutput($scope.Things.RandomList[thing].effect);
+                    }
+                }
+            }
+        };
+
+        $scope.toggleSelection = function(source) {
+            var idx = $scope.Things.SelectedSources.indexOf(source);
+            // is currently selected
+            if (idx > -1) {
+                $scope.Things.SelectedSources.splice(idx, 1);
+            }
+            // is newly selected
+            else {
+                $scope.Things.SelectedSources.push(source);
+            }
+        };
+        $scope.toggleTypeSelection = function(type) {
+            var idx = $scope.Things.SelectedTypes.indexOf(type);
+            // is currently selected
+            if (idx > -1) {
+                $scope.Things.SelectedTypes.splice(idx, 1);
+            }
+            // is newly selected
+            else {
+                $scope.Things.SelectedTypes.push(type);
+            }
+        };
+
+        function filterThings() {
+            var filtered = [];
+            for (var type in data.Items) {
+                if (data.Items.hasOwnProperty(type)) {
+                    var items = data.Items[type];
+                    for (var item in items) {
+                        if (items.hasOwnProperty(item)) {
+                            if (helper.Contains($scope.Things.SelectedSources, items[item].source) &&
+                                helper.Contains($scope.Things.SelectedTypes, items[item].type)) {
+                                filtered.push(items[item]);
+                            }
                         }
                     }
                 }
-
-                break;
             }
-
-            default:
-            {
-                console.log("default");
-                break;
-            }
-
-            }
-        };
+            console.log(filtered);
+            return filtered;
+        }
 
         function getSources() {
             var sources = [];
             console.log(data.Items);
-            data.Items.artifacts.forEach(function(element, index, array) {
-                if (!helper.Contains(sources,element.source)) {
-                    sources.push(element.source);
+            for (var type in data.Items) {
+                if (data.Items.hasOwnProperty(type)) {
+                    data.Items[type].forEach(function(element, index, array) {
+                        if (!helper.Contains(sources, element.source)) {
+                            sources.push(element.source);
+                            console.log(element);
+                        }
+                    });
                 }
-            });
+            }
+
+
             return sources;
         }
 
