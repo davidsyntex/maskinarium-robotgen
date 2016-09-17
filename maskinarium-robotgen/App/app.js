@@ -472,30 +472,27 @@ app.controller("prylarController",
                     }
                 }
             }
-            console.log(filtered);
             return filtered;
         }
 
         function getSources() {
             var sources = [];
-            console.log(data.Items);
             for (var type in data.Items) {
                 if (data.Items.hasOwnProperty(type)) {
                     data.Items[type].forEach(function(element, index, array) {
                         if (!helper.Contains(sources, element.source)) {
                             sources.push(element.source);
-                            console.log(element);
                         }
                     });
                 }
             }
-
 
             return sources;
         }
 
         function getHtmlOutput(string) {
             var matchIndex;
+
             var hasMoreSkillMatches = true;
             while (hasMoreSkillMatches) {
                 matchIndex = string.indexOf("{skill:");
