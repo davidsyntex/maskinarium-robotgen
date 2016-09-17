@@ -80,20 +80,6 @@
                 "Prylbonus +3 på {skill:beskjuta}. Vapenskada 2. Kan användas mot mål på distans (avståndsmodifikation -3). Energivapen. Elektroniskt föremål.",
             "unKrav": "Teknologi 50",
             "unBonus": "Teknologi +T6"
-        }, {
-            "name": "LASERSVETS",
-            "book": "Maskinarium",
-            "description": "En liten handtagsformad tub som slutar i rött sken syns i spetsen på pinnen när Effekt: Prylbonus +3 på reparera, tillverkaoch 2. Lätt föremål. Energivapen. Elektronisk.",
-            "effect": "Effekt: Prylbonus +3 på reparera, tillverkaoch 2. Lätt föremål. Energivapen. Elektronisk.",
-            "unKrav": "UN-krav: Teknologi 70",
-            "unBonus": "UN-bonus: Teknologi +T6"
-        }, {
-            "name": "MASERPISTOL",
-            "book": "Maskinarium",
-            "description": "Ett grovt högteknologiskt skjutvapen avlossar en energipuls som är osynlig för effekt när den träffar. beskjutaoch vapenskada 3. Kort räckvidd. UN-krav: Tek nologi 80",
-            "effect": "Effekt:Lätt vapen med prylbonus +2 på Energivapen. Elektroniskt föremål. ",
-            "unKrav": "UN-krav: Teknologi 80",
-            "unBonus": "UN-bonus: Teknologi +T6"
         },
     ]
 };
