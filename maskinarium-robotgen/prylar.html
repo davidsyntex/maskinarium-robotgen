@@ -109,7 +109,7 @@
                         <p>
                             <strong>{{art.type}}</strong>
                         </p>
-                        <p ng-if="art.description">{{art.description}}</p>
+                        <p ng-if="art.description"><span ng-bind-html="art.description | trust"></span></p>
                         <p ng-if="art.effect">
                             <strong>Effekt</strong>: <span ng-bind-html="art.effect | trust"></span>
                         </p>
