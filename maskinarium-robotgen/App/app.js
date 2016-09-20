@@ -243,6 +243,9 @@ function DataStore() {
     this.getRobot = function() {
         return angular.copy(data.Robot);
     };
+    this.getZonenData = function () {
+        return angular.copy(data.Zonen);
+    };
     this.getGeneral = function() {
         return angular.copy(data.General);
     };
@@ -395,8 +398,36 @@ app.controller("genlabController",
 ]);
 app.controller("zonenController",
 [
-    "$scope", function($scope) {
-        console.log($scope);
+    "$scope", "DataStoreService", function ($scope, DataStoreService) {
+        var helper = new Helper();
+        var data = {};
+        data = DataStoreService.getZonenData();
+        $scope.Zonen = {};
+        console.log($scope.Zonen);
+
+        var sum = 0;
+
+        for (var i = 0; i < data.environment.length; i++) {
+            sum += data.environment[i].chance;
+        }
+
+        console.log(sum);
+
+        var randomInt = helper.GetRandomInt(0, sum) + 1;
+        console.log(randomInt);
+
+        var randomEnv;
+
+        for (var j = 0; j < data.environment.length; j++) {
+            randomInt -= data.environment[j].chance;
+            if (randomInt <= 0) {
+                randomEnv = data.environment[j];
+                break;
+            }
+        }
+
+        $scope.Zonen.Environment = randomEnv;
+
     }
 ]);
 app.controller("prylarController",
