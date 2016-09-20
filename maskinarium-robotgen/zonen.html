@@ -20,57 +20,94 @@
     <script src="App/app.js"></script>
     <script src="App/data-zonen.js"></script>
     <script src="App/data-general.js"></script>
+    <script src="App/data-item.js"></script>
 </head>
 <body class="container-fluid" ng-app="robotgen">
-<div ng-controller="appController">
-    <nav class="navbar navbar-inverse">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">MUTANT</a>
-            </div>
+    <div ng-controller="appController">
+        <nav class="navbar navbar-inverse">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">MUTANT</a>
+                </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li ng-repeat="link in Links">
-                        <a href="{{link.path}}">{{link.name}}</a>
-                    </li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
-    <div class="container">
-        <p class="computah">
-            {{Version}}
-        </p>
-    </div>
-</div>
-<div ng-controller="zonenController" class="container">
-    <h1>Zonen Gen</h1>
-    <div class="row">
-        <div class="col-xs-12">
-            <p>Enkel och rolig förklarande text som beskriver vad man kan göra på sidan.</p>
-        </div>
-        <div class="col-xs-12 col-md-6">
-            <h2 class="rbt-btn" ng-click="RollThreat()">Visa faror från Maskinarium</h2>
-        </div>
-        <div class="col-xs-12 col-md-6">
-            <h2 class="rbt-btn" ng-click="GetRandomRobot()">Slumpa Robot</h2>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li ng-repeat="link in Links">
+                            <a href="{{link.path}}">{{link.name}}</a>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <div class="container">
+            <p class="computah">
+                {{Version}}
+            </p>
         </div>
     </div>
-    <div class="row sheet">
-        <div class="col-xs-12">
-            <h3>Vald fara</h3>
+    <div ng-controller="zonenController" class="container">
+        <h1>Zonen Gen</h1>
+        <div class="row">
+            <div class="col-xs-12">
+                <p>Enkel och rolig förklarande text som beskriver vad man kan göra på sidan.</p>
+            </div>
+            <div class="col-xs-12 col-md-12">
+                <h2 class="rbt-btn" ng-click="RollSector()">Slumpa Zonsektor</h2>
+            </div>
         </div>
-        <p>{{Zonen.Environment}}</p>
+        <div class="row sheet">
+            <div class="col-xs-12">
+                <h3>Sektormiljö</h3>
+                <p>Namn: {{Zonen.Environment.name ?Zonen.Environment.name : ""}}</p>
+                <p>Hot: {{Zonen.Environment.hasThreat ? "Ja" : "Nej"}}</p>
+                <p>Artefakter: {{Zonen.Environment.hasArtifact ? "Ja" : "Nej"}}</p>
+                <p>Ruintyp: {{Zonen.Environment.ruins}}</p>
+
+                <h4>{{Zonen.Ruin.name}}</h4>
+                <p>{{Zonen.Ruin.description}}</p>
+
+                <h4>Hot</h4>
+                <p>Hotnivå: {{Zonen.Threat.Level}}</p>
+                <p>Antal: {{Zonen.Threat.Amount}}</p>
+
+                <h4>Artefakter</h4>
+                <p>Antal: {{Zonen.Artifacts.Amount}}</p>
+            </div>
+        </div>
+        <div class="row sheet">
+            <div class="col-xs-6 modules row" ng-repeat="art in Zonen.Artifacts.Things">
+                <div class="col-xs-8">
+                    <h3>¤ {{art.name}} ({{art.source}})</h3>
+                    <p>
+                        <strong>{{art.type}}</strong>
+                    </p>
+                    <p ng-if="art.description"><span ng-bind-html="art.description | trust"></span></p>
+                    <p ng-if="art.effect">
+                        <strong>Effekt</strong>: <span ng-bind-html="art.effect | trust"></span>
+                    </p>
+                    <p ng-if="art.unKrav">
+                        <strong>UN-krav</strong>: {{art.unKrav}}
+                    </p>
+                    <p ng-if="art.unBonus">
+                        <strong>UN-bonus</strong>: {{art.unBonus}}
+                    </p>
+                    <p ng-if="art.special">
+                        <strong>Special</strong>: {{art.special}}
+                    </p>
+                </div>
+                <div ng-if="art.image" class="col-xs-4">
+                    <img src="{{art.image}}" alt="Artefaktens bild"/>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 </body>
 </html>

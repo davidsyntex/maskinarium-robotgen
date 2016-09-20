@@ -5,3 +5,8 @@ h1,h2,h3,h4
 {
     color: #e58900;
 }
+
+.modules img
+{
+    width: 100%;
+}

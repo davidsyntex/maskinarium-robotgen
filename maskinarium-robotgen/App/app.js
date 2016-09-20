@@ -134,7 +134,6 @@ function Robot() {
         return moduleList;
     }
 
-
     function calculateStats() {
         robot.TotalaStats.SRV = 0;
         robot.TotalaStats.STB = 0;
@@ -220,6 +219,74 @@ function Robot() {
     }
 }
 
+function Thing() {
+    var thing = {};
+    var helper = new Helper();
+    var data = {};
+
+    this.Thing = function(dataStoreService) {
+        data = dataStoreService.getItemsData();
+        data.Sources = getSources();
+        thing.SelectedSources = data.Sources.slice();
+        data.Types = ["Artefakt", "Skrot"];
+    };
+    this.GetTypes = function() {
+        return data.Types.slice();
+    };
+    this.GetSources = function() {
+        return data.Sources.slice();
+    };
+    this.GetRandomThing = function(selectedSources, selectedTypes) {
+        var filteredList = getFilteredListOfThings(selectedSources, selectedTypes);
+
+        if (filteredList.length <= 0) {
+            return -1;
+        }
+        var randomThing = filteredList[helper.GetRandomInt(0, filteredList.length)];
+
+        if (randomThing.hasOwnProperty("effect")) {
+            if (angular.isString(randomThing.effect)) {
+                randomThing.effect = helper.GetHtmlOutput(randomThing.effect);
+            }
+        }
+
+
+        return randomThing;
+    };
+
+    function getFilteredListOfThings(selectedSources, selectedTypes) {
+        var filtered = [];
+        for (var type in data) {
+            if (data.hasOwnProperty(type)) {
+                var items = data[type];
+                for (var item in items) {
+                    if (items.hasOwnProperty(item)) {
+                        if (helper.Contains(selectedSources, items[item].source) &&
+                            helper.Contains(selectedTypes, items[item].type)) {
+                            filtered.push(items[item]);
+                        }
+                    }
+                }
+            }
+        }
+        return filtered;
+    };
+
+    function getSources() {
+        var sources = [];
+        for (var type in data) {
+            if (data.hasOwnProperty(type)) {
+                data[type].forEach(function(element, index, array) {
+                    if (!helper.Contains(sources, element.source)) {
+                        sources.push(element.source);
+                    }
+                });
+            }
+        }
+        return sources;
+    }
+}
+
 function DataStore() {
     var data = {};
     if (typeof window.generalData !== "undefined" || window.generalData !== null) {
@@ -243,7 +310,7 @@ function DataStore() {
     this.getRobot = function() {
         return angular.copy(data.Robot);
     };
-    this.getZonenData = function () {
+    this.getZonenData = function() {
         return angular.copy(data.Zonen);
     };
     this.getGeneral = function() {
@@ -398,71 +465,98 @@ app.controller("genlabController",
 ]);
 app.controller("zonenController",
 [
-    "$scope", "DataStoreService", function ($scope, DataStoreService) {
+    "$scope", "DataStoreService", "ThingService", function($scope, DataStoreService, ThingService) {
         var helper = new Helper();
+        var thingService = ThingService;
+        thingService.Thing(DataStoreService);
+
         var data = {};
         data = DataStoreService.getZonenData();
+
         $scope.Zonen = {};
-        console.log($scope.Zonen);
+        $scope.Zonen.Threat = {};
+        $scope.Zonen.Artifacts = {};
 
-        var sum = 0;
-
-        for (var i = 0; i < data.environment.length; i++) {
-            sum += data.environment[i].chance;
-        }
-
-        console.log(sum);
-
-        var randomInt = helper.GetRandomInt(0, sum) + 1;
-        console.log(randomInt);
-
-        var randomEnv;
-
-        for (var j = 0; j < data.environment.length; j++) {
-            randomInt -= data.environment[j].chance;
-            if (randomInt <= 0) {
-                randomEnv = data.environment[j];
-                break;
+        $scope.RollSector = function() {
+            $scope.Zonen.Environment = getRandomEnvironment();
+            if ($scope.Zonen.Environment.hasOwnProperty("ruins")) {
+                $scope.Zonen.Ruin = helper.GetRandomFromList(data.ruins[$scope.Zonen.Environment.ruins]);
             }
+
+            $scope.Zonen.Threat.Level = helper.GetRandomInt(1, 12);
+            $scope.Zonen.Artifacts.Amount = 0;
+            $scope.Zonen.Threat.Amount = 0;
+
+            for (var i = 0; i < $scope.Zonen.Threat.Level; i++) {
+                var t6 = helper.RullaT6();
+                if (t6 === 6) {
+                    $scope.Zonen.Artifacts.Amount += 1;
+                } else if (t6 === 1) {
+                    $scope.Zonen.Threat.Amount += 1;
+
+                }
+            }
+
+            var artifacts = [];
+
+            for (var j = 0; j < $scope.Zonen.Artifacts.Amount; j++) {
+                var artifact = thingService.GetRandomThing(["Maskinarium", "År Noll", "Genlab Alfa"], ["Artefakt"]);
+                console.log(artifacts.indexOf(artifact) > -1);
+
+                while (artifacts.indexOf(artifact) > -1) {
+                    artifact = thingService.GetRandomThing(["Maskinarium", "År Noll", "Genlab Alfa"], ["Artefakt"]);
+                }
+                artifacts.push(artifact);
+            }
+
+            $scope.Zonen.Artifacts.Things = artifacts;
+        };
+
+        function getRandomEnvironment() {
+            var sum = 0;
+
+            for (var i = 0; i < data.environment.length; i++) {
+                sum += data.environment[i].chance;
+            }
+
+            var randomInt = helper.GetRandomInt(0, sum) + 1;
+            var randomEnv = {};
+
+            for (var j = 0; j < data.environment.length; j++) {
+                randomInt -= data.environment[j].chance;
+                if (randomInt <= 0) {
+                    randomEnv = data.environment[j];
+                    break;
+                }
+            }
+
+            return randomEnv;
         }
-
-        $scope.Zonen.Environment = randomEnv;
-
     }
 ]);
 app.controller("prylarController",
 [
-    "$scope", "DataStoreService", function($scope, DataStoreService) {
+    "$scope", "DataStoreService", "ThingService", function($scope, DataStoreService, ThingService) {
+        var thingService = ThingService;
+        thingService.Thing(DataStoreService);
         var helper = new Helper();
-        var data = {};
-        data.Items = DataStoreService.getItemsData();
+
+
         $scope.Things = {};
-        $scope.Things.Sources = getSources();
+        $scope.Things.Sources = thingService.GetSources();
         $scope.Things.SelectedSources = $scope.Things.Sources.slice();
 
-        $scope.Things.Types = ["Artefakt", "Skrot"];
+        $scope.Things.Types = thingService.GetTypes();
         $scope.Things.SelectedTypes = ["Artefakt", "Skrot"];
 
         $scope.Things.Filtered = [];
         $scope.Things.RandomList = [];
 
         $scope.RollArtifacts = function(book) {
-            $scope.Things.Filtered = filterThings();
-            if ($scope.Things.Filtered.length <= 0) {
-                return;
-            }
+
             $scope.Things.RandomList = [];
-
-            $scope.Things.RandomList.push($scope.Things.Filtered[helper
-                .GetRandomInt(0, $scope.Things.Filtered.length)]);
-
-            for (var thing in $scope.Things.RandomList) {
-                if ($scope.Things.RandomList.hasOwnProperty(thing)) {
-                    if (angular.isString($scope.Things.RandomList[thing].effect)) {
-                        $scope.Things.RandomList[thing].effect = getHtmlOutput($scope.Things.RandomList[thing].effect);
-                    }
-                }
-            }
+            $scope.Things.RandomList.push(thingService
+                .GetRandomThing($scope.Things.SelectedSources, $scope.Things.SelectedTypes));
         };
 
         $scope.toggleSelection = function(source) {
@@ -488,78 +582,8 @@ app.controller("prylarController",
             }
         };
 
-        function filterThings() {
-            var filtered = [];
-            for (var type in data.Items) {
-                if (data.Items.hasOwnProperty(type)) {
-                    var items = data.Items[type];
-                    for (var item in items) {
-                        if (items.hasOwnProperty(item)) {
-                            if (helper.Contains($scope.Things.SelectedSources, items[item].source) &&
-                                helper.Contains($scope.Things.SelectedTypes, items[item].type)) {
-                                filtered.push(items[item]);
-                            }
-                        }
-                    }
-                }
-            }
-            return filtered;
-        }
-
-        function getSources() {
-            var sources = [];
-            for (var type in data.Items) {
-                if (data.Items.hasOwnProperty(type)) {
-                    data.Items[type].forEach(function(element, index, array) {
-                        if (!helper.Contains(sources, element.source)) {
-                            sources.push(element.source);
-                        }
-                    });
-                }
-            }
-
-            return sources;
-        }
-
-        function getHtmlOutput(string) {
-            var matchIndex;
-
-            var hasMoreSkillMatches = true;
-            while (hasMoreSkillMatches) {
-                matchIndex = string.indexOf("{skill:");
-
-                if (matchIndex !== -1) {
-                    string = helper.CSSify(string);
-                } else {
-                    hasMoreSkillMatches = false;
-                }
-            }
-
-            var hasMoreSymbolMatches = true;
-            while (hasMoreSymbolMatches) {
-                matchIndex = string.indexOf("{symbol:");
-
-                if (matchIndex !== -1) {
-                    string = helper.CSSify(string);
-                } else {
-                    hasMoreSymbolMatches = false;
-                }
-            }
-
-            var hasMoreRefMatches = true;
-            while (hasMoreRefMatches) {
-                matchIndex = string.indexOf("{ref:");
-
-                if (matchIndex !== -1) {
-                    string = helper.CSSify(string);
-                } else {
-                    hasMoreRefMatches = false;
-                }
-            }
-            return string;
-        }
-
         ////////// D E V /////////////
+        /*
         $scope._dev = {};
         $scope._dev
             .area =
@@ -624,7 +648,8 @@ app.controller("prylarController",
                 "unBonus": lines[1]
             };
             $scope._dev.done = JSON.stringify(obj, null, 4) + ",";
-        };
+            
+        };*/
     }
 ]);
 app.controller("farorController",
@@ -681,7 +706,7 @@ app.controller("farorController",
                 }
             });
 
-            for (let blockKey in $scope.ChosenDanger.Block) {
+            for (var blockKey in $scope.ChosenDanger.Block) {
                 if ($scope.ChosenDanger.Block.hasOwnProperty(blockKey)) {
                     if ($scope.ChosenDanger.Block[blockKey].hasOwnProperty("properties")) {
                         var properties = $scope.ChosenDanger.Block[blockKey].properties;
@@ -689,7 +714,7 @@ app.controller("farorController",
                         getWeapons(properties);
 
                         if (Array.isArray(properties) && properties != null) {
-                            for (let i = 0; i < properties.length; i++) {
+                            for (var i = 0; i < properties.length; i++) {
 
                                 if (angular.isString(properties[i])) {
                                     if (properties[i].indexOf("{/}") !== -1) {
@@ -1095,6 +1120,7 @@ app.controller("robotController",
 
 app.service("RobotService", Robot);
 app.service("DataStoreService", DataStore);
+app.service("ThingService", Thing);
 
 app.filter("trust",
 [
@@ -1215,6 +1241,43 @@ function Helper() {
         var stuffInside = string.match(/{([^}]*)}/);
         var tokens = stuffInside[1].split(":");
         string = string.replaceAll(stuffInside[0], "<span class=\"" + tokens[0] + "\">" + tokens[1] + "</span>");
+        return string;
+    };
+    this.GetHtmlOutput = function(string) {
+        var matchIndex;
+
+        var hasMoreSkillMatches = true;
+        while (hasMoreSkillMatches) {
+            matchIndex = string.indexOf("{skill:");
+
+            if (matchIndex !== -1) {
+                string = this.CSSify(string);
+            } else {
+                hasMoreSkillMatches = false;
+            }
+        }
+
+        var hasMoreSymbolMatches = true;
+        while (hasMoreSymbolMatches) {
+            matchIndex = string.indexOf("{symbol:");
+
+            if (matchIndex !== -1) {
+                string = this.CSSify(string);
+            } else {
+                hasMoreSymbolMatches = false;
+            }
+        }
+
+        var hasMoreRefMatches = true;
+        while (hasMoreRefMatches) {
+            matchIndex = string.indexOf("{ref:");
+
+            if (matchIndex !== -1) {
+                string = this.CSSify(string);
+            } else {
+                hasMoreRefMatches = false;
+            }
+        }
         return string;
     };
 }
