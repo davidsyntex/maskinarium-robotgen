@@ -111,6 +111,7 @@
     <Content Include="Content\Images\Chassikort---U_Skrot.png" />
     <Content Include="Content\Images\Danger\drönarsoldat-methusalem.png" />
     <Content Include="Content\Images\Danger\hushallsrobot.png" />
+    <Content Include="Content\Images\Things\artifact_jaktgevar.png" />
     <Content Include="Content\prylar.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\zon.css" />

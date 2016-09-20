@@ -52,15 +52,15 @@
     <div ng-controller="robotController" class="container">
         <h1>MASKINARIUM RBT SLP GEN</h1>
         <div class="row">
-            <div class="col-xs-12 col-md-6">
+            <div class="col-xs-12 col-md-12">
                 <h2 class="rbt-btn" ng-click="GetRandomRobot()">Skapa maskin</h2>
-            </div>
+            </div><!--
             <div class="col-xs-12 col-md-6">
                 <h2 class="rbt-btn" ng-click="GO_NUTS()">
                     GO NUTS!!!½1 (Work In
                     Progress)
                 </h2>
-            </div>
+            </div>-->
         </div>
         <div class="row">
             <div class="col-xs-12 col-md-6 robot-visuals" ng-style="{'height':calc(100%-Robot.Torso.HEADOFFSET-Robot.Torso.LEGOFFSET)}">
@@ -68,35 +68,35 @@
                 <div class="part part-head part-image">
                     <div>
                         <img class="part-head-image" src="{{Robot.Head.BILD}}" alt="{{Robot.Head.NAMN}}">
-                    </div>
+                    </div><!--
                     <div class="navigation left" ng-click="GetPreviousHead()">
                         <span>[‹]</span>
                     </div>
                     <div class="navigation right" ng-click="GetNextHead()">
                         <span>[›]</span>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="part part-torso part-image" ng-style="{'margin-top': Robot.Torso.HEADOFFSET}">
                     <div>
                         <img src="{{Robot.Torso.BILD}}" alt="{{Robot.Torso.NAMN}}">
-                    </div>
+                    </div><!--
                     <div class="navigation left" ng-click="GetPreviousTorso()">
                         <span>[‹]</span>
                     </div>
                     <div class="navigation right" ng-click="GetNextTorso()">
                         <span>[›]</span>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="part part-image part-leg" ng-style="{'margin-top': Robot.Torso.LEGOFFSET}">
                     <div>
                         <img src="{{Robot.Leg.BILD}}" alt="{{Robot.Leg.NAMN}}">
-                    </div>
+                    </div><!--
                     <div class="navigation left" ng-click="GetPreviousLeg()">
                         <span>[‹]</span>
                     </div>
                     <div class="navigation right" ng-click="GetNextLeg()">
                         <span>[›]</span>
-                    </div>
+                    </div>-->
                 </div>
             </div>
             <div class="col-xs-12 col-md-6 sheet">
@@ -191,7 +191,7 @@
                 </ul>
                 <ul ng-repeat="art in Robot.Model.Artifacts"></ul>
             </div>
-        </div>
+        </div><!--
         <div class="row">
             <div class="col-xs-8">
                 <h2>TYPISKA MASKINER</h2>
@@ -241,7 +241,7 @@
                     <span ng-repeat="kommentar in vapen.kommentar">{{kommentar}}</span>
                 </td>
             </tr>
-        </table>
+        </table>-->
     </div>
 </body>
 </html>

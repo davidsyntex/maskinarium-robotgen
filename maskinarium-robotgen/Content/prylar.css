@@ -11,3 +11,84 @@ h4
     font-weight: bold;
     text-align: left;
 }
+
+.modules img
+{
+    width: 100%;
+}
+
+.magic
+{
+    background-color: #fff;
+    width: 55mm;
+    height: 88mm;
+    font-size: 10pt;
+    display: block;
+    clear: both;
+    margin-bottom: 88mm;
+    margin-left: 2rem;
+    color: #000000;
+    border: 2mm solid rgb(145, 83, 0);
+    border-radius: 2mm;
+    box-sizing: border-box;
+    line-height: 1.1;
+}
+
+.magic h3
+{
+    color: #000000;
+    font-size: 10pt;
+    text-transform: lowercase;
+    padding: 0 2mm;
+    margin-top: 1mm;
+    margin-bottom: 1mm;
+}
+.magic h3::first-letter
+{
+    text-transform: uppercase;
+}
+
+.magic img
+{
+    width: 51.5mm;
+    height: 35mm;
+    text-align: center;
+    border: 0.5mm solid #000000;
+}
+.magic-desc
+{
+    box-shadow: 0mm 0.5mm 1mm #000000 inset;
+    height:auto;
+}
+
+.magic p
+{
+    margin-bottom:0.25mm;
+    font-size: 8pt;
+    padding-left: 0.25mm;
+    padding-right: 0.25mm;
+    text-align: left;
+    text-justify: inter-word;
+}
+
+.magic p:first-of-type
+{
+    border: 1px solid #000;
+    border-radius: 1mm;
+    width: 53mm;
+    margin-left:-1mm;
+    background-color: rgb(255, 204, 140)
+}
+
+.magic div p:first-of-type
+{
+    border: none;
+    border-radius: 0;
+    text-align: left;
+    box-shadow: none;
+    font-style: italic;
+    width:inherit;
+    background-color: inherit;
+    margin: 0;
+    margin-bottom: 0.25mm;
+}
