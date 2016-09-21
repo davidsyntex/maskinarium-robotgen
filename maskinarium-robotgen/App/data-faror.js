@@ -280,7 +280,7 @@
                     "name": "Effekt",
                     "type": "block",
                     "properties": [
-                        "Slå 4 till 10 grundtärningar, 6 är normalt. Varje {/} ger en poäng skada. Slå igen varje runda tills den drabbade retireraroch därmed lyckas finna skydd."
+                        "Slå 4 till 10 grundtärningar, 6 är normalt. Varje {symbol:/} ger en poäng skada. Slå igen varje runda tills den drabbade retireraroch därmed lyckas finna skydd."
                     ]
                 }
             ],

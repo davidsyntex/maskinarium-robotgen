@@ -157,7 +157,7 @@
                         </a>
                     </th>
                 </tr>
-                <tr ng-repeat="fara in filtered = (Faror | orderBy:sortType:sortReverse | filter:searchDanger) track by $index" ng-click="ShowDanger(fara.name)">
+                <tr ng-repeat="fara in filtered = (Dangers | orderBy:sortType:sortReverse | filter:searchDanger) track by $index" ng-click="ShowDanger(fara.name)">
                     <td>{{fara.name}}</td>
                     <td>{{fara.type}} <span ng-if="fara.subtype">({{fara.subtype}})</span></td>
                     <td>{{fara.book}} ({{fara.bookContraction}})</td>

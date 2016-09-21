@@ -217,6 +217,8 @@ function Robot() {
             helper.GetRandomInt(0, 9) +
             helper.GetRandomInt(0, 9);
     }
+
+    return this;
 }
 
 function Thing() {
@@ -285,6 +287,324 @@ function Thing() {
         }
         return sources;
     }
+
+    return this;
+}
+
+function Danger() {
+    var danger = {};
+    var helper = new Helper();
+    var data = {};
+    var self = this;
+    var dss;
+
+    this.SetData = function(dataStoreService) {
+        dss = dataStoreService;
+        data = dss.getFarorData();
+        data.General = dss.getGeneral();
+    }
+    this.GetAll = function() {
+        return data.faror.slice();
+    };
+    this.GetSpecificDanger = function(name) {
+        var search = helper.FindWithAttr(data.faror, "name", name);
+        if (search === -1) {
+            return {};
+        }
+        var dataDanger = data.faror[search];
+        danger = {};
+        danger.Name = dataDanger.name;
+        danger.Description = dataDanger.description;
+        danger.Image = dataDanger.image;
+        danger.Weapons = [];
+
+        var stats = getStats(dataDanger);
+
+        danger.Inline = stats.inline.slice();
+        danger.BlockValues = stats.blockValue.slice();
+        danger.Block = stats.block.slice();
+
+        dataDanger.functions.forEach(function (func) {
+            var funcString = "_" + func.function;
+            if (angular.isFunction(self[funcString])) {
+                self[funcString]();
+            }
+        });
+
+        for (var blockKey in danger.Block) {
+            if (danger.Block.hasOwnProperty(blockKey)) {
+                if (danger.Block[blockKey].hasOwnProperty("properties")) {
+                    var properties = danger.Block[blockKey].properties;
+
+                    getWeapons(properties);
+
+                    if (Array.isArray(properties) && properties != null) {
+                        for (var i = 0; i < properties.length; i++) {
+                            if (angular.isString(properties[i])) {
+                                    
+                            }
+                        }
+                    }
+                }
+            }
+
+        };
+
+        return danger;
+    };
+    this.GetRandomRobot = function (robotService) {
+        robotService.Robot(dss);
+        var robot = robotService.GetRandomRobot();
+
+        danger = {};
+        danger.Name = robot.Name + " - " + robot.CodeName;
+        danger.Description = robot.Description;
+        danger.Image = [
+            {
+                "path": robot.Head.BILD,
+                "offSet": 0,
+                "zIndex": 4
+            }, {
+                "path": robot.Torso.BILD,
+                "offSet": robot.Torso.HEADOFFSET,
+                "zIndex": 3
+            }, {
+                "path": robot.Leg.BILD,
+                "offSet": robot.Torso.LEGOFFSET,
+                "zIndex": 1
+            }
+        ];
+        var stats = convertRobotStats(robot);
+        danger.Inline = stats.inline.slice();
+        danger.BlockValues = stats.blockValue.slice();
+        danger.Block = stats.block.slice();
+
+        if (danger.Block.things != null) {
+            danger.Weapons = getWeapons();
+        }
+        return danger;
+    }
+    function getStats(chosenDanger) {
+        var stats = {
+            "inline": [],
+            "blockValue": [],
+            "block": []
+        };
+
+        if (chosenDanger.hasOwnProperty("statBlock")) {
+
+            chosenDanger.statBlock.forEach(function(stat) {
+                if (stat.hasOwnProperty("type")) {
+                    switch (stat.type) {
+                    case "inline":
+                        stats.inline.push(stat);
+                        break;
+
+                    case "blockValue":
+                        stats.blockValue.push(stat);
+                        break;
+
+                    case "block":
+                        stats.block.push(stat);
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            });
+        }
+
+        return stats;
+    };
+    // Takes a String array and compares it to the weapons data
+    function getWeapons(list) {
+        var weaponNames = [];
+        data.General.weapons.forEach(function(weapon) {
+            weaponNames.push(weapon.name);
+        });
+
+        list.forEach(function(thing) {
+            data.General.weapons.forEach(function(weapon) {
+                if (weapon.name === thing) {
+                    danger.Weapons.push(weapon);
+                }
+
+            });
+        });
+    }
+    function convertRobotStats(robot) {
+        var stats = {
+            "inline": [],
+            "blockValue": [],
+            "block": []
+        };
+
+        var stat = {
+            "name": "Huvud: " + robot.Head.NAMN,
+            "type": "inline",
+            "description": robot.Head.BESKRIVNING,
+            "properties": {
+                "srv": robot.Head.SRV,
+                "stb": robot.Head.STB,
+                "prc": robot.Head.PRC,
+                "ntv": robot.Head.NTV,
+                "skydd": robot.Head.SKYDD
+            }
+        };
+        stats.inline.push(stat);
+
+        stat = {
+            "name": "Bål: " + robot.Torso.NAMN,
+            "type": "inline",
+            "description": robot.Torso.BESKRIVNING,
+            "properties": {
+                "srv": robot.Torso.SRV,
+                "stb": robot.Torso.STB,
+                "prc": robot.Torso.PRC,
+                "ntv": robot.Torso.NTV,
+                "skydd": robot.Torso.SKYDD
+            }
+        };
+        stats.inline.push(stat);
+
+        stat = {
+            "name": "Underrede: " + robot.Leg.NAMN,
+            "type": "inline",
+            "description": robot.Leg.BESKRIVNING,
+            "properties": {
+                "srv": robot.Leg.SRV,
+                "stb": robot.Leg.STB,
+                "prc": robot.Leg.PRC,
+                "ntv": robot.Leg.NTV,
+                "skydd": robot.Leg.SKYDD
+            }
+        };
+        stats.inline.push(stat);
+
+        stat = {
+            "name": "Grundegenskaper: ",
+            "type": "inline",
+            "description": "",
+            "properties": {
+                "srv": robot.TotalaStats.SRV,
+                "stb": robot.TotalaStats.STB,
+                "prc": robot.TotalaStats.PRC,
+                "ntv": robot.TotalaStats.NTV,
+                "skydd": robot.TotalaStats.SKYDD,
+                "Moduler": robot.TotalaStats.MOD
+            }
+        };
+        stats.inline.push(stat);
+
+        var skills = {};
+        robot.Programs.forEach(function (program, index, array) {
+            var string = array[index].Name + " (" + array[index].Attribute + ")";
+            skills[string] = array[index].Value;
+        });
+        stat = {
+            "name": "Program",
+            "type": "blockValue",
+            "description": "",
+            "properties": skills
+        };
+        stats.blockValue.push(stat);
+
+        var modules = [];
+        robot.Modules.forEach(function (module, index, array) {
+            modules.push(helper.Capitalize(array[index].Name));
+        });
+        stat = {
+            "name": "Moduler",
+            "type": "block",
+            "description": "",
+            "properties": modules
+        };
+        stats.block.push(stat);
+
+        var secondaryFunctions = [];
+        robot.SecondaryFunctions.forEach(function (secondaryFunction, index, array) {
+            secondaryFunctions.push(helper.Capitalize(array[index].Name));
+        });
+        stat = {
+            "name": "Sekundärfunktioner",
+            "type": "block",
+            "description": "",
+            "properties": secondaryFunctions
+        };
+        stats.block.push(stat);
+
+        stat = {
+            "name": "Information",
+            "type": "inline",
+            "description": "",
+            "properties": {
+                "Modell": robot.Model.Name,
+                "Färg": robot.Model.Colour,
+                "Röst": robot.Model.Voice,
+                "Kännetecken": robot.Model.Features,
+                "Personlighet": robot.Model.Personality,
+                "Hierarki": robot.TotalaStats.Hiearchy
+            }
+        };
+        stats.inline.unshift(stat);
+
+        return stats;
+    }
+    // Danger Funcs
+    //function _CalcArmour() {
+    this._CalcArmour = function() {
+        var skydd = 0;
+        var propSkydd = [];
+        danger.Inline.forEach(function(element) {
+            if (element.hasOwnProperty("properties")) {
+                if (element.properties.hasOwnProperty("skydd")) {
+                    skydd += element.properties.skydd;
+                }
+            }
+        });
+
+        propSkydd.push(skydd);
+
+        var skyddsObjekt = {
+            "name": "Skydd",
+            "type": "block",
+            "description": "",
+            "properties": propSkydd
+        };
+        danger.Block.push(skyddsObjekt);
+    };
+    this._CalcAttributes = function() {
+        var attributes = {
+            "srv": 0,
+            "stb": 0,
+            "prc": 0,
+            "ntv": 0
+        };
+        danger.Inline.forEach(function(element) {
+            if (element.hasOwnProperty("properties")) {
+                if (element.properties.hasOwnProperty("srv")) {
+                    attributes.srv += element.properties.srv;
+                }
+                if (element.properties.hasOwnProperty("stb")) {
+                    attributes.stb += element.properties.stb;
+                }
+                if (element.properties.hasOwnProperty("prc")) {
+                    attributes.prc += element.properties.prc;
+                }
+                if (element.properties.hasOwnProperty("ntv")) {
+                    attributes.ntv += element.properties.ntv;
+                }
+            }
+        });
+        var attributesObjekt = {
+            "name": "Grundegenskaper",
+            "description": "",
+            "properties": attributes
+        };
+        danger.Inline.push(attributesObjekt);
+    };
+
+    return this;
 }
 
 function DataStore() {
@@ -319,12 +639,14 @@ function DataStore() {
     this.getGenlab = function() {
         return angular.copy(data.Genlab);
     };
-    this.getFaror = function() {
+    this.getFarorData = function() {
         return angular.copy(data.Faror);
     };
     this.getItemsData = function() {
         return angular.copy(data.Items);
     };
+
+    return this;
 }
 
 var app = angular.module("robotgen", ["ngSanitize"]);
@@ -353,7 +675,6 @@ app.controller("appController",
         $scope.Version = "Pracownik fabryki wersja systemu głównego 0.0.6a";
     }
 ]);
-
 app.controller("genlabController",
 [
     "$scope", "DataStoreService", function($scope, DataStoreService) {
@@ -654,12 +975,17 @@ app.controller("prylarController",
 ]);
 app.controller("farorController",
 [
-    "$scope", "RobotService", "DataStoreService", function($scope, RobotService, DataStoreService) {
+    "$scope", "RobotService", "DataStoreService", "DangerService",
+    function($scope, RobotService, DataStoreService, DangerService) {
         var robotService = RobotService;
         var helper = new Helper();
-        var data = {};
-        data.Faror = DataStoreService.getFaror();
-        data.General = DataStoreService.getGeneral();
+        var dangerService = DangerService;
+        dangerService.SetData(DataStoreService);
+        
+
+        //data.Faror = DataStoreService.getFaror();
+        //data.General = DataStoreService.getGeneral();
+
         $scope.sortType = "Name"; // set the default sort type
         $scope.sortReverse = false; // set the default sort order
         $scope.searchDanger = {}; // set the default search/filter term
@@ -673,325 +999,15 @@ app.controller("farorController",
             },
             true);
 
-        $scope.Faror = [];
-
-        data.Faror.faror.forEach(function(danger) {
-            $scope.Faror.push(danger);
-        });
-
+        $scope.Dangers = dangerService.GetAll();
         $scope.ChosenDanger = {};
 
         $scope.ShowDanger = function(name) {
-            $scope.ChosenDanger = {};
-            $scope.ChosenDanger.Weapons = [];
-            $scope.Faror.forEach(function(element) {
-                if (element.hasOwnProperty("name")) {
-                    if (element.name === name) {
-                        $scope.ChosenDanger.Name = element.name;
-                        $scope.ChosenDanger.Description = element.description;
-                        $scope.ChosenDanger.Image = element.image;
-
-                        var stats = getStats();
-                        $scope.ChosenDanger.Inline = stats.inline.slice();
-                        $scope.ChosenDanger.BlockValues = stats.blockValue.slice();
-                        $scope.ChosenDanger.Block = stats.block.slice();
-
-                        element.functions.forEach(function(func) {
-                            if (angular.isFunction($scope["_" + func.function])) {
-                                $scope["_" + func.function](func);
-                            }
-                        });
-
-                    }
-                }
-            });
-
-            for (var blockKey in $scope.ChosenDanger.Block) {
-                if ($scope.ChosenDanger.Block.hasOwnProperty(blockKey)) {
-                    if ($scope.ChosenDanger.Block[blockKey].hasOwnProperty("properties")) {
-                        var properties = $scope.ChosenDanger.Block[blockKey].properties;
-
-                        getWeapons(properties);
-
-                        if (Array.isArray(properties) && properties != null) {
-                            for (var i = 0; i < properties.length; i++) {
-
-                                if (angular.isString(properties[i])) {
-                                    if (properties[i].indexOf("{/}") !== -1) {
-                                        properties[i] = properties[i]
-                                            .replaceAll("{/}", "<span class=\"symbol\">/</span>");
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-
+            $scope.ChosenDanger = dangerService.GetSpecificDanger(name);
         };
-
         $scope.GetRandomRobot = function() {
-            robotService.Robot(DataStoreService);
-            var robot = robotService.GetRandomRobot();
-
-            $scope.ChosenDanger = {};
-            $scope.ChosenDanger.Name = robot.Name + " - " + robot.CodeName;
-            $scope.ChosenDanger.Description = robot.Description;
-            $scope.ChosenDanger.Image = [
-                {
-                    "path": robot.Head.BILD,
-                    "offSet": 0,
-                    "zIndex": 4
-                }, {
-                    "path": robot.Torso.BILD,
-                    "offSet": robot.Torso.HEADOFFSET,
-                    "zIndex": 3
-                }, {
-                    "path": robot.Leg.BILD,
-                    "offSet": robot.Torso.LEGOFFSET,
-                    "zIndex": 1
-                }
-            ];
-            var stats = convertRobotStats(robot);
-            $scope.ChosenDanger.Inline = stats.inline.slice();
-            $scope.ChosenDanger.BlockValues = stats.blockValue.slice();
-            $scope.ChosenDanger.Block = stats.block.slice();
-
-            if ($scope.ChosenDanger.Block.things != null) {
-                $scope.ChosenDanger.Weapons = getWeapons();
-            }
-            //jQuery("#chosenDangerVisuals").height(jQuery("#chosenDangerStats").height());
+            $scope.ChosenDanger = dangerService.GetRandomRobot(robotService);
         };
-
-        $scope._CalcArmour = function() {
-            var skydd = 0;
-            var propSkydd = [];
-
-            $scope.ChosenDanger.Inline.forEach(function(element) {
-                if (element.hasOwnProperty("properties")) {
-                    if (element.properties.hasOwnProperty("skydd")) {
-                        skydd += element.properties.skydd;
-                    }
-                }
-            });
-
-            propSkydd.push(skydd);
-
-            var skyddsObjekt = {
-                "name": "Skydd",
-                "type": "block",
-                "description": "",
-                "properties": propSkydd
-            };
-            $scope.ChosenDanger.Block.push(skyddsObjekt);
-        };
-
-        $scope._CalcAttributes = function() {
-            var attributes = {
-                "srv": 0,
-                "stb": 0,
-                "prc": 0,
-                "ntv": 0
-            };
-            $scope.ChosenDanger.Inline.forEach(function(element) {
-                if (element.hasOwnProperty("properties")) {
-                    if (element.properties.hasOwnProperty("srv")) {
-                        attributes.srv += element.properties.srv;
-                    }
-                    if (element.properties.hasOwnProperty("stb")) {
-                        attributes.stb += element.properties.stb;
-                    }
-                    if (element.properties.hasOwnProperty("prc")) {
-                        attributes.prc += element.properties.prc;
-                    }
-                    if (element.properties.hasOwnProperty("ntv")) {
-                        attributes.ntv += element.properties.ntv;
-                    }
-                }
-            });
-            var attributesObjekt = {
-                "name": "Grundegenskaper",
-                "description": "",
-                "properties": attributes
-            };
-            $scope.ChosenDanger.Inline.push(attributesObjekt);
-        };
-
-        function getStats() {
-            var stats = {
-                "inline": [],
-                "blockValue": [],
-                "block": []
-            };
-
-            $scope.Faror.forEach(function(danger) {
-                if (danger.name === $scope.ChosenDanger.Name) {
-                    if (danger.hasOwnProperty("statBlock")) {
-
-                        danger.statBlock.forEach(function(stat) {
-                            if (stat.hasOwnProperty("type")) {
-                                switch (stat.type) {
-                                case "inline":
-                                    stats.inline.push(stat);
-                                    break;
-
-                                case "blockValue":
-                                    stats.blockValue.push(stat);
-                                    break;
-
-                                case "block":
-                                    stats.block.push(stat);
-                                    break;
-                                default:
-                                    break;
-                                }
-                            }
-                        });
-                    }
-
-                }
-
-            });
-            return stats;
-        };
-
-        function convertRobotStats(robot) {
-            var stats = {
-                "inline": [],
-                "blockValue": [],
-                "block": []
-            };
-
-            var stat = {
-                "name": "Huvud: " + robot.Head.NAMN,
-                "type": "inline",
-                "description": robot.Head.BESKRIVNING,
-                "properties": {
-                    "srv": robot.Head.SRV,
-                    "stb": robot.Head.STB,
-                    "prc": robot.Head.PRC,
-                    "ntv": robot.Head.NTV,
-                    "skydd": robot.Head.SKYDD
-                }
-            };
-            stats.inline.push(stat);
-
-            stat = {
-                "name": "Bål: " + robot.Torso.NAMN,
-                "type": "inline",
-                "description": robot.Torso.BESKRIVNING,
-                "properties": {
-                    "srv": robot.Torso.SRV,
-                    "stb": robot.Torso.STB,
-                    "prc": robot.Torso.PRC,
-                    "ntv": robot.Torso.NTV,
-                    "skydd": robot.Torso.SKYDD
-                }
-            };
-            stats.inline.push(stat);
-
-            stat = {
-                "name": "Underrede: " + robot.Leg.NAMN,
-                "type": "inline",
-                "description": robot.Leg.BESKRIVNING,
-                "properties": {
-                    "srv": robot.Leg.SRV,
-                    "stb": robot.Leg.STB,
-                    "prc": robot.Leg.PRC,
-                    "ntv": robot.Leg.NTV,
-                    "skydd": robot.Leg.SKYDD
-                }
-            };
-            stats.inline.push(stat);
-
-            stat = {
-                "name": "Grundegenskaper: ",
-                "type": "inline",
-                "description": "",
-                "properties": {
-                    "srv": robot.TotalaStats.SRV,
-                    "stb": robot.TotalaStats.STB,
-                    "prc": robot.TotalaStats.PRC,
-                    "ntv": robot.TotalaStats.NTV,
-                    "skydd": robot.TotalaStats.SKYDD,
-                    "Moduler": robot.TotalaStats.MOD
-                }
-            };
-            stats.inline.push(stat);
-
-            var skills = {};
-            robot.Programs.forEach(function(program, index, array) {
-                var string = array[index].Name + " (" + array[index].Attribute + ")";
-                skills[string] = array[index].Value;
-            });
-            stat = {
-                "name": "Program",
-                "type": "blockValue",
-                "description": "",
-                "properties": skills
-            };
-            stats.blockValue.push(stat);
-
-            var modules = [];
-            robot.Modules.forEach(function(module, index, array) {
-                modules.push(helper.Capitalize(array[index].Name));
-            });
-            stat = {
-                "name": "Moduler",
-                "type": "block",
-                "description": "",
-                "properties": modules
-            };
-            stats.block.push(stat);
-
-            var secondaryFunctions = [];
-            robot.SecondaryFunctions.forEach(function(secondaryFunction, index, array) {
-                secondaryFunctions.push(helper.Capitalize(array[index].Name));
-            });
-            stat = {
-                "name": "Sekundärfunktioner",
-                "type": "block",
-                "description": "",
-                "properties": secondaryFunctions
-            };
-            stats.block.push(stat);
-
-            stat = {
-                "name": "Information",
-                "type": "inline",
-                "description": "",
-                "properties": {
-                    "Modell": robot.Model.Name,
-                    "Färg": robot.Model.Colour,
-                    "Röst": robot.Model.Voice,
-                    "Kännetecken": robot.Model.Features,
-                    "Personlighet": robot.Model.Personality,
-                    "Hierarki": robot.TotalaStats.Hiearchy
-                }
-            };
-            stats.inline.unshift(stat);
-
-            return stats;
-        }
-
-        // Takes a String array and compares it to the weapons data
-        function getWeapons(list) {
-            var weaponNames = [];
-
-            data.General.weapons.forEach(function(weapon) {
-                weaponNames.push(weapon.name);
-            });
-
-            list.forEach(function(thing) {
-                data.General.weapons.forEach(function(weapon) {
-                    if (weapon.name === thing) {
-                        $scope.ChosenDanger.Weapons.push(weapon);
-                    }
-
-                });
-            });
-        }
     }
 ]);
 app.controller("robotController",
@@ -1118,9 +1134,12 @@ app.controller("robotController",
     }
 ]);
 
-app.service("RobotService", Robot);
-app.service("DataStoreService", DataStore);
-app.service("ThingService", Thing);
+app.factory("RobotService", Robot);
+app.factory("DataStoreService", DataStore);
+app.factory("ThingService", Thing);
+app.factory("DangerService", function() {
+    return new Danger();
+});
 
 app.filter("trust",
 [
@@ -1218,6 +1237,14 @@ function Helper() {
         }
 
         return doesContain;
+    };
+    this.FindWithAttr = function(array, attr, value) {
+        for (var i = 0; i < array.length; i += 1) {
+            if (array[i][attr] === value) {
+                return i;
+            }
+        }
+        return -1;
     };
     this.GetTwoRandomStrings = function(list, separator) {
 
