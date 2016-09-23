@@ -89,7 +89,7 @@
             </div>
             <div ng-repeat="item in ChosenDanger.Block track by $index">
                 <p>
-                    <strong>{{item.name}}: </strong><span ng-repeat="(key, value) in item.properties" bn-repeat-delimiter=","><span ng-bind-html="value.toString() | trust"></span></span></p>
+                    <strong>{{item.name}}: </strong><span ng-repeat="(key, value) in item.properties" bn-repeat-delimiter=","><span ng-bind-html="value.toString() | trust"></span></span> <span ng-bind-html="item.description | trust"></span></p>
             </div>
             <div ng-show="ChosenDanger.Weapons">
                 <table class="table">

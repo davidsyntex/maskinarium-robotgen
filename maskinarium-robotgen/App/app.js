@@ -226,7 +226,7 @@ function Thing() {
     var helper = new Helper();
     var data = {};
 
-    this.Thing = function(dataStoreService) {
+    this.SetData = function(dataStoreService) {
         data = dataStoreService.getItemsData();
         data.Sources = getSources();
         thing.SelectedSources = data.Sources.slice();
@@ -300,9 +300,12 @@ function Danger() {
 
     this.SetData = function(dataStoreService) {
         dss = dataStoreService;
+
         data = dss.getFarorData();
+        console.log(dss.getFarorData());
+
         data.General = dss.getGeneral();
-    }
+    };
     this.GetAll = function() {
         return data.faror.slice();
     };
@@ -324,12 +327,14 @@ function Danger() {
         danger.BlockValues = stats.blockValue.slice();
         danger.Block = stats.block.slice();
 
-        dataDanger.functions.forEach(function (func) {
-            var funcString = "_" + func.function;
-            if (angular.isFunction(self[funcString])) {
-                self[funcString]();
-            }
-        });
+        if (dataDanger.hasOwnProperty("functions")) {
+            dataDanger.functions.forEach(function (func) {
+                var funcString = "_" + func.function;
+                if (angular.isFunction(self[funcString])) {
+                    self[funcString]();
+                }
+            });
+        }
 
         for (var blockKey in danger.Block) {
             if (danger.Block.hasOwnProperty(blockKey)) {
@@ -341,7 +346,7 @@ function Danger() {
                     if (Array.isArray(properties) && properties != null) {
                         for (var i = 0; i < properties.length; i++) {
                             if (angular.isString(properties[i])) {
-                                    
+
                             }
                         }
                     }
@@ -352,7 +357,7 @@ function Danger() {
 
         return danger;
     };
-    this.GetRandomRobot = function (robotService) {
+    this.GetRandomRobot = function(robotService) {
         robotService.Robot(dss);
         var robot = robotService.GetRandomRobot();
 
@@ -383,7 +388,11 @@ function Danger() {
             danger.Weapons = getWeapons();
         }
         return danger;
-    }
+    };
+    this.GetZoneDangerName = function(type) {
+        
+    };
+
     function getStats(chosenDanger) {
         var stats = {
             "inline": [],
@@ -396,15 +405,18 @@ function Danger() {
             chosenDanger.statBlock.forEach(function(stat) {
                 if (stat.hasOwnProperty("type")) {
                     switch (stat.type) {
-                    case "inline":
+                        case "inline":
+                            stat.description = helper.GetHtmlOutput(stat.description);
                         stats.inline.push(stat);
                         break;
 
-                    case "blockValue":
+                        case "blockValue":
+                            stat.description = helper.GetHtmlOutput(stat.description);
                         stats.blockValue.push(stat);
                         break;
 
-                    case "block":
+                        case "block":
+                            stat.description = helper.GetHtmlOutput(stat.description);
                         stats.block.push(stat);
                         break;
                     default:
@@ -416,6 +428,7 @@ function Danger() {
 
         return stats;
     };
+
     // Takes a String array and compares it to the weapons data
     function getWeapons(list) {
         var weaponNames = [];
@@ -432,6 +445,7 @@ function Danger() {
             });
         });
     }
+
     function convertRobotStats(robot) {
         var stats = {
             "inline": [],
@@ -497,7 +511,7 @@ function Danger() {
         stats.inline.push(stat);
 
         var skills = {};
-        robot.Programs.forEach(function (program, index, array) {
+        robot.Programs.forEach(function(program, index, array) {
             var string = array[index].Name + " (" + array[index].Attribute + ")";
             skills[string] = array[index].Value;
         });
@@ -510,7 +524,7 @@ function Danger() {
         stats.blockValue.push(stat);
 
         var modules = [];
-        robot.Modules.forEach(function (module, index, array) {
+        robot.Modules.forEach(function(module, index, array) {
             modules.push(helper.Capitalize(array[index].Name));
         });
         stat = {
@@ -522,7 +536,7 @@ function Danger() {
         stats.block.push(stat);
 
         var secondaryFunctions = [];
-        robot.SecondaryFunctions.forEach(function (secondaryFunction, index, array) {
+        robot.SecondaryFunctions.forEach(function(secondaryFunction, index, array) {
             secondaryFunctions.push(helper.Capitalize(array[index].Name));
         });
         stat = {
@@ -550,6 +564,7 @@ function Danger() {
 
         return stats;
     }
+
     // Danger Funcs
     //function _CalcArmour() {
     this._CalcArmour = function() {
@@ -786,10 +801,14 @@ app.controller("genlabController",
 ]);
 app.controller("zonenController",
 [
-    "$scope", "DataStoreService", "ThingService", function($scope, DataStoreService, ThingService) {
+    "$scope", "DataStoreService", "ThingService", "DangerService",
+    function($scope, DataStoreService, ThingService, DangerService) {
         var helper = new Helper();
         var thingService = ThingService;
-        thingService.Thing(DataStoreService);
+        thingService.SetData(DataStoreService);
+
+        var dangerService = DangerService;
+        dangerService.SetData(DataStoreService);
 
         var data = {};
         data = DataStoreService.getZonenData();
@@ -799,10 +818,40 @@ app.controller("zonenController",
         $scope.Zonen.Artifacts = {};
 
         $scope.RollSector = function() {
-            $scope.Zonen.Environment = getRandomEnvironment();
+            $scope.Zonen.Environment = helper.GetRandomFromListWeigthed(data.environment, "chance");
             if ($scope.Zonen.Environment.hasOwnProperty("ruins")) {
                 $scope.Zonen.Ruin = helper.GetRandomFromList(data.ruins[$scope.Zonen.Environment.ruins]);
             }
+
+            var random;
+
+            $scope.Zonen.Rot = function() {
+                random = helper.RullaT6();
+                if (random === 1) {
+                    return {
+                        "level": 0,
+                        "description": "Röt-oas. RP tar inga rötpoäng"
+                    };
+                } else if (random === 6) {
+                    return {
+                        "level": 2,
+                        "description": "Extra rötdrabbad sektor. En rötpoäng per timme."
+                    };
+                } else {
+                    return {
+                        "level": 1,
+                        "description": "Typisk zonsektor. RP tar en rötpoäng varje dygn"
+                    };
+                }
+            }();
+
+            var detail = helper.GetRandomFromList(data.details);
+
+            console.log(detail);
+
+            $scope.Zonen.Detail = {};
+            $scope.Zonen.Detail.Name = detail.name;
+            $scope.Zonen.Detail.Description = detail.description;
 
             $scope.Zonen.Threat.Level = helper.GetRandomInt(1, 12);
             $scope.Zonen.Artifacts.Amount = 0;
@@ -814,10 +863,30 @@ app.controller("zonenController",
                     $scope.Zonen.Artifacts.Amount += 1;
                 } else if (t6 === 1) {
                     $scope.Zonen.Threat.Amount += 1;
-
                 }
             }
 
+            // DANGERS
+            $scope.Zonen.Threat.Dangers = [];
+            $scope.Zonen.Threat.Names = [];
+
+            for (var k = 0; k < $scope.Zonen.Threat.Amount; k++) {
+                random = helper.RullaT6();
+                if (random === 1 || random === 2) {
+                    $scope.Zonen.Threat.Names.push(helper.GetRandomFromListWeigthed(data.dangers.humanoider, "chance").name);
+                } else if (random === 6) {
+                    $scope.Zonen.Threat.Names.push(helper.GetRandomFromListWeigthed(data.dangers.fenomen, "chance").name);
+                } else {
+                    $scope.Zonen.Threat.Names.push(helper.GetRandomFromListWeigthed(data.dangers.monster,"chance").name);
+                }
+            }
+
+            for (var l = 0; l < $scope.Zonen.Threat.Names.length; l++) {
+                $scope.Zonen.Threat.Dangers.push(dangerService.GetSpecificDanger($scope.Zonen.Threat.Names[l]));
+                console.log($scope.Zonen.Threat.Names[l]);
+            }
+
+            // ARTIFACTS
             var artifacts = [];
 
             for (var j = 0; j < $scope.Zonen.Artifacts.Amount; j++) {
@@ -833,25 +902,14 @@ app.controller("zonenController",
             $scope.Zonen.Artifacts.Things = artifacts;
         };
 
-        function getRandomEnvironment() {
-            var sum = 0;
-
-            for (var i = 0; i < data.environment.length; i++) {
-                sum += data.environment[i].chance;
+        function getDangerName(type) {
+            if (type === "humanoider") {
+                return helper.GetRandomFromListWeigthed(data.dangers.humanoider);
+            } else if (type === "monster") {
+                return helper.GetRandomFromListWeigthed(data.dangers.monster);
+            } else if (type === "fenomen") {
+                return helper.GetRandomFromListWeigthed(data.dangers.fenomen);
             }
-
-            var randomInt = helper.GetRandomInt(0, sum) + 1;
-            var randomEnv = {};
-
-            for (var j = 0; j < data.environment.length; j++) {
-                randomInt -= data.environment[j].chance;
-                if (randomInt <= 0) {
-                    randomEnv = data.environment[j];
-                    break;
-                }
-            }
-
-            return randomEnv;
         }
     }
 ]);
@@ -859,10 +917,9 @@ app.controller("prylarController",
 [
     "$scope", "DataStoreService", "ThingService", function($scope, DataStoreService, ThingService) {
         var thingService = ThingService;
-        thingService.Thing(DataStoreService);
+        thingService.SetData(DataStoreService);
         var helper = new Helper();
-
-
+        
         $scope.Things = {};
         $scope.Things.Sources = thingService.GetSources();
         $scope.Things.SelectedSources = $scope.Things.Sources.slice();
@@ -981,7 +1038,7 @@ app.controller("farorController",
         var helper = new Helper();
         var dangerService = DangerService;
         dangerService.SetData(DataStoreService);
-        
+
 
         //data.Faror = DataStoreService.getFaror();
         //data.General = DataStoreService.getGeneral();
@@ -1137,9 +1194,10 @@ app.controller("robotController",
 app.factory("RobotService", Robot);
 app.factory("DataStoreService", DataStore);
 app.factory("ThingService", Thing);
-app.factory("DangerService", function() {
-    return new Danger();
-});
+app.factory("DangerService",
+    function() {
+        return new Danger();
+    });
 
 app.filter("trust",
 [
@@ -1205,6 +1263,26 @@ function Helper() {
     };
     this.GetRandomFromList = function(list) {
         return list[this.GetRandomInt(0, list.length)];
+    };
+    this.GetRandomFromListWeigthed = function(list, prop) {
+        var sum = 0;
+
+        for (var i = 0; i < list.length; i++) {
+            sum += list[i].chance;
+        }
+
+        var randomInt = this.GetRandomInt(0, sum) + 1;
+        var randomSelection = {};
+
+        for (var j = 0; j < list.length; j++) {
+            randomInt -= list[j][prop];
+            if (randomInt <= 0) {
+                randomSelection = list[j];
+                break;
+            }
+        }
+        console.log(randomSelection);
+        return randomSelection;
     };
     this.RollMutantDieSuccessesOnly = function(numberOfDice) {
         var successes = 0;

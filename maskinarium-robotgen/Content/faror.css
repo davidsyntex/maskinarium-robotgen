@@ -11,11 +11,12 @@ h5
 {
     font-size: 0.75rem;
     font-weight: bold;
+    text-transform: uppercase;
 }
 
 .modules p
 {
-    font-family: "FuturaStd-Book";
+    font-family: "ArcherPro-Medium";
     border-bottom: 0.0625rem solid #b4ff00;
     box-sizing: border-box;
     margin-bottom: 1rem;
@@ -25,6 +26,7 @@ h5
 {
     /*color: #ff004d;*/
     font-weight: bold;
+    font-family: "FuturaStd-Book";
     text-transform: uppercase;
 }
 

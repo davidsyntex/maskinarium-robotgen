@@ -40,14 +40,11 @@
 html
 {
     font-size: 100% !important;
-    
 }
 
 body
 {
     background-color: #24282d;
-    -ms-background-size: cover;
-    background-size: cover;
     color: #fefefe;
     font-family: "ArcherPro-Medium";
     font-size: 100% !important;

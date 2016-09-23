@@ -19,6 +19,7 @@
     <script src="Scripts/NameSets/mittlandare_set.js"></script>
     <script src="App/app.js"></script>
     <script src="App/data-zonen.js"></script>
+    <script src="App/data-faror.js"></script>
     <script src="App/data-general.js"></script>
     <script src="App/data-item.js"></script>
 </head>
@@ -70,6 +71,8 @@
                 <p>Hot: {{Zonen.Environment.hasThreat ? "Ja" : "Nej"}}</p>
                 <p>Artefakter: {{Zonen.Environment.hasArtifact ? "Ja" : "Nej"}}</p>
                 <p>Ruintyp: {{Zonen.Environment.ruins}}</p>
+                <p>RÖTA: {{Zonen.Rot.level}}, {{Zonen.Rot.description}}</p>
+                <p>Detaljer: {{Zonen.Detail.Name}}, {{Zonen.Detail.Description}}</p>
 
                 <h4>{{Zonen.Ruin.name}}</h4>
                 <p>{{Zonen.Ruin.description}}</p>
@@ -77,7 +80,56 @@
                 <h4>Hot</h4>
                 <p>Hotnivå: {{Zonen.Threat.Level}}</p>
                 <p>Antal: {{Zonen.Threat.Amount}}</p>
+                <div class="row modules" ng-repeat="ChosenDanger in Zonen.Threat.Dangers track by $index">
+                    <div class="col-xs-12">
+                        <h4>{{ChosenDanger.Name}}</h4>
+                    </div>
+                    
+                        <div class="col-xs-12 col-sm-8" id="chosenDangerStats">
+                            <p>{{ChosenDanger.Description}}</p>
+                            <div ng-repeat="item in ChosenDanger.Inline track by $index">
+                                <h5>{{item.name}}</h5>
+                                <p><span ng-repeat="(key, value) in item.properties" bn-repeat-delimiter=","><strong>{{key}}</strong>: {{value}}</span><span ng-show="item.description">, {{item.description}}</span>
+                            </div>
+                            <div ng-repeat="item in ChosenDanger.BlockValues track by $index">
+                                <p>
+                                    <strong>{{item.name}}: </strong><span ng-repeat="(key, value) in item.properties" bn-repeat-delimiter=",">{{key}}: {{value}}</span>
+                                </p>
+                            </div>
+                            <div ng-repeat="item in ChosenDanger.Block track by $index">
+                                <p>
+                                    <strong>{{item.name}}: </strong><span ng-repeat="(key, value) in item.properties" bn-repeat-delimiter=","><span ng-bind-html="value.toString() | trust"></span></span>
+                                </p>
+                            </div>
+                            <div ng-show="ChosenDanger.Weapons.length > 0">
+                                <table class="table">
+                                    <tr>
+                                        <th>Vapen</th>
+                                        <th>Bonus</th>
+                                        <th>Skada</th>
+                                        <th>Räckvidd</th>
+                                        <th>Kommentar</th>
+                                    </tr>
+                                    <tr ng-repeat="vapen in ChosenDanger.Weapons track by $index">
+                                        <td>{{vapen.name}}</td>
+                                        <td>+{{vapen.bonus}}</td>
+                                        <td>{{vapen.skada}}</td>
+                                        <td>{{vapen.reach}}</td>
+                                        <td>
+                                            <span ng-repeat="kommentar in vapen.kommentar">{{kommentar}}</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    <div class="col-xs-12 col-sm-4 visuals-container" id="chosenDangerVisuals">
+                        <div ng-repeat="image in ChosenDanger.Image" class="visuals-container-image">
+                            <img ng-style="{'margin-top':image.offSet,'z-index':image.zIndex}" class="part-head-image" src="{{image.path}}" alt="{{ChosenDanger.Name}}">
+                        </div>
+                    </div>
 
+
+                </div>
                 <h4>Artefakter</h4>
                 <p>Antal: {{Zonen.Artifacts.Amount}}</p>
             </div>

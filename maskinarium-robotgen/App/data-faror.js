@@ -131,14 +131,15 @@
                     "function": "CalcAttributes"
                 }
             ],
-            "image":[
-            {
-                "path": "Content/Images/Danger/drönarsoldat-methusalem.png",
-                "offSet": 0,
-                "zIndex": 0
-            }]
-                
-        },{
+            "image": [
+                {
+                    "path": "Content/Images/Danger/drönarsoldat-methusalem.png",
+                    "offSet": 0,
+                    "zIndex": 0
+                }
+            ]
+
+        }, {
             "name": "Hushållsrobot Hem-Antoine",
             "type": "Robot",
             "subtype": "Konsument",
@@ -170,7 +171,7 @@
                         "prc": 1,
                         "ntv": 2,
                         "skydd": 1,
-                        "modul":1
+                        "modul": 1
                     }
                 },
                 {
@@ -217,13 +218,14 @@
                     "function": "GetRobotModules"
                 }
             ],
-            "image":[
-            {
-                "path": "Content/Images/Danger/hushallsrobot.png",
-                "offSet": 0,
-                "zIndex":0
-            }]
-                
+            "image": [
+                {
+                    "path": "Content/Images/Danger/hushallsrobot.png",
+                    "offSet": 0,
+                    "zIndex": 0
+                }
+            ]
+
         },
         {
             "name": "Asgnagare",
@@ -286,6 +288,95 @@
             ],
             "functions": [],
             "image": ""
-        }
+        },
+        {
+            "name": "BETESDJUR",
+            "type": "Monster",
+            "book": "År Noll",
+            "bookContraction": "M0",
+            "knowZoneMod": 1,
+            "description":
+                "Här och var i Zonen lever flockar av relativt beskedliga betesdjur, muterade versioner av den gamla tidens får, getter, grisar och kor. De är förvildade och tvekar inte att anfalla zonvandrare som de uppfattar som hot mot flocken. Betesdjur är särskilt lämpliga att jaga för att få krubb (se talangen Slaktare i {ref:Bok 1: Mutanten}).",
+            "statBlock": [
+                {
+                    "name": "Grundegenskaper",
+                    "type": "inline",
+                    "description": "",
+                    "properties": {
+                        "sty": "2-5",
+                        "kyl": "2-4"
+                    }
+                },
+                {
+                    "name": "Skydd",
+                    "type": "block",
+                    "description": "",
+                    "properties": ["-"]
+                },
+                {
+                    "name": "Vapen",
+                    "type": "block",
+                    "description": "",
+                    "properties": ["Horn, bett eller trynen (vapenskada 1)."]
+                }
+            ]
+        }, {
+            "name": "DRÅPARTRÄD",
+            "type": "Monster",
+            "book": "År Noll",
+            "bookContraction": "M0",
+            "knowZoneMod": 1,
+            "description":
+                "Ett område som är obehagligt tyst och stilla. Det är hemvist åt Zonens fruktade modergrönska; ett dråparträd. Det består av en mörk stam som slutar i ormande tentakelgrenar. Knotiga rötter täckta av illaluktande sekret har spräckt ruiner och mark. Rester av ben, skinn och fjädrar ligger överallt runt om. Dråparträdets märkliga frökapslar – humanoida kringvandrande växtmutanter som undertvingade dråparträdets vilja jagar åt rovgrönskan – finns i området och kommer göra allt för att fånga in levande väsen som rör sig nära och mata dem åt sin hungrande trädmoder.",
+            "statBlock": [
+                {
+                    "name": "Grundegenskaper",
+                    "type": "inline",
+                    "description": "",
+                    "properties": {
+                        "sty": 10,
+                        "kyl": 6
+                    }
+                },
+                {
+                    "name": "Färdigheter",
+                    "type": "blockValue",
+                    "description": "",
+                    "properties": {
+                         "Slåss": 3
+                    }
+                },
+                {
+                    "name": "Skydd",
+                    "type": "block",
+                    "description": "",
+                    "properties": [6]
+                },
+                {
+                    "name": "Vapen",
+                    "type": "block",
+                    "description": "",
+                    "properties": ["Tentakler (vapenskada 1, vid träff blir offret snärjt och måste Ta krafttag för att komma loss, även vänner intill kan slå), ringformat gap (vapenskada 3, kräver att offret är snärjt)."]
+                },
+                {
+                    "name": "Tankevågor",
+                    "type": "block",
+                    "description": "Dråparträdet lockar sina offer till sig med kraftfulla tankevågor. Alla inom kort avstånd måste klara att {skill:fly} för att stå emot – den som misslyckas tar en poäng förvirring och måste avancera fram mot trädet.",
+                    "properties": []
+                },
+                {
+                    "name": "Tentakler",
+                    "type": "block",
+                    "description": "När ett offer väl är på nära avstånd kan dråparträdet {skill:slåss} med sina tentakler. Trädet kan fördela sina grund- och färdighetstärningar på flera offer och angripa dem i samma runda.",
+                    "properties": []
+                },
+                {
+                    "name": "Frökapslar",
+                    "type": "block",
+                    "description": "Offer som lyckas motstå dråparträdets lockelser blir som regel angripna av trädets humanoida frökapslar. I sitt naturliga tillstånd har dessa varelser grönaktig hy och saknar kroppsbehåring och tydliga anletsdrag. En frökapsel har {skill:sty 3} och {skill:kyl 5} och {skill:fv 2} i att {skill:slåss}. De kan dock efterapa en humanoids exakta utseende, genom att skicka in växtstänglar i offrets hjärna och suga ut information om offrets DNA. Offret, som måste vara fasthållet eller brutet av skada för att processen ska gå att genomföra, dör på kuppen. En frökapsel som efterapat en människa eller mutant är helt identisk med offret och kan även tala med dess röst, men är totalt känslokall och går inte att {skill:manipulera} eller {skill:mucka} med.",
+                    "properties": []
+                }
+            ]
+        },
     ]
 };
