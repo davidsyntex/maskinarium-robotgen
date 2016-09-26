@@ -820,7 +820,7 @@ app.controller("zonenController",
         $scope.RollSector = function() {
             $scope.Zonen.Environment = helper.GetRandomFromListWeigthed(data.environment, "chance");
             if ($scope.Zonen.Environment.hasOwnProperty("ruins")) {
-                $scope.Zonen.Ruin = helper.GetRandomFromList(data.ruins[$scope.Zonen.Environment.ruins]);
+                $scope.Zonen.Ruin = helper.GetRandomFromList(data.ruins[$scope.Zonen.Environment.ruins.toLowerCase()]);
             }
 
             var random;

@@ -25,3 +25,13 @@ h1,h2,h3,h4
     font-weight: bold;
     text-transform: uppercase;
 }
+
+.paragraph-header
+{
+    color: #f00;
+}
+span::first-letter
+{
+    text-transform: uppercase !important;
+    color: #00f !important;
+}
